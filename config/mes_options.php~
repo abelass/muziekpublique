@@ -1,0 +1,6 @@
+<?php
+  define ('_ID_WEBMESTRES','1:35');
+$table_des_traitements['TITRE'][]= 'typo(supprimer_numero(%s))';
+$table_des_traitements['PAYS'][]= 'extraire_multi(%s)';
+
+?>

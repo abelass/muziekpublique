@@ -1,0 +1,9 @@
+*.class
+*.pyc
+*.pyo
+/IMG
+/local
+/tmp
+/html
+/dump
+
