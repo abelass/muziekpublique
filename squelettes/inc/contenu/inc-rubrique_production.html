@@ -1,0 +1,23 @@
+#CACHE{7*3600*14}
+
+<BOUCLE_art(RUBRIQUES){id_trad}{lang}>
+	<BOUCLE_rubriques(RUBRIQUES){id_parent}{tout}{par titre}{lang}>
+		<B_rub>
+		[<p class="pagination">(#PAGINATION)</p>]
+			<BOUCLE_rub(RUBRIQUES){id_rubrique}{tout}{par titre}{pagination}>
+			<div class="Item item_production">
+				<div class="Chapeau">
+					[(#LOGO_RUBRIQUE|!={''}|?{
+						<a href="[(#URL_RUBRIQUE|parametre_url{lang,#ENV{lang}}|parametre_url{id_mot,#GET{id_mot}})]">[(#LOGO_RUBRIQUE_NORMAL||image_reduire{141})]</a>,<a href="[(#URL_RUBRIQUE|parametre_url{lang,#ENV{lang}}|parametre_url{id_mot,#GET{id_mot}})]">[(#INCLURE{fond=inc/contenu/inc-logo_rub}{id_rubrique}{width=141}{id_trad})]</a>})]
+					<div class="ItemContent">
+						<a href="[(#URL_RUBRIQUE|parametre_url{lang,#ENV{lang}}|parametre_url{id_mot,#GET{id_mot}})]">#TITRE</a>
+						[<span class="Soustitre">(#SURTITRE)</span>]
+					<p class="ChapeauTxt">[(#INTRODUCTION|couper{250})]</p>	
+					</div>
+				</div>
+			</div>
+		</BOUCLE_rub>
+	</BOUCLE_rubriques>
+</BOUCLE_art>
+
+

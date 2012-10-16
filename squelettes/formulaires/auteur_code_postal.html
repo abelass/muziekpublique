@@ -1,0 +1,12 @@
+#CACHE{48*3600}
+
+	<B_code_postal>
+	<select name="code_postal" class="forml">
+	[<option value="#ENV{code_postal}"  selected="selected">(#ENV{code_postal})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_code_postal(spip_auteurs_elargis){tout}{par code_postal} {code_postal!=#ENV{code_postal}}>
+	[<option value="[(#CODE_POSTAL)]" >(#CODE_POSTAL|unique)</option>]
+	</BOUCLE_code_postal>	
+	</select>
+	</B_code_postal>
+

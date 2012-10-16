@@ -1,0 +1,200 @@
+#SET{date,(#DATE|annee)}
+
+ <form action="[(#SELF)]#inscription_activite" method="POST"  class="formbox" id="inscription_activite" >
+#ACTION_FORMULAIRE{#ENV{action}}
+<input name="url_retour" type="hidden" value="#SELF" />
+<BOUCLE_editable(CONDITION){si #EDITABLE}>
+
+
+<B_lesevenements_edit>
+<ul class="liste concerts" id="accordion">
+      [<li class="spip_form_erreur">(#ENV**{erreurs}|table_valeur{reservation_2}|)</li> ]
+<BOUCLE_lesevenements_edit(EVENEMENTS) {id_evenement IN #EVENEMENTS} {par num titre}>
+ 
+  <li class="Item"><h3><a href="#contenu_#ID_EVENEMENT">#COMPTEUR_BOUCLE. #TITRE</a></h3>
+  <div id="contenu_#ID_EVENEMENT" class="details_evenement">
+	<div class="evenement">
+		#DESCRIPTIF
+	</div>
+	<div class="apartement">
+	<BOUCLE_appart(MOTS){id_evenement}{id_groupe=26}{par titre}{0,1}>	
+	#SET{titre,#TITRE}
+	#SET{descriptif,#DESCRIPTIF*}	 
+	[(#LOGO_MOT|image_reduire{150})]
+	[(#TEXTE)]
+	</BOUCLE_appart>
+	</div> 
+  </div>
+
+
+  <div class="form_input">
+    <span class="titre_appart">
+		<span class="titre">#GET{titre}</span>	
+		<span class="descriptif">[(#GET{descriptif}|extraire_multi|replace{'_','-'})]</span>	
+   		#SET{titre,''}
+
+		#SET{descriptif,''}	 
+    </span>	  
+    #SET{teste_#ID_EVENEMENT,#ARRAY}
+    [(#EVENEMENT_FULL|table_valeur{#ID_EVENEMENT}|oui)
+      [(#SET{teste_#ID_EVENEMENT,#EVENEMENT_FULL|table_valeur{#ID_EVENEMENT}})]	           
+      ]
+
+	  <span class="input">
+    <BOUCLE_horaires(MOTS){id_evenement}{id_groupe=27}{par titre}>
+
+   [(#INSCRIPTION_ACTIVE|oui)
+   
+    <input class="deselectRadioButton"  type="radio" name="concert_[(#ID_EVENEMENT)]" value="[(#TITRE)]" [(#ENV{concert_#ID_EVENEMENT}|=={#TITRE}|oui) checked="checked"] [(#ENV{places_disponibles}|table_valeur{#ID_EVENEMENT}|table_valeur{#TITRE}|<{1}|oui) disabled="disabled"]/>
+    ]
+    <label for="concert_#ID_EVENEMENT">#TITRE</label>
+     [(#ENV**{erreurs}|table_valeur{reservation}|table_valeur{#ID_EVENEMENT}|table_valeur{#TITRE}|oui)#SET{h,#TITRE}]
+    </BOUCLE_horaires> 
+    </span>
+      [<span class="spip_form_erreur">(#ENV**{erreurs}|table_valeur{reservation}|table_valeur{#ID_EVENEMENT}|table_valeur{#GET{h}})</span> ]
+  </div>
+
+
+  </li>
+
+</BOUCLE_lesevenements_edit>
+</ul>
+</B_lesevenements_edit>
+ [(#INSCRIPTION_ACTIVE|oui)  
+  <div class="col1">
+    <p><:nom:> :</p>
+    <label>
+    [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{nom_famille})</span>]
+    <input class="input1" name="nom_famille" type="text" class="choix" size="40" value="[(#ENV{nom_famille})]" />
+    </label>
+  </div>
+  <div class="col2">
+    <p>
+      <:prenom:> :
+    </p>
+    <label>
+    [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{prenom})</span>]
+    <input class="input1" name="prenom" type="text" id="prenom" value="#ENV{prenom}" />
+    </label>
+  </div>  
+    
+  
+<!--  <div class='spip_form_champs'>
+    <span class='spip_form_label'>
+      <label for="id_adherent"><:asso:activite_libelle_adherent:> :</label>
+    </span>
+    <input name="id_adherent" type="text" class="choix" size="40" value="[(#ENV{id_adherent})]"  />
+  </div>-->
+  <div class="col1">
+    <p><:email:> :</p>
+      <label>
+      [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{email})</span>]
+      <input  class="input1" name="email" type="text" class="choix" value="[(#ENV{email})]" />
+      </label>
+  </div>  
+  <div class="col2">
+    <p><:telephone:> :</p>
+    <label>
+    <input class="input1"  name="telephone" type="text" value="[(#ENV{telephone})]" />
+    </label>
+  </div>  
+    
+    
+  <div class="col3">
+    <p><:rue:></p>
+        <label>
+
+    [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{adresse})</span>]
+           <input class="input3" type="text" name="adresse" value="#ENV{adresse}"/>
+        </label>
+    </div>  
+  <div class="col4">
+    <p><:numero:></p>
+        <label>
+        
+    [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{numero})</span>]
+           <input class="input2" type="text" name="numero" value="#ENV{numero}"/>
+        </label>
+    </div>        
+  <div class="col6">
+      <p><:code_postal:></p>
+        <label>
+        
+
+           <input class="input4" type="text" name="code_postal"  value="#ENV{code_postal}"/>
+        </label>
+    </div>
+  <div class="col7">
+      <p><:ville:></p>
+        <label>
+            [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{ville})</span>]
+           <input class="input5" type="text" name="ville" id="ville" value="#ENV{ville}"/>
+        </label>
+    </div>            
+          
+  <div class="col7">
+    <ul>
+    <INCLURE{fond=prive/inscription2_champs_pays}{env}/>
+    </ul>
+    </div>
+    <br />  
+
+
+  
+  <p><b><:nombre_tickets:> :</b></p>
+     [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{inscrits})</span>]
+  <div class="col9">
+    <p><:tickets_membre:> :</p>
+    <label>
+      [(#INCLURE{fond=formulaires/inc-inscription_concert_tickets} {name=membres}{valeur=#ENV{membres}})]
+      </label>
+      </div> 
+
+ 
+  [(#PRIX_NON_MEMBRES|oui)
+  <div class="col9">
+    <p><:tickets_non_membre:> :</p>
+    <label>
+         [(#INCLURE{fond=formulaires/inc-inscription_concert_tickets} {name=non_membres}{valeur=#ENV{non_membres}})]
+    </label>
+  </div>]
+
+  
+    <br/>  
+  <div class="legal">
+    <span class='spip_form_label'>
+      <label for="opt_out"><:opt_out:> :</label>
+    </span>
+    <label>
+    <input  class="checkbox" name="opt_out" type="checkbox" [ (#ENV{opt_out}|oui) checked="checked"] value="1"/>
+    </label>
+  </div>      
+
+  
+  <div>
+    <label>
+    <input type="submit"  class="btn" name="[(#ENV{erreurs}|table_valeur{bouton})]" value="ok"/>  
+    </label>
+  </div>]
+  </BOUCLE_editable>
+  [<div class="message_ok">(#ENV*{message_ok})</div>]
+  <//B_editable>
+  
+</form>
+
+  <script>
+  $(document).ready(function() {
+    $("#accordion").accordion(
+    { autoHeight: false,
+		collapsible: true,	
+		active: 0 
+     }
+     );
+$(".deselectRadioButton").click( function(e){
+    if($(this).hasClass("on")){
+       $(this).removeAttr('checked');
+    }
+    $(this).toggleClass("on");
+}).filter(":checked").addClass("on");
+  });
+  </script>

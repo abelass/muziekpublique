@@ -1,0 +1,21 @@
+<div class="Social">
+	<B_liens>
+		<div class="Links">
+			<h3><:liens:></h3>
+			<ul>		
+				<BOUCLE_liens(DOCUMENTS){id_article=#ID_ARTICLE}{extension=html}>
+					<li><a href="#URL_DOCUMENT" title="#TITRE" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a></li>
+					</BOUCLE_liens>
+				</ul>
+			</div>	
+		</B_liens>	
+		<div class="Share">
+			<h3><:partager_article:></h3>
+			<ul>
+				<li><a href="[(#URL_PAGE{backend}|parametre_url{id_rubrique,#ID_RUBRIQUE}|parametre_url{lang,#ENV{lang}})]"><img src="#CHEMIN{styles/img/ico_rss.gif}" alt="Rss" title="Rss"></a></li>
+					<li><a href="http://twitter.com/home?status=[(#SELF|url_absolue)]"><img src="#CHEMIN{styles/img/ico_twitter.gif}" alt="Twitter" title="Twitter"></a></li>
+					<li><a href="http://www.facebook.com/sharer.php?u=[(#SELF|url_absolue)]"><img src="#CHEMIN{styles/img/ico_facebook.gif}" alt="Facebook" title="Facebook"></a></li>
+							
+			</ul>
+		</div>	
+</div>

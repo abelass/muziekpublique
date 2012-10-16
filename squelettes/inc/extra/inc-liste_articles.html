@@ -1,0 +1,20 @@
+[(#REM) Articles de la rubrique ]
+#SET{debut,#ENV{debut}}
+#SET{fin,#ENV{fin}}
+
+<B_articles>
+	<BOUCLE_rubrique(RUBRIQUES){id_rubrique ?}>
+	<h2>#TITRE</h2>
+	</BOUCLE_rubrique>
+	<div class="menu articles">
+			<ul>
+				<BOUCLE_articles(ARTICLES) {id_rubrique ?}{id_mot ?}{id_article ?} {id_groupe ?} {par date}{inverse} {#GET{debut,0},#GET{fin,5}}>
+					<li>
+					[(#ENV{logo}|=={'oui'}|?{[(#LOGO_ARTICLE|#URL_ARTICLE|image_reduire{150,100})]})]
+					<h3><a href="#URL_ARTICLE">#TITRE</a></h3>
+					[(#ENV{date}|=={'oui'}|?{<small>[(#DATE|affdate_jourcourt)]</small>})]
+					</li>
+				</BOUCLE_articles>
+			</ul>
+	</div>
+</B_articles>

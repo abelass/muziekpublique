@@ -1,0 +1,1069 @@
+@charset "utf-8";
+
+/* GENERAL */
+
+	body {
+		margin-left: 0px;
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 80%;
+		background-image: url(img/bg_general.jpg);
+		background-repeat: repeat-x;
+	}
+body.radio{
+
+background-image: none;
+background-color: #6E2B70;
+width:100px.
+}
+	p {
+		color:#505155;
+		font-size:85%;
+	}
+	
+	h3 {
+		color:#505155;
+		font-size:97%;
+		font-weight:bold;
+		line-height:13px;
+		margin:11px 0;
+	}
+	.Item h3{
+		margin:7px 0 0;
+	}
+	hr {
+		background-image:url(img/bg_hr2.gif);
+		background-repeat:repeat-x;
+		border:0 solid #FFFFFF;
+	}
+	
+/* GENERAL : Liens */		
+	
+	.Menu_accueil a:link, .Menu_accueil a:visited,
+	.Menu_concerts a:link, .Menu_concerts a:visited,
+	.Menu_cours a:link, .Menu_cours a:visited,
+	.Menu_production a:link, .Menu_production a:visited,
+	.More a:link, .More a:visited,
+	.Inscriptions a:link, .Inscriptions a:visited
+	  {
+		text-decoration: none;
+		color:#521000;
+	}
+	.Menu_accueil a:hover, .Menu_accueil a:active, .Menu_accueil a:focus,
+	.Menu_concerts a:hover, .Menu_concerts a:active, .Menu_concerts a:focus,
+	.Menu_cours a:hover, .Menu_cours a:active, .Menu_cours a:focus,
+	.Menu_production a:hover, .Menu_production a:active, .Menu_production a:focus,
+	.More a:hover, .More a:active, .More a:focus,
+	.Inscriptions a:hover, .Inscriptions a:active, .Inscriptions a:focus  {
+		text-decoration: underline;
+		color:#521000;
+	}		
+	
+/* HEADER */
+
+	.Header {
+		height:143px;
+		width:100%;
+		background-image: url(img/bg_head.png);
+		background-repeat: no-repeat;
+		background-position: left top;
+	}
+	
+/* HEADER : Menu */
+
+	.Menu {
+		position: absolute;
+		width:995px;
+		margin-left: 137px;	
+		top:90px;
+	}
+	ul{
+		list-style-position: inside;
+		list-style-type: none;
+		margin:0;
+		padding:0;
+	}
+	.Menu ul li {
+		background-color:#fff;
+		color:#5c2200;
+		float:left;
+		font-size:80%;
+		height:18px;
+		letter-spacing:0.05em;
+		margin:2px;
+		padding:4px 3px 0 9px;
+		text-transform:uppercase;
+		vertical-align:middle;
+		width:89px;1
+	}
+	
+
+	
+/* HEADER : Menu : gestion des liens */	
+	
+	.Menu a:link, .Menu a:visited  {
+		text-decoration: none;
+		color:#fff;
+	}
+	.Menu a:hover, .Menu a:active, .Menu a:focus  {
+		text-decoration: none;
+		color:#fff;
+	}
+	
+		
+	.Menu #accueil{
+		background-color:#e65e10;
+		color:#fff;
+	}
+	/*
+	.Menu #accueil:hover{
+		background-color:#f78645;
+		cursor:pointer;
+	}
+	*/
+	
+	.Menu #concerts{
+		background-color:#a48f2b;
+	}
+	/*
+	.Menu #concerts:hover{
+		background-color:#cbb030;
+		cursor:pointer;
+	}
+	*/
+	
+	.Menu #cours{
+		background-color:#521000;
+	}
+	/*
+	.Menu #cours:hover{
+		background-color:#84260f;
+		cursor:pointer;
+	}
+	*/
+	
+	.Menu #production{
+		background-color:#80498e;
+	}
+	/*
+	.Menu #production:hover{
+		background-color:#ae54c5;
+		cursor:pointer;
+	}
+	*/
+	
+	.Menu #medias{
+		background-color:#4e6eae;
+	}
+	/*
+	.Menu #medias:hover{
+		background-color:#5f8be1;
+		cursor:pointer;
+	}
+	*/
+	
+	.Menu #et{
+		background-color:#efa000;
+	}
+	/*
+	.Menu #et:hover{
+		background-color:#ba8210;
+		cursor:pointer;
+	}
+	*/
+	
+	.Menu #gestion{
+		background-color:#cd6f21;
+	}
+	/*
+	.Menu #gestion:hover{
+		background-color:#ba8210;
+		cursor:pointer;
+	}
+	*/
+
+	.Menu #label{
+		background-color:#82c30b;
+	}
+	/*
+	.Menu #gestion:hover{
+		background-color:#ba8210;
+		cursor:pointer;
+	}
+	*/
+/* HEADER : ACCUEUIL : Menu  */	
+
+	.Menu_accueil {
+		background-color: #fff;
+		position: absolute;
+		width:744px;
+		margin-left: 137px;		
+		top:118px;
+		height:20px;
+	}
+	.Menu_accueil ul li{
+		padding:4px 0 0 8px;
+		/padding:4px 8px;
+		text-transform:uppercase;
+		vertical-align:middle;
+		color:#000000;
+		float:left;
+		font-size:80%;
+		height:18px;
+		letter-spacing:0.05em;
+		background-image: url(img/HeadUnderMenuSeparator.gif);
+		background-repeat: no-repeat;
+		background-position: 0 7px;
+	}
+	
+/* HEADER : CONCERTS : Menu  */	
+
+	.Menu_concerts {
+		background-color: #fff;
+		position: absolute;
+		width:500px;
+		margin-left: 137px;		
+		top:118px;
+		height:20px;
+	}
+	.Menu_concerts ul li{
+		padding:4px 0 0 8px;
+		/padding:4px 8px;
+		text-transform:uppercase;
+		vertical-align:middle;
+		color:#000000;
+		float:left;
+		font-size:80%;
+		height:18px;
+		letter-spacing:0.05em;
+		background-image: url(img/HeadUnderMenuSeparator.gif);
+		background-repeat: no-repeat;
+		background-position: 0 7px;
+	}
+	
+/* HEADER : COURS : Menu  */	
+
+	.Menu_cours {
+		background-color: #fff;
+		position: absolute;
+		width:500px;
+		margin-left: 137px;		
+		top:118px;
+		height:20px;
+	}
+	.Menu_cours ul li{
+		padding:4px 0 0 8px;
+		/padding:4px 8px;
+		text-transform:uppercase;
+		vertical-align:middle;
+		color:#000000;
+		float:left;
+		font-size:80%;
+		height:18px;
+		letter-spacing:0.05em;
+		background-image: url(img/HeadUnderMenuSeparator.gif);
+		background-repeat: no-repeat;
+		background-position: 0 7px;
+	}	
+	
+	
+/* HEADER : PRODUCTION : Menu  */	
+
+	.Menu_production {
+		background-color: #fff;
+		position: absolute;
+		width:500px;
+		margin-left: 137px;	
+		top:118px;
+		height:20px;
+	}
+	.Menu_production ul li{
+		padding:4px 0 0 8px;
+		/padding:4px 8px;
+		text-transform:uppercase;
+		vertical-align:middle;
+		color:#000000;
+		float:left;
+		font-size:80%;
+		height:18px;
+		letter-spacing:0.05em;
+		background-image: url(img/HeadUnderMenuSeparator.gif);
+		background-repeat: no-repeat;
+		background-position: 0 7px;
+	}	
+	
+/* HEADER : RECHERCHE  */	
+	
+	.Recherche {
+		background-color:#FFFFFF;
+		height:19px;
+		margin-left:885px;
+		position:absolute;
+		top:120px;
+		width:350px
+	}
+	.Recherche span {
+		padding:6px 7px 2px 6px;
+		/padding:8px 7px 1px 6px;
+		text-transform:uppercase;
+		font-size:80%;
+		background-color:#EEEEEE;
+		color:#5C2200;
+	}
+	.Recherche input, .Newsletter input {
+		padding:0;
+        width: 154px;
+		border:1px solid #AAA89D;
+		color:#5C2200;
+		height:15px;
+	}
+	.Recherche .ok, .Newsletter .ok {
+		background-color:#EEEEEE;
+		border:medium none;
+		color:#5C2200;
+		font-size:75%;
+		height:21px;
+		padding:0;
+		width:27px;
+	}
+	.Langue {
+		background-color:#FFFFFF;
+		height:20px;
+		margin-left:31px;
+		position:absolute;
+		top:118px;
+		width:80px;
+	}
+	.Langue ul li{
+		padding:4px 0 0 4px;
+		text-transform:uppercase;
+		vertical-align:middle;
+		color:#3b0c0b;
+		float:left;
+		font-size:80%;
+		height:18px;
+		letter-spacing:0.05em;
+	}
+	.Langue a:link, .Langue a:visited  {
+		text-decoration: none;
+		color:#cf7726;
+	}
+	.Langue a:hover, .Langue a:active, .Langue a:focus  {
+		text-decoration: none;
+		color:#000;
+	}
+	
+	
+
+	
+/* CONTENT */	
+	
+	.Contenu {
+		top:143px;
+		position: absolute;
+		width:1145px;
+		padding-top:20px;
+	}
+	
+/* CONTENT : LOGOS */	
+
+	.Logos {
+		background-color: #fff;
+		width:120px;
+		float:left;
+		margin-right:10px;
+		text-align:right;
+	}
+
+.Logos .spip_logos	{text-align:right;float:none; margin:0;
+
+}
+	.Logos ul{
+		list-style-position: inside;
+		list-style-type: none;
+		margin:50px 0;
+		padding:0;
+	}
+	.Logos a{
+		text-decoration: none;
+		cursor:pointer;		
+	}
+	
+
+
+/* CONTENT : PODIUM */	
+	
+	.Podium {
+		background-color: #fff;
+		float:left;
+		width:455px;
+		margin-right:10px;
+		margin-left:10px;
+	}
+	
+	.Podium h1{
+		color:#505155;
+		font-size:170%;
+		font-weight:bold;
+		background-image: url(img/bg_hr.gif);
+		background-repeat: repeat-x;
+		background-position: bottom;
+		margin:0;
+	}
+	
+	.Podium h3 {
+		color:#505155;
+		font-size:170%;
+		font-weight:bold;
+		line-height:13px;
+		margin:11px 0;
+	}
+	
+	.Podium .Item{
+		margin:5px 0;
+		padding:5px 0;
+		background-image:url(img/bg_hr.gif);
+		background-position:center bottom;
+		background-repeat:repeat-x;
+	}
+
+	.Podium .Item .Date,
+	.Podium .Item .Auteur {
+		color:#a72600;
+		font-size:90%;
+		font-weight:bold;
+		display:block;
+	}
+	
+	.Podium .Item .Date{text-transform: lowercase;}
+	
+	
+	.Podium .Item .Lieu {
+		color:#a72600;
+		font-size:80%;
+		font-weight:normal;
+		display:block;
+		margin-bottom:10px;
+	}
+	.Podium .Item h2{
+		color:#505155;
+		font-size:150%;
+		font-weight:bold;
+		margin:0;
+	}
+	.Podium h2{
+    color: #505155;
+    font-size: 150%;
+    font-weight: bold;
+    margin: 18px 0 0;
+	}
+	
+	.Podium .Item .Soustitre{
+		color:#505155;
+		font-size:97%;
+		font-weight:bold;
+		line-height:16px;
+	}
+	
+	.List .Item .Soustitre{
+	margin-bottom:2px;
+		color:#505155;
+		font-size:90%;
+		font-weight:bold;
+		line-height:normal;
+	}
+	.Podium .Item .Chapeau{
+		display:block;
+		margin:5px 0;
+	}
+	
+	/*rajout rainer*/
+mp_style.css (ligne 470)
+
+.Podium .Item .Date, .Podium .Item .Auteur {
+color:#A72600;
+display:block;
+font-size:90%;
+font-weight:bold;
+padding-top:10px;
+}
+
+.News h1 {
+background-color:#5C2200;
+color:#FFFFFF;
+display:block;
+font-size:89%;
+height:14px;
+margin:1px 0 0;
+padding:3px 0;
+position:relative;
+text-align:center;
+text-transform:uppercase;
+width:250px;
+}
+	/*rajout rainer*/
+
+
+	.Podium .Item .ChapeauImg{
+		border:none;
+		margin:5px 10px 0 0;
+	}
+	.Podium .Item .ChapeauTxt{
+		line-height:16px;
+		margin:0;
+		text-align:left;
+		text-align:justify;
+	}
+	.Podium .Item .More{
+		color:#521000;
+		display:block;
+		font-size:80%;
+		letter-spacing:0.05em;
+		padding:5px;
+		text-align:right;
+		text-transform:uppercase;
+	}
+	
+/* CONTENT : PODIUM : Detail */	
+	
+	.Detail {
+		position: relative;
+		display:block;
+	}
+	.Detail ul li{
+		background-color:#5C2200;
+		color:#FFFFFF;
+		float:left;
+		font-size:70%;
+		letter-spacing:0.1em;
+		margin:2px;
+		padding:3px 2px 3px 2px;
+		text-transform:uppercase;
+		vertical-align:middle;
+		width:63px;
+	}
+	.Detail a:link, .Detail a:visited  {
+		text-decoration: none;
+		color:#fff;
+	}
+	.Detail a:hover, .Detail a:active, .Detail a:focus  {
+		text-decoration: none;
+		color:#fff;
+	}
+	
+/* CONTENT : PODIUM : Inscriptions */	
+	
+	.Inscriptions {
+		clear:left;
+		color:#521000;
+		display:block;
+		font-size:106%;
+		font-weight:bold;
+		letter-spacing:-0.05em;
+		padding:10px 0 5px;
+		position:relative;
+		text-align:left;
+		text-transform:uppercase;
+	}
+	.End {
+		clear:left;
+		display:block;
+		margin-bottom:-12px;
+	}
+	
+/* CONTENT : PODIUM : Social share */
+
+	.Social {
+		color:#521000;
+		display:block;
+		font-size:89%;
+		padding:10px 0 5px;
+		position:relative;
+		text-align:left;
+	}	
+	.Social ul a:link, .Social ul a:visited,
+	.Comment a:link, .Comment a:visited {
+		color:#521000;
+		text-decoration:none;
+	}
+	.Social ul a:hover, .Social ul a:active, .Social ul a:focus,
+	.Comment a:hover, .Comment a:active, .Comment a:focus {
+		color:#521000;
+		text-decoration:underline;
+	}
+	.Social .Links {
+		display:block;
+		float:left;
+	}
+	.Social .Links ul {
+		list-style-position: outside;
+		list-style-type: none;	
+		padding:0;
+	}
+	.Social .Links h3, .Social .Share h3 {
+		color:#521000;
+		font-size:101%;
+		margin:0px 0;
+	}
+	.Social .Share {
+		display:block;
+		float:right;
+		text-align:right;
+	}
+	.Social .Share ul {
+		list-style-position: outside;
+		list-style-type: none;	
+		padding:3px 0;
+	}
+	.Social .Share ul li{
+		list-style-position: outside;
+		list-style-type: none;
+		padding:6px;
+		display: inline;
+	}
+	.Social img{
+		border:none;
+	}
+	
+/* CONTENT : PODIUM : Comment */
+	
+	.Comment {
+		background-image:url(img/bg_hr.gif);
+		background-position:center 13px;
+		background-repeat:repeat-x;
+		clear:left;
+		color:#521000;
+		font-size:90%;
+		font-weight:bold;
+		text-align:left;
+		padding:24px 0 9px;
+		/padding:10px 0 9px;
+	}
+	
+/* CONTENT : PODIUM : Sponsors */
+	
+	.Sponsors {
+		list-style-position: outside;
+		list-style-type: none;	
+		padding:0;
+	}
+	.Sponsors li{
+		list-style-position: outside;
+		list-style-type: none;
+		padding:6px;
+		display: inline;
+	}
+	
+	.Sponsors img{
+		border:none;
+		padding-right:10px;
+	}
+	
+/* CONTENT : PODIUM : Infos */
+	
+	.Infos {
+		position: relative;
+		display:block;
+		height:1%;
+	}
+	.Infos ul li{
+		background-color:#A48F2B;
+		color:#FFFFFF;
+		float:left;
+		font-size:70%;
+		height:17px;
+		letter-spacing:0.1em;
+		margin:2px;
+		padding:6px 3px 0 9px;
+		text-transform:uppercase;
+		vertical-align:middle;
+		width:89px;
+	}
+	.Infos a:link, .Infos a:visited  {
+		text-decoration: none;
+		color:#fff;
+	}
+	.Infos a:hover, .Infos a:active, .Infos a:focus  {
+		text-decoration: none;
+		color:#fff;
+	}
+	
+/* CONTENT : PODIUM : Filter */		
+	
+	.Podium .Filter {
+		padding:10px 2px;
+		background-image: url(img/bg_hr.gif);
+		background-repeat: repeat-x;
+		background-position: bottom;
+		margin:0 0 -9px;
+	}
+	
+	.Podium .Filter span {
+		font-weight: bold;
+		color: #000000;
+		font-size:85%;
+	}
+	
+	.Podium .Filter .Nav {
+		color:#000000;
+		display:block;
+		float:right;
+		font-size:85%;
+		font-weight:bold;
+		position:relative;
+		top:-22px;
+	}
+	
+	.Podium .Filter select {
+		background-color:#FFFFFF;
+		border:1px solid #AAA89D;
+		width:220px;
+		
+	}
+	.Podium .Filter .ok {
+		background-color:#EEEEEE;
+		height:22px;
+		margin:3px 0;
+		padding:3px 1px 9px;
+		width:21px;
+		/margin:0;
+		/padding:0;
+		font-size:75%;
+		border:medium none;
+		color:#5C2200;
+	}
+	
+	
+/* CONTENT : PODIUM : Sous menu Production */
+
+	.Podium .Sousmenu {
+		clear:right;
+		color:#5c2200;
+		display:block;
+		font-size:100%;
+		text-align:left;
+		margin-bottom:10px;
+	}
+	
+	.Podium .Sousmenu a, .Podium .Sousmenu a:visited {
+		color:#5c2200;
+		text-decoration:none;
+		font-weight:bold;
+	}
+	.Podium .Sousmenu a:hover, .Podium .Sousmenu a:focus   {
+		color:#A62600;
+		text-decoration:underline;
+		font-weight:bold;
+	}
+	
+	
+/* CONTENT : PODIUM : Nav */	
+	
+	.Podium .Nav {
+    color: #A62600;
+    font-size: 12px;
+    position: absolute;
+    right: 550px;
+    text-align: right;
+    top: 30px;
+}
+
+
+.Podium .menu_ev{
+font-size:12px;
+left:1px;
+right:550px;
+top:31px;
+}
+
+	
+	.Podium .Nav a, .Podium .Nav a:visited {
+		color:#515153;
+		text-decoration:none;
+		font-weight:normal;
+	}
+	.Podium .Nav a:hover, .Podium .Nav a:focus   {
+		color:#000;
+		text-decoration:underline;
+		font-weight:normal;
+	}
+	
+	
+/* CONTENT : LIST */	
+	
+	.List {
+		margin-top:26px;
+		background-color: #fff;
+		float:left;
+		margin-right:10px;
+		margin-left:10px;
+		width:250px;
+	}
+	
+	.List hr {
+		height:1px;
+		background-image: url(img/bg_hr.gif);
+		border:none;
+	}
+	
+/* CONTENT : LIST : Newsletter */	
+	
+	.List .Newsletter {
+		background-image:url(img/bg_hr.gif);
+		border:medium none;
+		background-repeat: repeat-x;
+		padding:6px 0 2px;
+	}
+	
+	.List .Newsletter span {
+		font-weight: bold;
+		color: #000000;
+		font-size:85%;
+	}
+	.List .Newsletter input {
+		height:18px;
+		width:116px;£
+		/width:105px;
+		background-color:#FFFFFF;
+	}
+	.List .Newsletter .ok {
+		background-color:#EEEEEE;
+		height:22px;
+		margin:3px 0;
+		padding:3px 1px 9px;
+		width:21px;
+		/margin:0;
+		/padding:0;
+	}
+
+/* CONTENT : LIST : Item */	
+	
+	.List .Item {
+		background-image:url(img/bg_hr.gif);
+		background-repeat:repeat-x;
+		display:block;
+		margin:4px 0;
+		padding:1px 0;
+		position:relative;
+	}
+	.List .Item p{
+		color:#3e3e3e;
+		margin:6px 0;
+		text-align: justify;		
+	}
+	.List .More{
+		color:#521000;
+		display:block;
+		font-size:80%;
+		letter-spacing:0.05em;
+		padding:5px;
+		text-align:right;
+		text-transform:uppercase;
+	}
+	
+/* CONTENT : NEWS */		
+	
+	.News {
+		background-color: #fff;
+		float:left;
+		margin-left:10px;
+		margin-right:10px;
+		width:250px;
+		margin-top:8px;
+	}
+	.News .Nav {
+		color:#515153;
+		text-align: right;
+	}
+	
+	.News .Nav a, .News .Nav a:visited {
+		color:#515153;
+		text-decoration:none;
+	}
+	.News .Nav a:hover, .News .Nav a:focus, .News .Nav a:active   {
+		color:#000;
+		text-decoration:underline;
+	}
+	.News h1 {
+		background-color:#5C2200;
+		color:#FFFFFF;
+		display:block;
+		font-size:89%;
+		height:14px;
+		margin:1px 0 11px;
+		padding:3px 0;
+		position:relative;
+		text-align:center;
+		text-transform:uppercase;
+		width:250px;
+	}
+	
+/* CONTENT : NEWS : Items */
+	
+	.News .Item {
+		background-image:url(img/bg_hr2.gif);
+		background-repeat:repeat-x;
+		display:inline-block;
+		margin:3px 0;
+		padding:1px 0;
+		position:relative;
+		background-position: bottom;
+	}
+	.News .Item a{
+		text-decoration: none;
+		cursor:pointer;		
+	}
+
+
+/* CONTENT : NEWS : gestion de la date */	
+
+	.News .Date {
+		float:left;
+		margin:3px 0 0 0;
+		padding:0;
+		position:relative;
+		text-align:center;
+		width:45px;
+	}
+	
+	.News .Date .DateBox {
+		background-color:#5C2200;
+		color:#FFFFFF;
+		display:block;
+		float:left;
+		height:39px;
+		padding:4px 3px 0;
+		position:relative;
+		text-align:center;
+		width:39px;
+		text-transform: uppercase;
+		margin-bottom:10px;
+		
+	}
+	.News .Date .DateBox .Day {
+		font-size:125%;
+		font-weight:normal;
+		margin:0;
+		padding:0;
+		width:39px;
+		display:block;	
+	}
+	.News .Date .DateBox .Number {
+		font-size:85%;
+		font-weight:bold;
+		margin:0;
+		padding:0;
+		line-height:7px;
+	}
+	.News .Date .Month {
+		color:#5C2200;
+		font-size:70%;
+		text-transform:uppercase;
+	}
+
+/* CONTENT : NEWS : Contenu de l'article */
+
+	.News .ItemContent {
+		display:block;
+		margin:0 7px 9px;
+		padding:0;
+		float:left;
+		width:191px;
+		font-size:12px;
+	}
+	.News .ItemContent:hover {
+		text-decoration:underline;
+		color: #5C2200;
+	}
+	.News .ItemContent h2{
+		color:#5C2200;
+		font-size:100%;
+		margin:0;
+		padding:0;
+	}
+	.News .ItemContent p{
+		color:#000000;
+		font-size:85%;
+		margin:3px 0 10px;
+		padding:0;
+	}
+	
+	
+	
+/* CONTENT : FOOTER */	
+	
+	
+	.Footer {
+		clear:both;
+		background-color:#FFFFFF;
+		left:50%;
+		margin-left:-432px;
+		position:relative;
+		width:995px;
+		top:30px;
+		vertical-align:middle;
+		height:40px;
+	}
+
+	.Footer #Moliere{
+		background-image:url(img/logo_moliere.gif);
+		display:block;
+		height:30px;
+		width:72px;
+		background-repeat: no-repeat;
+		background-position: left top;
+		float:left;
+
+	}
+	.Footer #Moliere:hover{
+		background-position: left -30px;
+	}
+	
+	.Footer p{
+		color:#0B0D0F;
+		float:left;
+		font-weight:bold;
+		margin:5px 0;
+		text-align:center;
+		width:732px;
+
+	}
+	
+	.Footer #Muziekpublique{
+		background-image:url(img/logo_muziekpublique.gif);
+		display:block;
+		height:26px;
+		width:191px;
+		background-repeat: no-repeat;
+		background-position: left top;
+		float:right;
+	}
+	
+	.Footer #Muziekpublique:hover{
+		background-position: left -26px;
+	}
+	
+	.Footer a:link, .Footer a:visited{
+		color:#580000;
+		font-weight:bold;
+		text-decoration:none;
+	}
+	
+	.Footer a:hover, .Footer a:active, .Footer a:focus{
+		color:#580000;
+		text-decoration:underline;
+	
+	}
+	
+.Recherche form {margin:0;padding:0;}
+
+.radiobox {
+    background: none repeat scroll 0 0 white;
+    padding: 5px;
+    margin: auto;
+
+}
+
+p.art_27,  p.art_27 a{font-weight:bold;}

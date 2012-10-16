@@ -1,0 +1,33 @@
+#CACHE{24*3600}
+<BOUCLE_art(ARTICLES){id_article}>
+
+        
+  #SET{logo_article,1}
+  [(#ENV{survol}|oui)#SET{logo_article,2}]
+  #SET{doc,#INCLURE{fond=inc/contenu/inc-logo_doc}{id_article}{logo_article=#GET{logo_article}}{width=#ENV{width,200}}{height=#ENV{height,200}}}
+  #SET{logo,(#GET{doc}|table_valeur{fichier}|image_reduire{#ENV{width,200},#ENV{height,200}})}
+  #SET{height,(#GET{doc}|table_valeur{height})}  
+  #SET{width,(#GET{doc}|table_valeur{width})}  
+
+  <BOUCLE_test(CONDITION){si #GET{logo}}> </BOUCLE_test>
+    <BOUCLE_art_trad(ARTICLES){traduction}{origine_traduction}>
+
+      #SET{logo,#LOGO_ARTICLE_NORMAL|image_reduire{#ENV{width,200},#ENV{height,200}}|replace{class='spip_logos',''}}
+      
+      [(#ENV{survol}|oui)
+        #SET{logo,#LOGO_ARTICLE_SURVOL|image_reduire{#ENV{width,200},#ENV{height,200}}|replace{class='spip_logos','}}
+      ]
+      
+      [(#GET{logo}|=={''}|oui)
+        [(#SET{doc,#INCLURE{fond=inc/contenu/inc-logo_doc}{id_article}{logo_article=#GET{logo_article}}})]
+        [(#SET{logo,#GET{doc}|table_valeur{fichier}|image_reduire{#ENV{width,200},#ENV{height,200}}})]
+        ]
+    </BOUCLE_art_trad>
+  <//B_test>
+
+</BOUCLE_art>
+[(#SET{doc,#GET{doc}|unserialize})]
+#SET_MERGE{doc,#GET{doc},#ARRAY{logo,#GET{logo}}}
+[(#GET{doc}|serialize)]
+
+

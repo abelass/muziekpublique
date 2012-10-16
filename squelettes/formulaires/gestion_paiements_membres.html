@@ -1,0 +1,108 @@
+#CACHE{0}
+
+<BOUCLE_cat_montants(ASSO_CATEGORIES){id_categorie=1}>
+#SET{cotisation,#COTISATION}
+</BOUCLE_cat_montants>
+
+
+<BOUCLE_auteurs_montants(AUTEURS_ELARGIS){statut_interne=ok_prov}{categorie=1}>
+#SET{montant,(#MONTANT|plus{#GET{montant}})}
+</BOUCLE_auteurs_montants>
+
+
+
+<div class="solde">
+<div>
+<form method="post" action="#SELF">
+<legend>
+	<:solde_imputer:>
+</legend><br/>
+<input type="hidden" name="etat" value="" />
+<input class="fondl" name="solde" value="#ENV{solde}" type="text"/>
+<input name="url_retour" value="#ENV{url_retour}" type="hidden">
+<input name="type" value="membres" type="hidden">
+<input class="fondl" name="gestion_paiements" value="OK" type="submit"/>
+</form>
+</div>
+<div><:montant_comptabilise:> : #GET{montant}</div>
+
+#SET{difference,(#ENV{solde}|moins{#GET{montant}})}
+
+<div [(#GET{difference}|=={'0'}|?{'style="font-weight:bold;"',style="color:red;"})]><:montant_difference:> : #GET{difference}</div>
+</div>
+
+[(#GET{montant}|oui)
+	[(#GET{difference}|=={'0'}|oui)
+		<form method="post" action="#SELF">
+		<legend>
+			<:valider:>
+		</legend>
+		<input type="hidden" name="etat" value="enregistrer" />
+		<input type="hidden" name="solde" value="#ENV{solde}" />
+		<input name="url_retour" value="#ENV{url_retour,#SELF}" type="hidden">
+		<input name="type" value="membres" type="hidden">
+		<input class="fondl" name="gestion_paiements" value="OK" type="submit"/>
+		</form>
+		]
+ 	]
+
+<B_membres>
+[<p>(#PAGINATION)</p>]
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td width="10%"><strong><:valider:></strong></td>
+		<td width="10%"><strong><:id_auteur:></strong></td>
+		<td width="10%"><strong><:id_asso:></strong></td>
+		<td width="10%"><strong><:prenom:></strong></td>
+		<td width="10%"><strong><:nom_famille:></strong></td>
+		<td width="5%"><strong><:montant:></strong></td>
+		<td width="10%"><strong><:asso:activite_libelle_statut:></strong></td>
+		<td width="10%"><strong><:date_paiement:></strong></td>
+		<td width="10%"><strong><:validite:></strong></td>		
+		<td width="15%"><strong><:source_paiement:></strong></td>
+		</tr>
+	</thead>
+		<tbody>
+
+<BOUCLE_membres(spip_auteurs_elargis){statut_interne!=ok}{categorie=1}{pagination 50}>
+<tr [(#STATUT_INTERNE|=={ok_prov}|?{style="background:grey;"})]>
+<form method="post" action="#SELF">
+	<table border=0 cellpadding=2 cellspacing=0   >
+	<tr>
+	<td  width="10%" class="cell" align="center">
+	<input name="url_retour" value="#ENV{url_retour,#SELF}" type="hidden">
+	<input type="hidden" name="etat" value="intermediaire" />
+	<input type="hidden" name="solde" value="#ENV{solde}" />
+	<input name="type" value="membres" type="hidden">
+	<input class="fondl" name="gestion_paiements" value="+" type="submit"/>
+	<input class="fondl" name="gestion_paiements" value="-" type="submit"/>	
+	</td>
+	<td width="10%" class="cell"><input  type="hidden" name="id_auteur"  value="#ID_AUTEUR"/>#ID_AUTEUR</td>
+	<td width="10%" class="cell"><input style="width:90%;" type="text" name="id_asso"  value="#ID_ASSO"/></td>
+	<td width="10%" class="cell">#PRENOM</td>
+	<td width="10%" class="cell">#NOM_FAMILLE</td>
+	<td width="5%" class="cell"><input style="width:90%;" type="text" name="montant"  value="#GET{cotisation}"/></td>
+	<td width="10%" class="cell" style="margin-left:2px;">[(#STATUT_INTERNE|sinon{rien})]</td>
+	<td width="10%" class="cell"><input style="width:90%;" type="text" name="date_paiement"  value="[(#DATE_PAIEMENT|!=={0000-00-00 00:00:00}|?{#DATE_PAIEMENT,[(#DATE|affdate{Y-m-d})]})]"/></td>
+	<td width="10%" class="cell"><input style="width:90%;" type="text" name="validite"  value="[(#DATE|annee)]-12-31"/></td>	
+	<td width="15%" class="cell"><select  style="width:90%;" name="source_paiement" >
+		[<option value="transference_bancaire">(#SOURCE_PAIEMENT)</option>]
+		<option value="transference_bancaire">Transference bancaire</option>
+		<option value="cash">Cash</option>
+		<option value="paypal">Paypal</option>
+		</select>
+	</td>
+	</tr>
+
+	</table>
+</form>
+</td>
+</tbody>	
+</tr>
+</BOUCLE_membres>
+</table>
+[<p>(#PAGINATION)</p>]
+</B_membres>
+
+

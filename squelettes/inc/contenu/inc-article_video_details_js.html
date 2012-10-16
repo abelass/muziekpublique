@@ -1,0 +1,6 @@
+#CACHE{0}<BOUCLE_art1(ARTICLES){id_article}{lang}>document.write('<span class="Date">[(#DATE|nom_jour)] [(#DATE|affdate{'d'})] [(#DATE|nom_mois)] [(#DATE|affdate{'Y'})]</span>\n'); 
+document.write('<h2><a href="[(#URL_ARTICLE|url_absolue)]">[(#TITRE|addslashes)]</a></h2>\n');
+document.write('[<span class="Soustitre">(#SURTITRE)</span>]\n');
+document.write('<div class="Chapeau">\n');
+document.write('<a href="[(#URL_ARTICLE|url_absolue)]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left}|replace{',"}|url_absolue)],[(#INCLURE{fond=inc/contenu/inc-logo_art}{id_article}{width=210}{height=140}{class="ChapeauImg"}|liens_absolus|addslashes)]})]</a>\n');</BOUCLE_art1>
+

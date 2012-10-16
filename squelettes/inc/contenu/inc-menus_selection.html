@@ -1,0 +1,16 @@
+<BOUCLE_cours_menus(MOTS) {id_rubrique}{id_mot IN 199,191,198} {tout}>
+	
+
+		[(#REM) menus de selection pour rubrique cours ]
+		[(#ID_MOT|=={'199'}|?{' ',''})
+		<INCLURE{fond=inc/contenu/inc-cours_selection_menu}{env}/>
+			]
+						
+		[(#REM) menus de selection pour rubrique concerts ]
+		[(#ID_MOT|=={'191'}|?{' ',''}) 
+		<INCLURE{fond=inc/contenu/inc-agenda_selection_menu}{env}/>
+			]
+		[(#REM) menus de selection pour rubrique médias]
+		[(#ID_MOT|=={'198'}|?{' ',''}) <INCLURE{fond=inc/contenu/inc-menu_selection_auteurs_photos}{id_rubrique}{id_mot=#ENV{id_mot}}>]
+
+</BOUCLE_cours_menus>

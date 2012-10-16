@@ -1,0 +1,11 @@
+#CACHE{48*3600}
+
+	<B_nom_famille>
+	<select name="nom_famille"  class="forml">
+	[<option value="#ENV{nom_famille}"  selected="selected">(#ENV{nom_famille})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_nom_famille(spip_auteurs_elargis){tout}{par nom_famille} {nom_famille!=#ENV{nom_famille}}>
+	[<option value="[(#NOM_FAMILLE)]" >(#NOM_FAMILLE|unique)</option>]
+	</BOUCLE_nom_famille>	
+	</select>
+	</B_nom_famille>

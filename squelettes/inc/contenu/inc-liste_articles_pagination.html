@@ -1,0 +1,17 @@
+[(#REM) Articles de la rubrique ]
+<B_articles>
+	<div class="menu articles">
+		#ANCRE_PAGINATION
+		<h2><:articles_rubrique:></h2>
+			<ul>
+				<BOUCLE_articles(ARTICLES) {id_rubrique ?}{id_mot ?}{id_article ?} {id_groupe ?} {par date}{inverse} {pagination}>
+					<li>
+					[(#LOGO_ARTICLE|#URL_ARTICLE|image_reduire{150,100})]
+					<h3><a href="#URL_ARTICLE">#TITRE</a></h3>
+					<small>[(#DATE|affdate_jourcourt)][, <:par_auteur:> (#LESAUTEURS)]</small>
+					</li>
+				</BOUCLE_articles>
+			</ul>
+	[<p class="pagination">(#PAGINATION)</p>]
+	</div>
+</B_articles>

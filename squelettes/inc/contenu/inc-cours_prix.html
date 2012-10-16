@@ -1,0 +1,20 @@
+#CACHE{24*3600}
+#SET{date,#DATE}
+
+#SET{jours,#ENV{id_article}|nombres_jours}
+
+
+<BOUCLE_lister(POUR){tableau #GET{jours}} {par cle}>
+
+	<B_ev>
+	<div>
+		<b>
+		[(#EVAL{date('Y-m-d', strtotime("2011W02#CLE"))}|nom_jour)]
+		</b>
+	<BOUCLE_ev(EVENEMENTS){id_evenement IN #VALEUR}{date_fin>=#DATE}><p>
+<p><:prix:> : #PRIX_MEMBRES &euro; /<:trimestre:>+ 11,25 € (<BOUCLE_rub(RUBRIQUES){id_trad=42}{tout}{lang}><a href="#URL_RUBRIQUE"><:carte_de_membre:></a></BOUCLE_rub>)</p></p></BOUCLE_ev>
+	</div>
+	</B_ev>
+</BOUCLE_lister>
+
+

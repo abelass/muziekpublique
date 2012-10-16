@@ -1,0 +1,8 @@
+<BOUCLE_art(ARTICLES){id_rubrique=134}{id_article ?}{0,1} {!par date}>
+    #SET{id_article,#ID_ARTICLE}
+ </BOUCLE_art>
+
+
+
+<INCLURE{fond=inc/contenu/radio}{id_article=#GET{id_article}}{env}{ajax}/>
+

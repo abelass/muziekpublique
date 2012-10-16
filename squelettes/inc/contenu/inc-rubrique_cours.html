@@ -1,0 +1,19 @@
+#CACHE{0}
+<B_evs>
+[<div class="Nav pagination">(#PAGINATION{page})</div>]  
+<BOUCLE_evs(EVENEMENTS){id_evenement IN #ENV{id_evenement,#ENV{id_evenement_source}}} {pagination 10}{id_evenement_source=0}{date_fin>=#DATE}{doublons}>
+	[(#REM) Si l'article originale (celui de l'évenement) est dans la langue de l'environnement on le prend]
+		<BOUCLE_art_lang(ARTICLES){id_article}{lang}>
+			<INCLURE{fond=inc/contenu/inc-rubrique_cours_detail}{env}{id_article}{id_evenement}/>
+		</BOUCLE_art_lang>
+		[(#REM) Sinon on regarde si une traduction de l'article existe dans la langue du contexte]
+			<BOUCLE_art_alter(ARTICLES){id_trad=#ID_ARTICLE}{lang=#ENV{lang}}>
+				<INCLURE{fond=inc/contenu/inc-rubrique_cours_detail}{env}{id_article}{id_evenement}/>
+			</BOUCLE_art_alter>
+				[(#REM) Sinon on affiche l'article d'origine en mentionant la langue]
+				<BOUCLE_art_alter_or(ARTICLES){id_article=#ID_ARTICLE}>
+					<INCLURE{fond=inc/contenu/inc-rubrique_cours_detail}{env}{id_article}{id_evenement}{trad=#LANG}/>
+				</BOUCLE_art_alter_or>
+			<//B_art_alter>
+		<//B_art_lang>		
+</BOUCLE_evs>

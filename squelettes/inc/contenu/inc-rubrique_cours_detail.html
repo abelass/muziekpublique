@@ -1,0 +1,42 @@
+<div class="Item">
+	<BOUCLE_art(ARTICLES){id_article}>
+			#SET{donnees_logo,#INCLURE{fond=inc/contenu/inc-logo_art}{id_article}{width=141}{class=ChapeauImg}}
+			
+			[(#REM) Préparation des variables]
+			<BOUCLE_donnees(POUR){tableau (#GET{donnees_logo}|unserialize)}>
+			#SET{#CLE,#VALEUR}
+			</BOUCLE_donnees>
+					
+			[(#GET{icone}|oui)
+				[(#SET{icone,[(#CHEMIN{styles/img/icone_play.png}|image_reduire{15}|inserer_attribut{class,icone})]})]
+				]						
+					
+			#SET{class,class=#ENV{class,spip_logos}}
+				
+			
+			#SET{attribut_div,(#GET{class})}
+					
+			[(#GET{logo}|oui)
+				[(#SET{logo_fini,
+					<div #GET{attribut_div}>
+					#GET{icone}	
+					#GET{logo}					
+					</div>
+				})]
+			]		
+		
+	<div class="Chapeau">
+		#SET{titre,#TITRE}
+		[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+		<a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+		<BOUCLE_ev(EVENEMENTS){id_evenement}>
+		<div class="ItemContent">
+			<h2><a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">#GET{titre} [((#ENV{trad}))]</a></h2>
+			[<span class="Soustitre">(#SURTITRE)</span>]
+			<p class="ChapeauTxt">[(#INTRODUCTION|couper{125})]</p>	
+		</div>
+	</div>
+	<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]"><:lire_article:></a></span>
+		</BOUCLE_ev>
+</BOUCLE_art>
+</div>

@@ -1,0 +1,44 @@
+[(#REM)
+	Barre de navigation, ouverte sur la hierarchie courante
+
+	On fait un plan, et, quand on avance vers une rubrique,
+	on l'affiche si son parent est expose ou est la racine du site. ]
+
+<B_rubriques>
+<div class="menu rubriques">
+	<ul>
+	<BOUCLE_rubriques(RUBRIQUES) {racine} {par num titre, titre}{tout}{lang}{tout_voir}>
+		<li>
+			<a href="[(#URL_RUBRIQUE|parametre_url{lang,#LANG})]"[ class="(#EXPOSE)"]>[(#TITRE|couper{80})]</a>
+
+			<B_sous_rubriques>
+			<ul>
+				<BOUCLE_sous_rubriques(RUBRIQUES) {id_parent} {par num titre, titre}{tout}{tout_voir}>
+				<li><a href="[(#URL_RUBRIQUE|parametre_url{lang,#LANG})]"[ class="(#EXPOSE)"]>[(#TITRE|couper{80})]</a>
+			<BOUCLE_sel(MOTS){id_rubrique}{id_mot IN 189,188,192,195,196,198}{tout}>
+			[(#ID_RUBRIQUE|=={#ENV{id_rubrique}}|?{' '})
+			[(#ID_MOT|=={'189'}|?{' ',''})<INCLURE{fond=inc/inc-rubriques_articles}{id_rubrique}{id_article=#ENV{id_article}}> ]
+			[(#ID_MOT|=={'188'}|?{' ',''})	<ul>
+			<li><a href="[(#URL_RUBRIQUE|parametre_url{voir,tout}|parametre_url{lang,#LANG})]" [(#ENV{voir}|=={'tout'}|?{'class="on",''})]><:agenda_complete:></li></ul>]
+			[(#ID_MOT|=={'192'}|?{' ',''})<INCLURE{fond=inc/inc-rubriques_mots}{id_groupe=21}{id_mot=#ENV{id_mot}}{id_rubrique}>]
+			[(#ID_MOT|=={'195'}|?{' ',''})<INCLURE{fond=inc/inc-rubriques_mots}{id_groupe=19}{id_mot=#ENV{id_mot}}{id_rubrique}>]
+			[(#ID_MOT|=={'196'}|?{' ',''})<INCLURE{fond=inc/inc-rubriques_mots}{id_groupe=23}{id_mot=#ENV{id_mot}}{id_rubrique}>]
+			[(#ID_MOT|=={'198'}|?{' ',''})<INCLURE{fond=inc/inc-rubriques_mots2}{id_groupe=#ENV{id_groupe}}{id_mot=#ENV{id_mot}}{id_rubrique}>]
+		]
+#SET{id_rubrique,#ID_RUBRIQUE}
+			<BOUCLE_rub_enfant(RUBRIQUES){id_parent}{tout}>
+			[(#ID_RUBRIQUE|=={#ENV{id_rubrique}}|?{' ',''})<INCLURE{fond=inc/inc-rubriques_mots}{id_groupe=23}{id_mot=#ENV{id_mot}}{id_rubrique=#GET{id_rubrique}}>]
+			</BOUCLE_rub_enfant>
+			</BOUCLE_sel>
+
+				</li>
+				</BOUCLE_sous_rubriques>
+			</ul>
+			</B_sous_rubriques>
+
+		</li>
+	</BOUCLE_rubriques>
+
+	</ul>
+</div>
+</B_rubriques>

@@ -1,0 +1,575 @@
+<fieldset>
+<legend>
+	<:inscription2:info_perso:>
+</legend>
+<:inscription2:info_perso_desc:>
+<br /><br />
+
+<table>
+<tr>
+<td width='140'/>
+<td width='70'> <:inscription2:form:> </td>
+<td width='70'> <:inscription2:fiche_mod:> </td>
+<td width='70'> <:inscription2:fiche:> </td>
+<td width='70'> <:inscription2:table:> </td>
+</tr><tr>
+<td>
+	<strong><:inscription2:nom_famille:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="nom_famille" [checked="(#CONFIG{inscription2/nom_famille}?{checked})"] onclick="showoblig(this)" id="nom_famille" />
+	</label>
+	<label style="[(#CONFIG{inscription2/nom_famille}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="nom_famille_obligatoire" [checked="(#CONFIG{inscription2/nom_famille_obligatoire}?{checked})"] id="nom_famille_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="nom_famille_fiche_mod" onclick = "enadis(this,nom_famille_fiche)" [checked="(#CONFIG{inscription2/nom_famille_fiche_mod}?{checked})"] id="nom_famille_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="nom_famille_fiche" [checked="(#CONFIG{inscription2/nom_famille_fiche}?{checked})"] id="nom_famille_fiche" [disabled ="(#CONFIG{inscription2/nom_famille_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="nom_famille_table" [checked="(#CONFIG{inscription2/nom_famille_table}?{checked})"] id="nom_famille_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:prenom:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="prenom" [checked="(#CONFIG{inscription2/prenom}?{checked})"] onclick="showoblig(this)" id="prenom" />
+	</label>
+	<label style="[(#CONFIG{inscription2/prenom}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="prenom_obligatoire" [checked="(#CONFIG{inscription2/prenom_obligatoire}?{checked})"] id="prenom_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="prenom_fiche_mod" onclick = "enadis(this,prenom_fiche)" [checked="(#CONFIG{inscription2/prenom_fiche_mod}?{checked})"] id="prenom_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="prenom_fiche" [checked="(#CONFIG{inscription2/prenom_fiche}?{checked})"] id="prenom_fiche" [disabled ="(#CONFIG{inscription2/prenom_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="prenom_table" [checked="(#CONFIG{inscription2/prenom_table}?{checked})"] id="prenom_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:username:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="username" [checked="(#CONFIG{inscription2/username}?{checked})"] onclick="showoblig(this)" id="username" />
+	</label>
+	<label style="[(#CONFIG{inscription2/username}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="username_obligatoire" [checked="(#CONFIG{inscription2/username_obligatoire}?{checked})"] id="username_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="username_fiche_mod" onclick = "enadis(this,username_fiche)" [checked="(#CONFIG{inscription2/username_fiche_mod}?{checked})"] id="username_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="username_fiche" [checked="(#CONFIG{inscription2/username_fiche}?{checked})"] id="username_fiche" [disabled ="(#CONFIG{inscription2/username_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="username_table" [checked="(#CONFIG{inscription2/username_table}?{checked})"] id="username_table" />
+	</label>
+</td>
+</tr><tr>	
+<td>
+	<strong><:inscription2:naissance:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="naissance" [checked="(#CONFIG{inscription2/naissance}?{checked})"] onclick="showoblig(this)" id="naissance" />
+	</label>
+	<label style="[(#CONFIG{inscription2/naissance}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="naissance_obligatoire" [checked="(#CONFIG{inscription2/naissance_obligatoire}?{checked})"] id="naissance_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="naissance_fiche_mod" onclick = "enadis(this,naissance_fiche)" [checked="(#CONFIG{inscription2/naissance_fiche_mod}?{checked})"] id="naissance_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="naissance_fiche" [checked="(#CONFIG{inscription2/naissance_fiche}?{checked})"] id="naissance_fiche" [disabled ="(#CONFIG{inscription2/naissance_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="naissance_table" [checked="(#CONFIG{inscription2/naissance_table}?{checked})"] id="naissance_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:sexe:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="sexe" [checked="(#CONFIG{inscription2/sexe}?{checked})"] onclick="showoblig(this)" id="sexe" />
+	</label>
+	<label style="[(#CONFIG{inscription2/sexe}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="sexe_obligatoire" [checked="(#CONFIG{inscription2/sexe_obligatoire}?{checked})"] id="sexe_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="sexe_fiche_mod" onclick = "enadis(this,sexe_fiche)" [checked="(#CONFIG{inscription2/sexe_fiche_mod}?{checked})"] id="sexe_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="sexe_fiche" [checked="(#CONFIG{inscription2/sexe_fiche}?{checked})"] id="sexe_fiche" [disabled ="(#CONFIG{inscription2/sexe_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="sexe_table" [checked="(#CONFIG{inscription2/sexe_table}?{checked})"] id="sexe_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:adresse:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="adresse" [checked="(#CONFIG{inscription2/adresse}?{checked})"] onclick="showoblig(this)" id="adresse" />
+	</label>
+	<label style="[(#CONFIG{inscription2/adresse}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="adresse_obligatoire" [checked="(#CONFIG{inscription2/adresse_obligatoire}?{checked})"] id="adresse_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="adresse_fiche_mod" onclick = "enadis(this,adresse_fiche)" [checked="(#CONFIG{inscription2/adresse_fiche_mod}?{checked})"] id="adresse_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="adresse_fiche" [checked="(#CONFIG{inscription2/adresse_fiche}?{checked})"] id="adresse_fiche" [disabled ="(#CONFIG{inscription2/adresse_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="adresse_table" [checked="(#CONFIG{inscription2/adresse_table}?{checked})"] id="adresse_table" />
+	</label>
+</td>
+</tr>
+</tr><tr>
+<td>
+	<strong><:numero:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="numero" [checked="(#CONFIG{inscription2/numero}?{checked})"] onclick="showoblig(this)" id="numero" />
+	</label>
+	<label style="[(#CONFIG{inscription2/numero}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="numero_obligatoire" [checked="(#CONFIG{inscription2/numero_obligatoire}?{checked})"] id="numero_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="numero_fiche_mod" onclick = "enadis(this,numero_fiche)" [checked="(#CONFIG{inscription2/numero_fiche_mod}?{checked})"] id="numero_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="numero_fiche" [checked="(#CONFIG{inscription2/numero_fiche}?{checked})"] id="numero_fiche" [disabled ="(#CONFIG{inscription2/numero_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="numero_table" [checked="(#CONFIG{inscription2/numero_table}?{checked})"] id="numero_table" />
+	</label>
+</td>
+</tr>
+
+<tr>
+<td>	
+	<strong><:inscription2:code_postal:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="code_postal" [checked="(#CONFIG{inscription2/code_postal}?{checked})"] onclick="showoblig(this)" id="code_postal" />
+	</label>
+	<label style="[(#CONFIG{inscription2/code_postal}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="code_postal_obligatoire" [checked="(#CONFIG{inscription2/code_postal_obligatoire}?{checked})"] id="code_postal_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="code_postal_fiche_mod" onclick = "enadis(this,code_postal_fiche)" [checked="(#CONFIG{inscription2/code_postal_fiche_mod}?{checked})"] id="code_postal_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="code_postal_fiche" [checked="(#CONFIG{inscription2/code_postal_fiche}?{checked})"] id="code_postal_fiche" [disabled ="(#CONFIG{inscription2/code_postal_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="code_postal_table" [checked="(#CONFIG{inscription2/code_postal_table}?{checked})"] id="code_postal_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:ville:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="ville" [checked="(#CONFIG{inscription2/ville}?{checked})"] onclick="showoblig(this)" id="ville" />
+	</label>
+	<label style="[(#CONFIG{inscription2/ville}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="ville_obligatoire" [checked="(#CONFIG{inscription2/ville_obligatoire}?{checked})"] id="ville_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="ville_fiche_mod" onclick = "enadis(this,ville_fiche)" [checked="(#CONFIG{inscription2/ville_fiche_mod}?{checked})"] id="ville_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="ville_fiche" [checked="(#CONFIG{inscription2/ville_fiche}?{checked})"] id="ville_fiche" [disabled ="(#CONFIG{inscription2/ville_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="ville_table" [checked="(#CONFIG{inscription2/ville_table}?{checked})"] id="ville_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:pays:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="pays" [checked="(#CONFIG{inscription2/pays}?{checked})"] onclick="showoblig(this)" id="pays" />
+	</label>
+	<label style="[(#CONFIG{inscription2/pays}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="pays_obligatoire" [checked="(#CONFIG{inscription2/pays_obligatoire}?{checked})"] id="pays_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="pays_fiche_mod" onclick = "enadis(this,pays_fiche)" [checked="(#CONFIG{inscription2/pays_fiche_mod}?{checked})"] id="pays_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="pays_fiche" [checked="(#CONFIG{inscription2/pays_fiche}?{checked})"] id="pays_fiche" [disabled ="(#CONFIG{inscription2/pays_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="pays_table" [checked="(#CONFIG{inscription2/pays_table}?{checked})"] id="pays_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:telephone:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="telephone" [checked="(#CONFIG{inscription2/telephone}?{checked})"] onclick="showoblig(this)" id="telephone" />
+	</label>
+	<label style="[(#CONFIG{inscription2/telephone}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="telephone_obligatoire" [checked="(#CONFIG{inscription2/telephone_obligatoire}?{checked})"] id="telephone_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="telephone_fiche_mod" onclick = "enadis(this,telephone_fiche)" [checked="(#CONFIG{inscription2/telephone_fiche_mod}?{checked})"] id="telephone_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="telephone_fiche" [checked="(#CONFIG{inscription2/telephone_fiche}?{checked})"] id="telephone_fiche" [disabled ="(#CONFIG{inscription2/telephone_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="telephone_table" [checked="(#CONFIG{inscription2/telephone_table}?{checked})"] id="telephone_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:fax:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="fax" [checked="(#CONFIG{inscription2/fax}?{checked})"] onclick="showoblig(this)" id="fax" />
+	</label>
+	<label style="[(#CONFIG{inscription2/fax}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="fax_obligatoire" [checked="(#CONFIG{inscription2/fax_obligatoire}?{checked})"] id="fax_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="fax_fiche_mod" onclick = "enadis(this,fax_fiche)" [checked="(#CONFIG{inscription2/fax_fiche_mod}?{checked})"] id="fax_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="fax_fiche" [checked="(#CONFIG{inscription2/fax_fiche}?{checked})"] id="fax_fiche" [disabled ="(#CONFIG{inscription2/fax_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="fax_table" [checked="(#CONFIG{inscription2/fax_table}?{checked})"] id="fax_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:mobile:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="mobile" [checked="(#CONFIG{inscription2/mobile}?{checked})"] onclick="showoblig(this)" id="mobile" />
+	</label>
+	<label style="[(#CONFIG{inscription2/mobile}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="mobile_obligatoire" [checked="(#CONFIG{inscription2/mobile_obligatoire}?{checked})"] id="mobile_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="mobile_fiche_mod" onclick = "enadis(this,mobile_fiche)" [checked="(#CONFIG{inscription2/mobile_fiche_mod}?{checked})"] id="mobile_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="mobile_fiche" [checked="(#CONFIG{inscription2/mobile_fiche}?{checked})"] id="mobile_fiche" [disabled ="(#CONFIG{inscription2/mobile_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="mobile_table" [checked="(#CONFIG{inscription2/mobile_table}?{checked})"] id="mobile_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+<tr>
+<td>
+	<strong><:inscription2:commentaire:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="commentaire" [checked="(#CONFIG{inscription2/commentaire}?{checked})"] onclick="showoblig(this)" id="commentaire" />
+	</label>
+	<label style="[(#CONFIG{inscription2/commentaire}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="commentaire_obligatoire" [checked="(#CONFIG{inscription2/commentaire_obligatoire}?{checked})"] id="commentaire_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="commentaire_fiche_mod" onclick = "enadis(this,commentaire_fiche)" [checked="(#CONFIG{inscription2/commentaire_fiche_mod}?{checked})"] id="commentaire_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="commentaire_fiche" [checked="(#CONFIG{inscription2/commentaire_fiche}?{checked})"] id="commentaire_fiche" [disabled ="(#CONFIG{inscription2/commentaire_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="commentaire_table" [checked="(#CONFIG{inscription2/commentaire_table}?{checked})"] id="commentaire_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:partage:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="partage" [checked="(#CONFIG{inscription2/partage}?{checked})"] onclick="showoblig(this)" id="partage" />
+	</label>
+	<label style="[(#CONFIG{inscription2/partage}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="partage_obligatoire" [checked="(#CONFIG{inscription2/partage_obligatoire}?{checked})"] id="partage_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="partage_fiche_mod" onclick = "enadis(this,partage_fiche)" [checked="(#CONFIG{inscription2/partage_fiche_mod}?{checked})"] id="partage_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="partage_fiche" [checked="(#CONFIG{inscription2/partage_fiche}?{checked})"] id="partage_fiche" [disabled ="(#CONFIG{inscription2/partage_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="partage_table" [checked="(#CONFIG{inscription2/partage_table}?{checked})"] id="partage_table" />
+	</label>
+</td>
+</tr>
+<tr>
+<td>
+	<strong><:inscription2:partagedonne:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="partagedonne" [checked="(#CONFIG{inscription2/partagedonne}?{checked})"] onclick="showoblig(this)" id="partagedonne" />
+	</label>
+	<label style="[(#CONFIG{inscription2/partagedonne}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="partagedonne_obligatoire" [checked="(#CONFIG{inscription2/partagedonne_obligatoire}?{checked})"] id="partagedonne_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="partagedonne_fiche_mod" onclick = "enadis(this,partagedonne_fiche)" [checked="(#CONFIG{inscription2/partagedonne_fiche_mod}?{checked})"] id="partagedonne_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="partagedonne_fiche" [checked="(#CONFIG{inscription2/partagedonne_fiche}?{checked})"] id="partagedonne_fiche" [disabled ="(#CONFIG{inscription2/partagedonne_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="partagedonne_table" [checked="(#CONFIG{inscription2/partagedonne_table}?{checked})"] id="partagedonne_table" />
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:statut_provisoire:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="statut_provisoire" [checked="(#CONFIG{inscription2/statut_provisoire}?{checked})"] onclick="showoblig(this)" id="statut_provisoire" />
+	</label>
+	<label style="[(#CONFIG{inscription2/statut_provisoire}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="statut_provisoire_obligatoire" [checked="(#CONFIG{inscription2/statut_provisoire_obligatoire}?{checked})"] id="statut_provisoire_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="statut_provisoire_fiche_mod" onclick = "enadis(this,statut_provisoire_fiche)" [checked="(#CONFIG{inscription2/statut_provisoire_fiche_mod}?{checked})"] id="statut_provisoire_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="statut_provisoire_fiche" [checked="(#CONFIG{inscription2/statut_provisoire_fiche}?{checked})"] id="statut_provisoire_fiche" [disabled ="(#CONFIG{inscription2/statut_provisoire_fiche_mod}?{true})"]/>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="statut_provisoire_table" [checked="(#CONFIG{inscription2/statut_provisoire_table}?{checked})"] id="statut_provisoire_table" />
+	</label>
+</td>
+</tr>
+
+
+<tr>
+<td>
+	<strong><:inscription2:validite:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="validite" [checked="(#CONFIG{inscription2/validite}?{checked})"] onclick="showoblig(this)" id="validite" />
+	</label>
+	<label style="[(#CONFIG{inscription2/validite}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="validite_obligatoire" [checked="(#CONFIG{inscription2/validite_obligatoire}?{checked})"] id="validite_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="validite_fiche_mod" onclick = "enadis(this,validite_fiche)" [checked="(#CONFIG{inscription2/validite_fiche_mod}?{checked})"] id="validite_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="validite_fiche" [checked="(#CONFIG{inscription2/validite_fiche}?{checked})"] id="validite_fiche" [disabled ="(#CONFIG{inscription2/validite_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="validite_table" [checked="(#CONFIG{inscription2/validite_table}?{checked})"] id="validite_table" />
+	</label>
+</td>
+</tr>
+<tr>
+<td>
+	<strong><:benevole:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="benevole" [checked="(#CONFIG{inscription2/benevole}?{checked})"] onclick="showoblig(this)" id="benevole" />
+	</label>
+	<label style="[(#CONFIG{inscription2/benevole}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="benevole_obligatoire" [checked="(#CONFIG{inscription2/benevole_obligatoire}?{checked})"] id="benevole_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="benevole_fiche_mod" onclick = "enadis(this,benevole_fiche)" [checked="(#CONFIG{inscription2/benevole_fiche_mod}?{checked})"] id="benevole_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="benevole_fiche" [checked="(#CONFIG{inscription2/benevole_fiche}?{checked})"] id="benevole_fiche" [disabled ="(#CONFIG{inscription2/benevole_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="benevole_table" [checked="(#CONFIG{inscription2/benevole_table}?{checked})"] id="benevole_table" />
+	</label>
+</td>
+</tr>
+<tr>
+<td>
+	<strong><:inscription2:montant:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="montant" [checked="(#CONFIG{inscription2/montant}?{checked})"] onclick="showoblig(this)" id="montant"/>
+	</label>
+</td>
+</tr><tr>
+<td>
+	<strong><:inscription2:date:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="date_paiement" [checked="(#CONFIG{inscription2/date_paiement}?{checked})"] onclick="showoblig(this)" id="date_paiement" />
+	</label>
+</td>
+</tr>
+<tr><td>
+	<strong><:inscription2:id_asso:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="id_asso" [checked="(#CONFIG{inscription2/id_asso}?{checked})"] onclick="showoblig(this)" id="id_asso" />
+	</label>
+	<label style="[(#CONFIG{inscription2/id_asso}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="id_asso_obligatoire" [checked="(#CONFIG{inscription2/id_asso_obligatoire}?{checked})"] id="id_asso_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="id_asso_fiche_mod" onclick = "enadis(this,id_asso_fiche)" [checked="(#CONFIG{inscription2/id_asso_fiche_mod}?{checked})"] id="id_asso_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="id_asso_fiche" [checked="(#CONFIG{inscription2/id_asso_fiche}?{checked})"] id="id_asso_fiche" [disabled ="(#CONFIG{inscription2/id_asso_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="id_asso_table" [checked="(#CONFIG{inscription2/id_asso_table}?{checked})"] id="id_asso_table" />
+	</label>
+</td>
+	<label>
+</tr>
+<tr><td>
+	<strong><:inscription2:traitement:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="traitement" [checked="(#CONFIG{inscription2/traitement}?{checked})"] onclick="showoblig(this)" id="traitement" />
+	</label>
+	<label style="[(#CONFIG{inscription2/traitement}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="traitement_obligatoire" [checked="(#CONFIG{inscription2/traitement_obligatoire}?{checked})"] id="traitement_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="traitement_fiche_mod" onclick = "enadis(this,traitement_fiche)" [checked="(#CONFIG{inscription2/traitement_fiche_mod}?{checked})"] id="traitement_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="traitement_fiche" [checked="(#CONFIG{inscription2/traitement_fiche}?{checked})"] id="traitement_fiche" [disabled ="(#CONFIG{inscription2/traitement_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="traitement_table" [checked="(#CONFIG{inscription2/traitement_table}?{checked})"] id="traitement_table" />
+	</label>
+</td>
+	<label>
+</tr>
+<tr><<td>
+	<strong><:source_paiement:></strong>
+</td><td>
+	<label>
+		<input type="checkbox" name="source_paiement" [checked="(#CONFIG{inscription2/source_paiement}?{checked})"] onclick="showoblig(this)" id="source_paiement" />
+	</label>
+	<label style="[(#CONFIG{inscription2/source_paiement}|=={on}|?{display: block;, display:none;})]">
+		<input type="checkbox" name="source_paiement_obligatoire" [checked="(#CONFIG{inscription2/source_paiement_obligatoire}?{checked})"] id="source_paiement_obligatoire" />
+		<span style="color:red">*</span>
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="source_paiement_fiche_mod" onclick = "enadis(this,source_paiement_fiche)" [checked="(#CONFIG{inscription2/source_paiement_fiche_mod}?{checked})"] id="source_paiement_fiche_mod" />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="source_paiement_fiche" [checked="(#CONFIG{inscription2/source_paiement_fiche}?{checked})"] id="source_paiement_fiche" [disabled ="(#CONFIG{inscription2/source_paiement_fiche_mod}?{true})"] />
+	</label>
+</td><td>
+	<label>
+		<input type="checkbox" name="source_paiement_table" [checked="(#CONFIG{inscription2/source_paiement_table}?{checked})"] id="source_paiement_table" />
+	</label>
+</td>
+	<label>
+</tr>
+</table>
+</fieldset>

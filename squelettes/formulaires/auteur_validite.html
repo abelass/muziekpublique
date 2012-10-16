@@ -1,0 +1,11 @@
+#CACHE{48*3600}
+
+	<B_maj>
+	<select name="validite"  class="forml">
+	[<option value="#ENV{nom}"  selected="selected">(#ENV{validite}|affdate{j-m-Y})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_maj(AUTEURS_ELARGIS){tout}{!par validite} {validite!=#ENV{validite}}>
+	[<option value="[(#VALIDITE)]" >(#VALIDITE|affdate{j-m-Y}|unique{maj})</option>]
+	</BOUCLE_maj>	
+	</select>
+	</B_maj>

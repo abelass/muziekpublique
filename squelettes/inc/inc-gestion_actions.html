@@ -1,0 +1,168 @@
+#CACHE{0}
+
+<?php 
+$type = "#ENV{type}";
+$action = "#ENV{action}";
+$id_auteur_or = "#ENV{id_auteur_or}";
+$id_auteur_prov = "#ENV{id_auteur_prov}";
+$actualiser = "#ENV{actualiser}";
+$modify = "#ENV{modify}";
+$enregistrer = "#ENV{enregistrer}";
+$url_retour_or = "#ENV{url_retour}";
+$replace = array("&amp;");
+$url_retour = str_replace($replace, "&", $url_retour_or);
+$nom_famille = "#ENV{nom_famille}";
+$prenom = "#ENV{prenom}";
+$naissance = "#ENV{naissance}";
+$adresse = "#ENV{adresse}";
+$code_postal = "#ENV{code_postal}";
+$ville = "#ENV{ville}";
+$telephone = "#ENV{telephone}";
+$commentaire = "#ENV{commentaire}";
+$partage = "#ENV{partage}";
+$partagedonne = "#ENV{partagedonne}";
+$partagedonne_prov = "#ENV{partagedonne_prov}";
+$benevole = "#ENV{benevole}";
+$montant = "#ENV{montant}";
+$date_paiement = "#ENV{date_paiement}";
+$recepteur = "#ENV{recepteur}";
+$adapter = "#ENV{adapter}";
+$garder_original = "#ENV{garder_original}";
+$garder_provisoire = "#ENV{garder_provisoire}";
+
+// Actions inscription  provisoire
+
+if ($actualiser) {
+
+	// actualise l'auteur original
+
+	spip_query("UPDATE spip_auteurs SET nom="._q($nom)."  WHERE id_auteur=".$id_auteur_or) ;
+
+	spip_query("UPDATE spip_auteurs_elargis SET nom_famille="._q($nom_famille).", prenom="._q($prenom)." , naissance="._q($naissance)." , adresse="._q($adresse).", code_postal="._q($code_postal)." , ville="._q($ville).", telephone="._q($telephone).", commentaire="._q($commentaire).", partage="._q($partage).", partagedonne="._q($partagedonne)." WHERE id_auteur=".$id_auteur_or) ;
+
+	// met la requete provisional au statut poubelle
+	$statut = "5poubelle";
+	$statut_provisoire = "actualise";
+		spip_query("UPDATE spip_auteurs SET statut="._q($statut)."  WHERE id_auteur=".$id_auteur_prov) ;
+		spip_query("UPDATE spip_auteurs_elargis SET statut_provisoire="._q($statut_provisoire)."  WHERE id_auteur=".$id_auteur_prov);
+
+	// Envoie un mail de rappel des donnees
+	include_spip('inc/envoyer_mail');
+	include_spip('inc/mail');
+	$nom_site_spip = nettoyer_titre_email($GLOBALS['meta']["nom_site"]);
+	$adresse_site = $GLOBALS['meta']["adresse_site"];
+	
+	$prenom = (lire_config('inscription2/prenom')) ? "b.prenom," : "" ;
+	
+	$var_user=spip_fetch_array(spip_query("select a.nom, $prenom a.id_auteur, a.alea_actuel, a.login, a.email from spip_auteurs a join spip_auteurs_elargis b where a.id_auteur='$id_auteur_or' and a.id_auteur=b.id_auteur"));
+	
+	if($var_user['alea_actuel']==''){
+		$var_user['alea_actuel'] = rand(1,99999);
+		spip_query("UPDATE spip_auteurs SET alea_actuel='".$var_user['alea_actuel']."' WHERE id_auteur = ".$id_auteur_or);
+	};
+
+		$message = _T('inscription2:message_auto')."\n\n"
+			. _T('inscription2:email_bonjour', array('nom'=>sinon($var_user['prenom'],$var_user['nom'])))."\n\n"
+			. _T('inscription_provisoire_mail')."\n\n"			
+			. _T('inscription2:rappel_password')."\n\n"
+			. _T('inscription2:choisir_nouveau_password')."\n\n"
+			. $adresse_site."/?page=inscription2_confirmation&id="
+			. $var_user['id_auteur']."&cle=".$var_user['alea_actuel']."&mode=conf"."\n\n"
+			. _T('inscription2:rappel_login') . $var_user['login'] ;
+		$sujet = "[$nom_site_spip] "._T('inscription_provisoire_mail');
+		$from = $GLOBALS['meta']["email_webmaster"]; 
+		$expediteur= $nom_site_spip.'<'.$from.'>';		
+		$entete .= "Reply-To: ".$from."\n"; 
+		$entete .= "Return-Path: ".$from."\n"; 
+		$entete .= "MIME-Version: 1.0\n";
+		$entete .= "Content-Transfer-Encoding: 8bit\n";
+		$entete .= "X-Mailer: PHP/" . phpversion();     
+
+	if (envoyer_mail($var_user['email'],$sujet,$message,$from = $expediteur,$header = $entete))
+	header ('location:'.$url_retour);
+		else
+return _T('inscription2:probleme_email');
+
+	}
+
+	
+
+	// Enregistre definitivement
+
+elseif ($enregistrer) {
+	$statut_provisoire = "enregistre";
+
+	// actualise l'auteur original
+
+	spip_query("UPDATE spip_auteurs_elargis SET statut_provisoire="._q($statut_provisoire)." WHERE id_auteur=".$id_auteur_prov) ;
+
+	}
+
+// Actions partager données
+
+	// Recepteur original trouvé, actualise les deux fiches en mettant l'id_auteur du recepeur dans partagedonne des deux fiches 
+elseif ($recepteur) {
+
+	$partage_recepteur = "envoyer";
+	$partage_demandeur = "partage";	
+
+	spip_query("UPDATE spip_auteurs_elargis SET partage="._q($partage_recepteur).", partagedonne="._q($id_auteur_or)." WHERE id_auteur=".$id_auteur_or) ;
+
+	spip_query("UPDATE spip_auteurs_elargis SET partage="._q($partage_demandeur).", partagedonne="._q($id_auteur_or)." WHERE id_auteur=".$id_auteur_prov) ;
+	header ('location:'.$url_retour);
+	}
+
+	// Recepteur original pas trouvé, actualise la fiche en mentionant l'échec dans le commentaire
+
+elseif ($adapter) {
+	$partage_recepteur = "";
+	$commentaire = ": introuvable";
+	$partagedonne = "$partagedonne_prov $commentaire";
+
+	spip_query("UPDATE spip_auteurs_elargis SET partage="._q($partage_recepteur).", partagedonne="._q($partagedonne)." WHERE id_auteur=".$id_auteur_prov) ;
+	header ('location:'.$url_retour);
+	}
+
+	// Comparer les doublons
+
+	// enregistre et actualise le premier et efface le deuxième
+elseif ($garder_original) {
+	$traitement = "ok";
+	spip_query("UPDATE spip_auteurs_elargis SET nom_famille="._q($nom_famille).", prenom="._q($prenom)." , naissance="._q($naissance)." , adresse="._q($adresse).", code_postal="._q($code_postal)." , ville="._q($ville).", telephone="._q($telephone).", commentaire="._q($commentaire).", partage="._q($partage).", partagedonne="._q($partagedonne).", traitement="._q($traitement)." WHERE id_auteur=".$id_auteur_or) ;
+
+	spip_query("UPDATE spip_auteurs SET nom="._q($nom).", email="._q($email)." WHERE id_auteur=".$id_auteur_or) ;
+
+	spip_query("DELETE FROM spip_auteurs_elargis WHERE id_auteur = '$id_auteur_prov'");
+	spip_query("DELETE FROM spip_auteurs WHERE id_auteur = '$id_auteur_prov'");
+	header ('location:'.$url_retour);
+	}
+
+	// enregistre et actualise le deuxième et efface le premier
+
+elseif ($garder_provisoire) {
+	$traitement = "ok";
+	$nom = "#ENV{nom_prov}";
+	$email = "#ENV{email_prov}";	
+	$nom_famille = "#ENV{nom_famille_prov}";
+	$prenom = "#ENV{prenom_prov}";
+	$naissance = "#ENV{naissance_prov}";
+	$adresse = "#ENV{adresse_prov}";
+	$code_postal = "#ENV{code_postal_prov}";
+	$ville = "#ENV{ville_prov}";
+	$telephone = "#ENV{telephone_prov}";
+	$commentaire = "#ENV{commentaire_prov}";
+	$partage = "#ENV{partage_prov}";
+	$partagedonne = "#ENV{partagedonne_prov}";
+	$benevole = "#ENV{benevole_prov}";
+	$montant = "#ENV{montant_prov}";
+	$date_paiement = "#ENV{date_paiement_prov}";
+
+	spip_query("UPDATE spip_auteurs_elargis SET nom_famille="._q($nom_famille).", prenom="._q($prenom)." , naissance="._q($naissance)." , adresse="._q($adresse).", code_postal="._q($code_postal)." , ville="._q($ville).", telephone="._q($telephone).", commentaire="._q($commentaire).", partage="._q($partage).", partagedonne="._q($partagedonne).", traitement="._q($traitement)." WHERE id_auteur=".$id_auteur_prov) ;
+
+	spip_query("UPDATE spip_auteurs SET nom="._q($nom).", email="._q($email)." WHERE id_auteur=".$id_auteur_prov) ;
+
+	spip_query("DELETE FROM spip_auteurs_elargis WHERE id_auteur = '$id_auteur_or'");
+	spip_query("DELETE FROM spip_auteurs WHERE id_auteur = '$id_auteur_or'");
+	header ('location:'.$url_retour);
+	};
+?>

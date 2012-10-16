@@ -1,0 +1,13 @@
+#CACHE{48*3600}
+	<B_date>
+	<select name="date_paiement" class="forml">
+	[<option value="#ENV{date_paiement}"  selected="selected">(#ENV{date_paiement})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_date(spip_auteurs_elargis){tout}{!par date_paiement} {date_paiement!=#ENV{date_paiement}}>
+	[<option value="[(#DATE_PAIEMENT)]" >(#DATE_PAIEMENT|unique{date_paiement})</option>]
+	</BOUCLE_date>	
+	</select>
+	</B_date>
+
+
+

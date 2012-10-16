@@ -1,0 +1,49 @@
+#CACHE{7200}
+
+[(#REM)Détermine les evenements des sousrubriques]
+<div class="menu evenements">
+<BOUCLE_rub(RUBRIQUES){id_trad = 39}{tout}{lang}>
+[<h2>(#TITRE|unique)</h2>]
+	<B_lesevenements> 
+	<ul>
+	[(#REM)Afficher les evenements du m�me pays ]
+	<BOUCLE_lesevenements(EVENEMENTS){0,5}{par date}{id_rubrique IN 8,26,39}{id_mot ?} {id_groupe ?} {age_debut<=0}>
+	<li>[(#DATE_DEBUT|affdate{'d.m.Y'})]
+		<BOUCLE_art(ARTICLES){id_article}{lang}>
+  		<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{date,#DATE_DEBUT})]" title="#TITRE"> [(#TITRE|supprimer_numero|couper{80})]</a><br/>
+		</BOUCLE_art>
+			<BOUCLE_art_trad(ARTICLES){id_article}>
+				<BOUCLE_art_trad_lang(ARTICLES){traduction}{lang}>
+  				<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{date,#DATE_DEBUT})]" title="#TITRE"> [(#TITRE|supprimer_numero|couper{80})]</a><br/>
+				</BOUCLE_art_trad_lang>
+					<BOUCLE_art_trad_lang_alter(ARTICLES){traduction}{origine_traduction}>
+  					<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{date,#DATE_DEBUT})]" title="#TITRE"> [(#TITRE|supprimer_numero|couper{80})] [#LANG]</a><br/>
+					</BOUCLE_art_trad_lang_alter>
+				<//B_art_trad_lang>
+			</BOUCLE_art_trad>
+		<//B_art>
+  	[(#DATE_DEBUT|jour|=={[(#DATE_FIN|jour)]}|?{
+	[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+	[(#HORAIRE|=={oui}|?{
+	[(#REM) memes heures ?]
+	[(#DATE_DEBUT|=={#DATE_FIN}|?{ <:a:>  
+	[(#DATE_DEBUT|heures)]h[(#DATE_DEBUT|minutes)],''})]
+	[(#REM) pas memes heures ?]
+     [(#DATE_DEBUT|!={#DATE_FIN}|?{<:from:> 
+	[(#DATE_DEBUT|heures)]:[(#DATE_DEBUT|minutes)] <:a:>
+	[(#DATE_FIN|heures)]:[(#DATE_FIN|minutes)],''})]
+	,''})]
+	,
+ 	[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+	[(#HORAIRE|=={oui}|?{ : 
+  	[(#DATE_DEBUT|heures)]H[(#DATE_DEBUT|minutes)],''})] <:a:> 
+	[(#DATE_FIN|nom_jour)]
+  	[(#DATE_FIN|affdate)] [(#HORAIRE|=={oui}|?{ : 
+  	[(#DATE_FIN|heures)]H[(#DATE_FIN|minutes)],''})] })]<br/>
+		<BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}>#TITRE</BOUCLE_lieu>
+	</li>
+  	</BOUCLE_lesevenements>
+	</ul>
+	</B_lesevenements>
+</BOUCLE_rub>
+</div>

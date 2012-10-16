@@ -1,0 +1,30 @@
+#CACHE{24*3600}
+<B_docs>
+	<BOUCLE_mot(MOTS){id_mot}>
+		<h2>#TITRE</h2>
+	</BOUCLE_mot>
+	<ul>
+	<BOUCLE_docs(DOCUMENTS){id_article}{id_mot}>
+		<li>
+		<a href="#URL_DOCUMENT" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a>
+		</li>
+	</BOUCLE_docs>
+	</ul>
+</B_docs>
+	<BOUCLE_art(ARTICLES){id_article}>
+		<BOUCLE_art_trad(ARTICLES){traduction}{lang!=#ENV{lang}}>
+			<B_docs_trad>
+				<BOUCLE_mot_trad(MOTS){id_mot}>
+					<h2>#TITRE</h2>
+				</BOUCLE_mot_trad>
+				<ul>
+					<BOUCLE_docs_trad(DOCUMENTS){id_article}{id_mot}>
+						<li>
+							<a href="#URL_DOCUMENT" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a>
+						</li>
+					</BOUCLE_docs_trad>
+				</ul>
+			</B_docs_trad>			
+		</BOUCLE_art_trad>
+	</BOUCLE_art>
+<//B_docs>

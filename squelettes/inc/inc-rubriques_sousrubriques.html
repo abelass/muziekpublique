@@ -1,0 +1,10 @@
+#CACHE{7*3600*24}
+<BOUCLE_rub(RUBRIQUES){id_rubrique} {tout} >
+	<B_rub_par>
+		<ul>
+			<BOUCLE_rub_par(RUBRIQUES){id_parent}{tout} {lang=#ENV{lang}}>#EXPOSE
+				<li><a href="[(#URL_RUBRIQUE|parametre_url{id_article,#ID_ARTICLE}|parametre_url{lang,#LANG})]" 	[(#ID_RUBRIQUE|=={#ENV{id_rubrique2}}|?{'class="on"',''})]>[(#TITRE|couper{80})]</li>
+			</BOUCLE_rub_par>
+		</ul>
+	</B_rub_par>
+</BOUCLE_rub>

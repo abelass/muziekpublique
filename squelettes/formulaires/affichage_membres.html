@@ -1,0 +1,345 @@
+#CACHE{7*24*3600}
+<div class="form_sel_tout">
+<form action="[(#URL_RUBRIQUE)]#tableau" method="get">
+	<input  type="hidden" name="type"  value="membres"/>
+	<input  type="hidden" name="id_requete"  value="#ENV{id_requete}"/>
+
+	<table id="table_selection" class="data">
+
+	<thead><tr>
+    	<th colspan="1"></th>
+	<th>
+	<:id_auteur:>
+	</th><th>
+	<:nom:>
+	</th><th>
+	<:email:>
+	</th><th>
+	<:nom_site:>
+	</th><th>
+	<:url_site:>
+	</th><th>
+	<:statut:>
+	</th><th>
+	<:maj:>
+	</th><th>
+	<:en_ligne:>
+	</th><th>
+	<:id_asso:>
+	</th><th>
+	<:nom_famille:>
+	</th><th>
+	<:prenom:>
+	</th><th>
+	<:adresse:>
+	</th><th>
+	<:code_postale:>
+	</th><th>
+	<:ville:>
+	</th><th>
+	<:telephone:>
+	</th><th>
+	<:fax:>
+	</th><th>
+	<:mobile:>
+	</th><th>
+	<:commentaire:>
+	</th><th>
+	<:statut_interne:>
+	</th><th>
+	<:creation:>
+	</th><th>
+	<:validite:>
+	</th><th>
+	<:categorie:>
+	</th><th>
+	<:partage:>
+	</th><th>
+	<:partagedonne:> 
+	</th><th>
+	<:statut_provisoire:>
+	</th><th>
+	<:montant:>
+	</th><th>
+	<:date_paiement:>
+	</th><th>
+	<:benevole:>
+	</th></tr>
+	</thead>
+	<tbody>
+		<tr class="odd">
+    		<td align="center">
+			<:afficher_champ:>
+    		</td>
+ 		<td  class="checkbox">
+		<input  type="checkbox" name="sel_id_auteur"  value="ok" class="checkbox" [(#ENV{sel_id_auteur}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox"  name="sel_nom"  value="ok" class="checkbox"     [(#ENV{sel_nom}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_email"  value="ok" class="checkbox" [(#ENV{sel_email}|?{checked="checked",''})]/>
+		</td><td class="checkbox">	
+		<input  type="checkbox" name="sel_nom_site"  value="ok" class="checkbox" [(#ENV{sel_nom_site}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_url_site"  value="ok" class="checkbox" [(#ENV{sel_url_site}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_statut"  value="ok" class="checkbox" [(#ENV{sel_statut}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_maj"  value="ok" class="checkbox"  [(#ENV{sel_maj}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_en_ligne"  value="ok" class="checkbox" [(#ENV{sel_en_ligne}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_id_asso"  value="ok" class="checkbox" [(#ENV{sel_id_asso}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input type="checkbox" name="sel_nom_famille"  value="ok" class="checkbox" [(#ENV{sel_nom_famille}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_prenom"  value="ok" class="checkbox" [(#ENV{sel_prenom}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_adresse"  value="ok" class="checkbox" [(#ENV{sel_adresse}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input type="checkbox" name="sel_code_postal"  value="ok" class="checkbox" [(#ENV{sel_code_postal}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_ville"  value="ok" class="checkbox" [(#ENV{sel_ville}|?{checked="checked",''})]/>
+		</td><td class="checkbox"><input id="sel_telephone" type="checkbox" name="sel_telephone"  value="ok" class="checkbox" [(#ENV{sel_telephone}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_fax"  value="ok" class="checkbox" [(#ENV{sel_fax}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_mobile"  value="ok" class="checkbox" [(#ENV{sel_mobile}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_commentaire"  value="ok" class="checkbox" [(#ENV{sel_commentaire}|?{checked="checked",''})]/></td>
+		<td class="checkbox">
+		<input  type="checkbox" name="sel_statut_interne"  value="ok" class="checkbox" [(#ENV{sel_statut_interne}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_creation"  value="ok" class="checkbox" [(#ENV{sel_creation}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_validite"  value="ok" class="checkbox" [(#ENV{sel_validite}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_categorie"  value="ok" class="checkbox" [(#ENV{sel_categorie}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_partage"  value="ok" class="checkbox" [(#ENV{sel_partage}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_partagedonne"  value="ok" class="checkbox" [(#ENV{sel_partagedonne}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_statut_provisoire"  value="ok" class="checkbox" [(#ENV{sel_statut_provisoire}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_montant"  value="ok" class="checkbox" [(#ENV{sel_montant}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_date_paiement"  value="ok" class="checkbox" [(#ENV{sel_date_paiement}|?{checked="checked",''})]/>
+		</td><td class="checkbox">
+		<input  type="checkbox" name="sel_benevole"  value="ok" class="checkbox" [(#ENV{sel_benevole}|?{checked="checked",''})]/>
+		</td></tr>
+    	<tr>
+    		<td align="center">
+		<:choisir:>
+    		</td>
+ 		<td  class="text">
+		<input  type="text" name="id_auteur"  value="#ENV{id_auteur}" class="text" />
+		</td><td class="text">	
+		<input  type="text" name="nom"  value="#ENV{nom}" class="text" />
+		</td><td class="text">
+		<input type="text" name="email"  value="#ENV{email}" class="text" />
+		</td><td class="text">
+		<input  type="text" name="nom_site"  value="#ENV{nom_site}" class="text" />
+		</td><td class="text">
+		<input type="text" name="url_site"  value="#ENV{url_site}" class="text" />
+		</td><td class="text">
+		<select name="statut"  class="forml">
+			<option value="#ENV{statut}"  selected="selected">[(#ENV{statut}|=={0minirezo}|?{<:ecrire:info_statut_administrateur:>,[(#ENV{statut}|=={1comite}|?{<:ecrire:info_redacteur_1:>,[(#ENV{statut}|=={6forum}|?{<:ecrire:info_visiteur_1:>,[(#ENV{statut}|=={aconfirmer}|?{A confirmer,[(#ENV{statut}|=={5poubelle}|?{<:ecrire:info_poubelle_1:>,''})]})]})]})]})]</option>
+			<option value="" >Nothing</option>
+			<option value="0minirezo"><:ecrire:info_statut_administrateur:></option>
+			<option value="1comite" ><:ecrire:info_redacteur_1:></option>
+			<option value="6forum" ><:ecrire:info_visiteur_1:></option> 
+			<option value="aconfirmer" >A confirmer</option>
+			<option value="5poubelle" ><:ecrire:info_statut_site_4:></option> 
+		</select>
+		</td><td class="text">
+		<INCLURE{fond=formulaires/auteur_maj}{maj=#ENV{maj}}>
+		</td><td class="text">
+		<INCLURE{fond=formulaires/auteur_en_ligne}{en_ligne=#ENV{en_ligne}}>
+		</td><td class="text">
+		<input  type="text" name="id_asso"  value="#ENV{id_asso}" class="text" />
+		</td><td class="text">
+		<input  type="text" name="nom_famille"  value="#ENV{nom_famille}" class="text" />
+		</td><td class="text">
+		<input  type="text" name="prenom"  value="#ENV{prenom}" class="text" />
+		</td><td class="text">
+		<input  type="text" name="adresse"  value="#ENV{adresse}" class="text" />
+		</td><td class="text">
+		<input  type="text" name="code_postal"  value="#ENV{code_postal}" class="text" />
+		</td><td class="text">
+		<input  type="text" name="ville"  value="#ENV{ville}" class="text" />
+		</td><td class="text">
+		<input type="text" name="telephone"  value="#ENV{telephone}" class="text" />
+		</td><td class="text">
+		<input id="fax" type="text" name="fax"  value="#ENV{fax}" class="text" />
+		</td><td class="text">
+		<input  type="text" name="mobile"  value="#ENV{mobile}" class="text" />
+		</td><td class="text">
+		<input  type="text" name="commentaire"  value="#ENV{commentaire}" class="text" /></td>
+		<td class="text">
+		<select name="statut_interne"  class="forml">
+			<option value="#ENV{statut_interne}"  selected="selected">[(#ENV{statut_interne}|=={ok}|?{À jour,[(#ENV{statut_interne}|=={echu}|?{À relancer (échu),[(#ENV{statut_interne}|=={relance}|?{Relancé,[(#ENV{statut_interne}|=={sorti}|?{Désactivé,[(#ENV{statut_interne}|=={prospect}|?{Prospect (nouveau),'Nothing'})]})]})]})]})]</option>
+			<option value="" >Nothing</option>
+			<option value="ok">À jour</option>
+			<option value="echu" >À relancer (échu)</option>
+			<option value="relance" >Relancé</option> 
+			<option value="sorti" >Désactivé</option>
+			<option value="prospect" >Prospect (nouveau)</option> 
+		</select>
+		</td><td class="text">
+		<INCLURE{fond=formulaires/auteur_creation}{creation=#ENV{creation}}>
+		</td><td class="text">
+		<INCLURE{fond=formulaires/auteur_validite}{validite=#ENV{validite}}>
+		</td><td class="text">
+		<input  type="text" name="categorie"  value="#ENV{categorie}" class="text" />
+		</td><td class="text">
+		<select name="partage"  class="forml">
+			<option value="#ENV{partage}"  selected="selected">[(#ENV{partage}|=={partage}|?{Traité,[(#ENV{partage}|=={attente}|?{Soumis,[(#ENV{partage}|=={introuvable}|?{Introuvable,[(#ENV{partage}|=={envoyer}|?{Re&ccedil;oit bulletin,'Nothing'})]})]})]})]</option>
+			<option value="" >Nothing</option>
+			<option value="envoyer" >Re&ccedil;oit bulletin</option>
+			<option value="partage" >Traité</option>
+			<option value="attente" >Soumis</option>
+			<option value="introuvable" >Introuvable</option>
+		</select>
+		</td><td class="text">
+		<input  type="text" name="partagedonne"  value="#ENV{partagedonne}" class="text" />
+		</td><td class="text">
+		<select name="statut_provisoire" id="statut_provisoire" class="forml">
+			<option value="#ENV{statut_provisoire}"  selected="selected">[(#ENV{statut_provisoire}|=={oui}|?{À traiter,[(#ENV{statut_provisoire}|=={actualise}|?{Actualisé,[(#ENV{statut_provisoire}|=={enregistre}|?{Enregistré,'Nothing'})]})]})]</option><option value="" >Nothing</option>
+			<option value="oui">Oui</option>
+			<option value="actualise">Actualisé</option>
+			<option value="enregistre">Enregistré</option>
+		</select>
+		</td><td class="text">
+		<input id="montant" type="text" name="montant"  value="#ENV{montant}" class="text" />
+		</td><td class="text">
+		<INCLURE{fond=formulaires/auteur_date}{date_paiement=#ENV{date_paiement}}>
+		</td><td class="text">
+		<select name="benevole" id="benevole" class="forml">
+			[<option value="#ENV{benevole}"  selected="selected">(#ENV{benevole})</option>]
+			<option value="" >Nothing</option>
+			<option value="ok" >ok</option>
+		</select>
+		</td>
+	<tr>
+		<td></td>
+		<td><strong><:requete:></strong></td>
+		<td><strong><:actions_requetes:></strong><br/></td>
+		<td colspan="2"><strong><:actions_autres:></strong><br/></td>
+
+	</tr>
+    	<tr>
+		<td></td>
+		<td>
+			<input type="submit" name="submit" class="spip_bouton" value="<:valider:>"/><br/>
+			<label for="affichage"><:affichage:></label>
+			<div>
+				<input id="affichage" type="text" name="affichage"  value="#ENV{affichage,30}" size="5" />
+			</div>
+	
+			<label for="defaut"><:requete_defaut:></label>
+			<div>
+				<input id="defaut" type="checkbox" name="defaut"  value="defaut" class="checkbox" [(#ENV{defaut}|?{checked="checked",''})]/>
+			</div>
+	
+			<label for="defaut"><:trie_par:></label>
+			
+			[(#ENV{critere}|=={id_auteur}|?{#SET{nom,<:id_auteur:>},''})]
+			[(#ENV{critere}|=={id_asso}|?{#SET{nom,<:id_asso:>},''})]
+			[(#ENV{critere}|=={nom_famille}|?{#SET{nom,<:nom_famille:>},''})]
+			[(#ENV{critere}|=={prenom}|?{#SET{nom,<:prenom:>},''})]
+			[(#ENV{critere}|=={adresse}|?{#SET{nom,<:adresse:>},''})]
+			[(#ENV{critere}|=={code_postal}|?{#SET{nom,<:code_postale:>},''})]
+			[(#ENV{critere}|=={ville}|?{#SET{nom,<:ville:>},''})]
+			[(#ENV{critere}|=={telephone}|?{#SET{nom,<:telephone:>},''})]
+			[(#ENV{critere}|=={fax}|?{#SET{nom,<:fax:>},''})]
+			[(#ENV{critere}|=={mobile}|?{#SET{nom,<:mobile:>},''})]
+			[(#ENV{critere}|=={commentaire}|?{#SET{nom,<:commentaire:>},''})]
+			[(#ENV{critere}|=={statut_interne}|?{#SET{nom,<:statut_interne:>},''})]
+			[(#ENV{critere}|=={creation}|?{#SET{nom,<:creation:>},''})]
+			[(#ENV{critere}|=={validite}|?{#SET{nom,<:validite:>},''})]
+			[(#ENV{critere}|=={categorie}|?{#SET{nom,<:categorie:>},''})]
+			[(#ENV{critere}|=={partage}|?{#SET{nom,<:partage:>},''})]
+			[(#ENV{critere}|=={partagedonne}|?{#SET{nom,<:partagedonne:>},''})]
+			[(#ENV{critere}|=={statut_provisoire}|?{#SET{nom,<:statut_provisoire:>},''})]
+			[(#ENV{critere}|=={montant}|?{#SET{nom,<:montant:>},''})]
+			[(#ENV{critere}|=={date_paiement}|?{#SET{nom,<:date_paiement:>},''})]
+			[(#ENV{critere}|=={benevole}|?{#SET{nom,<:benevole:>},''})]
+	
+			<div>
+				<select name="critere" class="forml">
+					[(#ENV{sel_id_auteur}|?{<option value="id_auteur"[ (#ENV{critere}|=={id_auteur}|oui)selected="selected")]><:id_auteur:></option>,''})]
+					[(#ENV{sel_id_asso}|?{<option value="id_asso"[ (#ENV{critere}|=={id_asso}|oui)selected="selected")]><:id_asso:></option>,''})]
+					[(#ENV{sel_nom_famille}|?{<option value="nom_famille"[ (#ENV{critere}|=={nom_famille}|oui)selected="selected")]><:nom_famille:></option>,''})]
+					[(#ENV{sel_prenom}|?{<option value="prenom"[ (#ENV{critere}|=={prenom}|oui)selected="selected")]><:prenom:></option>,''})]
+					[(#ENV{sel_adresse}|?{<option value="adresse"[ (#ENV{critere}|=={adresse}|oui)selected="selected")]><:adresse:></option>,''})]
+					[(#ENV{sel_code_postal}|?{<option value="code_postal" [ (#ENV{critere}|=={adresse}|oui)selected="code_postal")]><:code_postale:></option>,''})]
+					[(#ENV{sel_ville}|?{<option value="ville"[ (#ENV{critere}|=={ville}|oui)selected="selected")]><:ville:></option>,''})]
+					[(#ENV{sel_telephone}|?{<option value="telephone"[ (#ENV{critere}|=={telephone}|oui)selected="selected")]><:telephone:></option>,''})]
+					[(#ENV{sel_fax}|?{<option value="fax"[ (#ENV{critere}|=={fax}|oui)selected="selected")]><:fax:></option>,''})]
+					[(#ENV{sel_mobile}|?{<option value="mobile"[ (#ENV{critere}|=={mobile}|oui)selected="selected")]><:mobile:></option>,''})]
+					[(#ENV{sel_commentaire}|?{<option value="commentaire"[ (#ENV{critere}|=={commentaire}|oui)selected="selected")]><:commentaire:></option>,''})]
+					[(#ENV{sel_statut_interne}|?{<option value="statut_interne" [ (#ENV{critere}|=={statut_interne}|oui)selected="selected")]><:statut_interne:></option>,''})]
+					[(#ENV{sel_creation}|?{<option value="creation"[ (#ENV{critere}|=={creation}|oui)selected="selected")]><:creation:></option>,''})]
+					[(#ENV{sel_validite}|?{<option value="validite"[ (#ENV{critere}|=={validite}|oui)selected="selected")]><:validite:></option>,''})]
+					[(#ENV{sel_categorie}|?{<option value="categorie"[ (#ENV{critere}|=={categorie}|oui)selected="selected")]><:categorie:></option>,''})]
+					[(#ENV{sel_partage}|?{<option value="partage"[ (#ENV{critere}|=={partage}|oui)selected="selected")]><:partage:></option>,''})]
+					[(#ENV{sel_partagedonne}|?{<option value="partagedonne"[ (#ENV{critere}|=={partagedonne}|oui)selected="selected")]><:partagedonne:> </option>,''})]
+					[(#ENV{sel_statut_provisoire}|?{<option value="statut_provisoire"[ (#ENV{critere}|=={statut_provisoire}|oui)selected="selected")]><:statut_provisoire:></option>,''})]
+					[(#ENV{sel_montant}|?{<option value="montant"[ (#ENV{critere}|=={montant}|oui)selected="selected")]><:montant:></option>,''})]
+					[(#ENV{sel_date_paiement}|?{<option value="date_paiement" [ (#ENV{critere}|=={date_paiement}|oui)selected="selected")]><:date_paiement:></option>,''})]
+					[(#ENV{sel_benevole}|?{<option value="benevole"[ (#ENV{critere}|=={benevole}|oui)selected="selected")]><:benevole:></option>,''})]
+				</select>
+			</div>
+			
+		</td>
+		<td>
+		<BOUCLE_req(spip_requetes){id_requete}>
+		#SET{nom_requete,#NOM_REQUETE}
+		</BOUCLE_req>
+		[(#ENV{valider}|!={'rien'}|oui)
+		
+			<label for="nom_requete">Name</label><br/>
+			<input type="hidden" name="id_requete" class="forml" value="[(#ENV{id_requete})]"/>
+			<input type="text" name="nom_requete" class="forml" value="[(#ENV{nom_requete})]"/><br/>
+			
+			[(#ENV{requete}|oui)<input type="submit" name="modify" class="spip_bouton" value="<:modify:>"/>]
+	
+			[(#ENV{save}|oui)<input type="submit" name="modify" class="spip_bouton" value="<:modify:>"/>]
+	
+			[(#ENV{modify}|oui)<input type="submit" name="modify" class="spip_bouton" value="<:modify:>"/>]
+			
+			[(#ENV{modify}|non)
+				[(#ENV{id_requete}|non)<input type="submit" name="[(#ENV{save}|?{'save_as','save'})]" class="spip_bouton" value="[(#ENV{save}|?{<:save_as:>,<:save:>})]"/>]
+				]
+			]
+
+			
+		[(#ENV{save_as}|non)
+			[(#ENV{requete}|oui)
+			<input type="hidden" name="id_requete" class="forml" value="[(#ENV{id_requete})]"/>
+			<input type="submit" name="[(#ENV{valider}|!={'ok'}|?{'save_as','save'})]" class="spip_bouton" value="[(#ENV{valider}|!={'ok'}|?{<:save_as:>,<:save:>})]"/>]
+			]
+
+	
+		[(#ENV{save_as}|oui)
+		<label for="nom_requete">Name</label>
+		<input type="submit" name="save" class="spip_bouton" value="<:save:>"/>
+		]
+	</td>
+		<td colspan="2" >
+	
+		<input type="submit" name="envoi_email" class="spip_bouton" value="Email"/>
+		<BOUCLE_requete_def(spip_requetes){defaut=defaut} {type=etiquettes}>
+		#AFFICHAGE
+		[(#SELECTION|replace{nom_requete,'nom_requete_etiquete'}|replace{name="type",'name="type_etiquettes"'})]
+		</BOUCLE_requete_def>
+		<input type="submit" name="editer_labels" class="spip_bouton" value="<:etiquettes:>"/>
+		<a href="ecrire/?exec=ajouter_adherent" title="<:inscription2:ajouter_adherent:>"><img src="#CHEMIN{images/adherent.png}" alt="<:inscription2:ajouter_adherent:>" align="middle"/></a>
+		</td>
+	</tr>
+</tbody>
+</table>
+</form>
+</div>
+
+<INCLURE{fond=formulaires/affichage_membres_choix_requetes}{env}/>

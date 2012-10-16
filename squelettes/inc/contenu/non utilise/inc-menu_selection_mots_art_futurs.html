@@ -1,0 +1,31 @@
+#CACHE{24*3600*7} 
+[(#REM) Menu selection pour les mots clés atachés à l'article et qui ne sont pas des pays ou regions]
+<BOUCLE_rub_sel(RUBRIQUES){id_mot=#ENV{id_mot_rub}}{tout}>
+			<BOUCLE_ev_sel(EVENEMENTS){id_rubrique}{id_evenement_source=0}{age<=0}>
+			<BOUCLE_art_sel(MOTS){id_article}{id_groupe}> #SET{limiteur,1}  </BOUCLE_art_sel>#SET{limiteur,0}<//B_art_sel>
+			</BOUCLE_ev_sel>
+</BOUCLE_rub_sel>
+
+<BOUCLE_tete(RUBRIQUES){id_rubrique}{0,#GET{limiteur}}{tout}>
+	<select id="menu#ID_GROUPE" class="forml"
+			onchange="go#ID_GROUPE()">
+		<BOUCLE_pays(MOTS){id_groupe}{id_mot=#ENV{id_mot}}>
+<option selected="selected" value="">#TITRE</option>
+</BOUCLE_pays>
+<BOUCLE_groupe(GROUPES_MOTS){id_groupe}><option selected="selected" value="">#TITRE</option></BOUCLE_groupe><//B_pays>
+</BOUCLE_tete>
+
+<BOUCLE_rub(RUBRIQUES){id_mot=#ENV{id_mot_rub}}>#SET{url,#URL_RUBRIQUE}
+
+		<BOUCLE_art(ARTICLES){id_rubrique}{origine_traduction}>
+			<BOUCLE_ev(EVENEMENTS){id_article}{id_evenement_source=0}{age<=0}>
+				<B_mots_art>
+				<BOUCLE_mots_art(MOTS){id_groupe}{id_article}{par titre}{exclus}>
+					[<option value="[(#GET{url}|parametre_url{id_mot,#ID_MOT}|parametre_url{lang,#ENV{lang}}|parametre_url{voir,#ENV{voir}})]">(#TITRE|unique)</option>]
+				</BOUCLE_mots_art>
+			</BOUCLE_ev>
+		</BOUCLE_art>
+
+
+</BOUCLE_rub>
+[(#GET{limiteur}|=={1}|?{'</select>',''})]

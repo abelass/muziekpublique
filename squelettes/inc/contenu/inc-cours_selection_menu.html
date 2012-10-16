@@ -1,0 +1,40 @@
+#SET{id_rub,#ARRAY{}}
+#SET{date,#DATE}
+<BOUCLE_rub(RUBRIQUES){id_trad=40}>
+	#SET{id_rub,#GET{id_rub}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_RUBRIQUE}}}
+</BOUCLE_rub> 
+
+[(#REM)Création du formulaire des jours en deux pas pour assurer que les jours de la semaine sont bien dans l'ordre]
+
+[(#REM)On sort d'abord les jours de la semaine ou il y a des cours actifs]
+#SET{jours,#ARRAY}
+<BOUCLE_jours_prep(EVENEMENTS){id_rubrique IN #GET{id_rub}}{date_fin>=#GET{date}}{par date_debut}>
+ 	[(#DATE_DEBUT|nom_jour|unique|oui)#SET{jours,#GET{jours}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#DATE_DEBUT|affdate{w}}}}]	
+</BOUCLE_jours_prep>
+
+ <div class="Filter">
+<form action='' method='post'>
+[(#REM)On crée le formulaire des jours de la semaine trié par jour de la semaine]
+<B_form_jours>
+	<select SIZE=1 ONCHANGE="window.open(this.options[this.selectedIndex].value,'_top')">
+		<option value=""><:select_jour:></option>
+		<option value="#URL_RUBRIQUE"><:all:></option>	
+	<BOUCLE_form_jours(POUR){tableau #GET{jours}}{par valeur}>
+		[(#REM) Eviter la valeur 0 pour le dimanche]
+		#SET{val_jour,#VALEUR}
+		[(#VALEUR|=={0}|oui)#SET{val_jour,d}]
+	<option value="[(#URL_PAGE{rubrique}|parametre_url{id_rubrique,#ENV{id_rubrique}}|parametre_url{id_rubrique,#ENV{id_rubrique}}|parametre_url{jour,#GET{val_jour}})]"[ (#ENV{jour}|=={#GET{val_jour}}|oui) selected="selected"]>[(#EVAL{date('Y-m-d', strtotime("2011W02#VALEUR"))}|nom_jour)]</option>
+	</BOUCLE_form_jours>
+	</select>
+</B_form_jours>
+
+	<select SIZE=1 ONCHANGE="window.open(this.options[this.selectedIndex].value,'_top')">
+		<option value=""><:select_cours:></option>
+		<option value="[(#URL_PAGE{rubrique}|parametre_url{id_rubrique,#ENV{id_rubrique}})]"><:all:></option>			
+ 		 <BOUCLE_ev(EVENEMENTS articles){id_rubrique IN 27,1,40}{par  spip_articles.titre}{date_fin>=#GET{date}}{id_evenement_source=0}>
+ 			 [<option value="[(#URL_PAGE{rubrique}|parametre_url{id_rubrique,#ENV{id_rubrique}}|parametre_url{id_article,#ID_ARTICLE}|parametre_url{id_evenement,#ID_EVENEMENT})]" [(#ENV{id_evenement}|=={#ID_EVENEMENT}|oui) selected="selected"]>(#ID_ARTICLE|nom_article|unique)</option>]
+		</BOUCLE_ev>
+
+	</select>
+</form>
+</div>

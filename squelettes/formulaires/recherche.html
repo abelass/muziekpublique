@@ -1,0 +1,9 @@
+<form action="[(#ENV{action})]" method="get">
+	[(#ENV{action}|form_hidden)]
+	<span><:info_rechercher_02:></span>
+	[<input type="hidden" name="lang" value="(#ENV{lang})" />]
+
+	<input type="text" class="text" size="10" name="recherche" id="recherche"[ value="(#ENV{recherche})"] accesskey="4" />
+</form>
+
+

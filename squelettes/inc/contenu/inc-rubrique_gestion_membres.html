@@ -1,0 +1,27 @@
+#CACHE{7*24*3600}
+[(#ENV{comparer}|non)
+	[(#ENV{save}|oui)<INCLURE{fond=inc/inc-save_request}{env}>]
+
+	[(#ENV{modify}|oui)<INCLURE{fond=inc/inc-save_request}{env}>]
+
+	[(#ENV{delete}|oui)<INCLURE{fond=inc/inc-save_request}{env}>]
+
+	[(#ENV{envoi_email}|=={'Email'}|oui) <INCLURE{fond=formulaires/envoi_email}{env}>]
+
+	[(#ENV{editer_labels}|!={''}|oui) <INCLURE{fond=formulaires/editer_labels}{env}>]
+
+
+	[(#ENV{editer_labels}|non)
+		[(#ENV{envoi_email}|!=={'Email'}|oui)
+			<INCLURE{fond=formulaires/affichage_membres}{env}>
+
+			<INCLURE{fond=inc/contenu/inc-table_auteurs}{env}{ajax}>
+			]
+		]
+	]
+
+[(#ENV{comparer}|=={'provisoire'}oui)<INCLURE{fond=inc/contenu/inc-rubrique_gestion_provisoire_tout}{id_auteur=#ENV{id_auteur}}{url_retour=#ENV{url_retour}}>]
+
+[(#ENV{comparer}|=={'partage'}|oui)<INCLURE{fond=inc/contenu/inc-rubrique_gestion_partage_tout}{id_auteur=#ENV{id_auteur}}{url_retour=#ENV{url_retour}}>]
+
+[(#ENV{comparer}|=={'doublons'}|oui)<INCLURE{fond=inc/contenu/inc-rubrique_gestion_doublons_tout}{id_auteur=#ENV{id_auteur}}{url_retour=#ENV{url_retour}}>]

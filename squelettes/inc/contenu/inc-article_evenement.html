@@ -1,0 +1,85 @@
+#CACHE{24*3600}
+#SET{date,#DATE}
+<BOUCLE_ev(EVENEMENTS){id_article =#ENV{id_trad}}{id_evenement ?}{par date_debut}{0,1}>
+
+	#SET{prix,
+		#ARRAY{prix_membres,#PRIX_MEMBRES,prix_non_membres,#PRIX_NON_MEMBRES,prix_prevente_non_membres,#PRIX_PREVENTE_NON_MEMBRES,ext1,#PRIX_EXT_1_VALEUR,ext2,#PRIX_EXT_2_VALEUR,ext3,#PRIX_EXT_3_VALEUR}}
+	
+	#SET{montant,0}
+	<BOUCLE_prix(POUR){tableau #GET{prix}}>
+	#SET{montant,#GET{montant}|plus{#VALEUR}}
+	</BOUCLE_prix>
+	
+
+		[(#GET{montant}|=={0}|oui)#SET{type,gratuit}]
+		
+		[(#PRIX_MEMBRES|=={0}|oui)[(#GET{montant}|!={0}|oui)#SET{type,membregratuit}]]
+	
+
+<div class="Infos" id="infos">
+	<ul>
+		[(#CACHER_PRIX|non)
+		<li>[(#ENV{voir}|=={prix}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:prix:></a>,<a class="ajax" href="[(#SELF|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,prix})]"><:prix:></a>})]</li>
+		]
+		[(#DATE_FIN|>={#ENV{date}}|oui)
+			[(#CACHER_RESERVATION|non)
+				<li>[(#ENV{voir}|=={reservation}|?{<a class="ajax" href="[(#ENV{url_art}|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{id_art,#ENV{id_article}}|parametre_url{voir,rien}|parametre_url{lang,#ENV{lang}})]#infos"><:reservations:></a>,<a class="ajax" href="[(#ENV{url_art}|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{id_art,#ENV{id_article}}|parametre_url{voir,reservation}|parametre_url{type,#GET{type}}|parametre_url{lang,#ENV{lang}})]#infos"><:reservations:></a>})]</li>
+				]
+			]
+		<BOUCLE_documents_joints(DOCUMENTS) {id_article=#ID_TRAD} {extension IN flv,swf}{0,1}>
+			<li>[(#ENV{voir}|=={video}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:video:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,video})]"><:video:></a>})]</li>	
+		</BOUCLE_documents_joints>			
+	</ul>
+</div>
+<br class="nettoyeur" />
+[(#REM) Affiche les donn�es des evements attach� � l'article]
+</B_ev>
+
+
+	<BOUCLE_rub(RUBRIQUES){id_trad=42}{lang}{tout}>
+	#SET{url_membres,#URL_RUBRIQUE}
+	</BOUCLE_rub>
+
+	[(#DATE_FIN|>={#GET{date}}|?{ [(#SET{affichage,1})],#SET{affichage,0}})]
+
+
+	[(#ENV{voir}|=={prix}|oui)
+		[(#GET{montant}|!={0}|?{
+			[(#PRIX_MEMBRES|=={0}|?{
+				<p><a href="[(#GET{url_membres})]"><:membres_gratuit:></a></p>
+				<p><:carte_de_membre:> #PRIX_NON_MEMBRES EUR</p>
+				,
+				<p><:prix_membres:> #PRIX_MEMBRES &euro; </p>
+				[<p><:prix_non_membres:> (#PRIX_NON_MEMBRES) &euro;</p>]
+				[<p><:prix_prevente_non_membres:> (#PRIX_PREVENTE_NON_MEMBRES) &euro;</p>]
+				[<p>[(#PRIX_EXT_1_TITRE)]	(#PRIX_EXT_1_VALEUR) &euro;</p>]
+				[<p>[(#PRIX_EXT_2_TITRE)]	(#PRIX_EXT_2_VALEUR) &euro;</p>]
+				[<p>[(#PRIX_EXT_3_TITRE)]	(#PRIX_EXT_3_VALEUR) &euro;</p>]
+				}
+				)]
+			,<:gratuit:>})
+			[(#ARTICLE_27|non)<p class="art_27"><:article_27_legende:></p>]
+			]		
+		]		
+
+
+	[(#ENV{voir}|=={video}|oui)<INCLURE {fond=inc/contenu/inc-documents_video}{env}>]
+	
+	[(#ENV{voir}|=={reservation}|oui)
+		<div class="ajax">
+		[(#REM) [(#SESSION|non)
+			[(#FORMULAIRE_LOGIN{
+				[(#URL_ARTICLE{#ENV{id_article}}|parametre_url{id_evenement,#ENV{id_evenement}}|parametre_url{voir,reservation}|parametre_url{lang,#ENV{lang}})]#inscription_activite
+				})]
+			]]
+			#FORMULAIRE_INSCRIPTION_CONCERT{#ID_EVENEMENT}
+		</div>
+		]
+
+</BOUCLE_ev>
+
+	<BOUCLE_ev_alter(EVENEMENTS){id_article=#ENV{id_trad}}{0,1}>
+		<INCLURE{fond=inc/contenu/inc-article_evenement}{env}{id_evenement}{ajax}{self}{session}>
+	</BOUCLE_ev_alter>
+
+<//B_ev>

@@ -1,0 +1,80 @@
+#CACHE{3750*24}
+[(#REM) Portfolio : cherche tous les images des articles lié par traduction]
+
+#SET{url_rub,#URL_RUBRIQUE}
+[(#ENV{auteur}|=={''}|?{#SET{limiteur,1},[(#ENV{id_groupe}|=={20}|?{#SET{limiteur,1},#SET{limiteur,50}})]})]
+
+
+<B_art_menu>
+<div class="plat">
+	<ul>
+<BOUCLE_art_menu(ARTICLES){!par date}>
+		<B_documents_portfolio_menu>
+	[(#ENV{annee}|!=={[(#DATE|annee)]}|?{[<li><a href="[(#SELF|parametre_url{annee,[(#DATE|annee)]})]">(#DATE|annee|unique)</a></li>],[<li>(#DATE|annee|unique)</li>]})]
+		<BOUCLE_documents_portfolio_menu(DOCUMENTS) {id_article}{mode=document} {id_mot ?}{par num titre, date} {type IN video,gallerie}{0,1}>
+		</BOUCLE_documents_portfolio_menu>
+</BOUCLE_art_menu>
+	</ul>
+</div>
+</B_art_menu>
+
+
+
+<BOUCLE_art_menu2(ARTICLES){par date}>
+		<B_documents_portfolio_menu2>
+#SET{annee,(#DATE|annee)}
+		<BOUCLE_documents_portfolio_menu2(DOCUMENTS) {id_article} {auteur ?}{mode=document} {par num titre, date}  {type IN video,gallerie} {0,1}>
+		</BOUCLE_documents_portfolio_menu2>
+</BOUCLE_art_menu2>
+
+
+<B_art_photos_date>
+<h2>#ENV{annee,#GET{annee}}</h2>
+<div class="documents_portfolio id_mot#ENV{id_mot}">
+<BOUCLE_art_photos_date (ARTICLES){annee=#ENV{annee,#GET{annee}}}  {!par date}>
+	<B_art_photos>
+	[<h2>(#DATE|annee|unique)</h2>]
+	<BOUCLE_art_photos(ARTICLES) {annee_relatif}{!par date}>
+	[(#REM) Portfolio : album d'images des photos officiels -> avec mot clÃ© auteur]
+		<B_documents_portfolio>
+		<div class="photos media">
+		<BOUCLE_rub(RUBRIQUES){id_rubrique}{id_groupe IN 23}>
+		[<h2>(#TITRE|unique)</h2>] 
+		</BOUCLE_rub>
+		[(#ENV{id_groupe}|!=={20}|?{[(#ENV{id_groupe}|!=={''}|?{[<h2>(#TITRE|unique)</h2>],[<h2>(#TITRE|unique|couper{30})</h2>]})],[<h2>(#TITRE|unique|couper{30})</h2>]})]
+		<//B_rub>
+		<BOUCLE_documents_portfolio(DOCUMENTS) {id_article} {auteur ?}{mode=document} {par num titre, date}  {type IN video,gallerie}{doublons afficher}{0,#GET{limiteur}}>
+[(#TYPE_DOCUMENT|=={'Flash'}|?{[(#EMBED_DOCUMENT|image_reduire{200})]<br class="nettoyeur" > </br>,
+						[(#TYPE_DOCUMENT|=={'MP3'}|?{[(#MODELE{doc_player}{align=left})]<br class="nettoyeur" > </br>,<a [(#ENV{sel}|=={1000}|?{href="#URL_DOCUMENT" type="#MIME_TYPE"  onclick="location.href='[(#URL_ARTICLE
+		|parametre_url{id_document,#ID_DOCUMENT}
+		)]#documents_portfolio';return false;",href="[(#GET{url_rub}|parametre_url{id_art,#ID_ARTICLE}|parametre_url{sel,1000})]"})][ class="(#EXPOSER)"][ title="(#TITRE|attribut_html|couper{80})"]>[(#FICHIER|image_reduire_recadre{200,200}|inserer_attribut{class,spip_logos}|inserer_attribut{alt,[(#TITRE|attribut_html|couper{80})]})]</a>})]})]
+
+			<BOUCLE_mots(MOTS){id_mot=#AUTEUR}>
+			<small>© #TITRE</small>
+			</BOUCLE_mots>
+
+		</BOUCLE_documents_portfolio>
+<br/> [(#DATE|affdate)]
+		</div>
+		</B_documents_portfolio>
+	</BOUCLE_art_photos>
+	<br class="nettoyeur" />
+	</B_art_photos>
+</BOUCLE_art_photos_date>
+</div>
+</B_art_photos_date>
+
+[(#REM)
+	Afficher en grand le document demande dans l'URL
+]
+<BOUCLE_afficher_document(DOCUMENTS) {id_document} {mode=document}{extension IN png,jpg,gif}>
+<div class="spip_documents spip_documents_center" id="document_actif">
+	[(#EMBED_DOCUMENT|image_reduire{500,0})]
+	[<div class="#EDIT{titre} spip_doc_titre">(#TITRE)</div>]
+	[<div class="#EDIT{descriptif} spip_doc_descriptif">(#DESCRIPTIF)</div>]
+</div>
+</BOUCLE_afficher_document>
+
+
+
+

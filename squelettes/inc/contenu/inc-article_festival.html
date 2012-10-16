@@ -1,0 +1,15 @@
+#CACHE{24*3600}
+#SET{date,#DATE}
+<div class="ajax">
+#FORMULAIRE_INSCRIPTION_FESTIVAL{#ID_TRAD}
+</div>
+ <B_plan>
+<div class="plan_festival">
+	 <h3><:plan_festival:></h3>
+ <BOUCLE_plan(DOCUMENTS){id_article=#ID_TRAD}{tout}{titre LIKE Plan}>
+	 <a class="nyroceros" href="[(#URL_DOCUMENT)]">[(#FICHIER|image_reduire{455})]</a>
+</BOUCLE_plan> 
+	</div> 
+</B_plan>
+
+

@@ -1,0 +1,20 @@
+#CACHE{24*3600}
+
+<BOUCLE_ev(EVENEMENTS){id_evenement}>
+	<div class="ev_corp">
+		[(#DATE_DEBUT|nom_jour)] : [(#DATE_DEBUT|heures)]h[(#DATE_DEBUT|minutes)]
+		
+		<BOUCLE_mots_groupe(MOTS){id_evenement}{id_groupe!=14}>
+			<B_mots_titre>
+				<div>
+					<BOUCLE_titre_groupe(GROUPES_MOTS){id_groupe}>
+						<b>#TITRE :</b>
+					</BOUCLE_titre_groupe>
+					<BOUCLE_mots_titre(MOTS){id_groupe}{id_evenement}{doublons}{', '}>#TITRE[, (#DESCRIPTIF)]</BOUCLE_mots_titre>
+				</div>
+			</B_mots_titre>
+		</BOUCLE_mots_groupe>
+		
+	</div>
+
+</BOUCLE_ev>

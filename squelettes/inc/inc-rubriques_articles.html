@@ -1,0 +1,9 @@
+#CACHE{7*3600*24}
+<B_art_ev>
+	<ul>
+		<BOUCLE_art_ev(ARTICLES){id_rubrique}>
+			<li>
+<a href="[(#URL_RUBRIQUE|parametre_url{id_article,#ID_ARTICLE}|parametre_url{lang,#LANG})]" [(#ID_ARTICLE|=={#ENV{id_article}}|?{'class="on"',''})]> [(#TITRE|couper{80})]</a></li>
+			</BOUCLE_art_ev>
+		</ul>
+</B_art_ev>

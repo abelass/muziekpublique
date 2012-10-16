@@ -1,0 +1,16 @@
+#CACHE{0}
+<BOUCLE_rubrique(RUBRIQUES){id_mot=193}{lang}{tout}>
+#SET{url_membres,#URL_RUBRIQUE}
+</BOUCLE_rubrique>
+				
+<div style="text-align: center; width: 400px; margin: 0 auto; padding: 2em 0;">
+														
+	<div class="formulaire_spip formulaire_login">       
+	#LOGIN_PUBLIC					
+	[(#SESSION{id_auteur}||?{'',' '})<p style="text-align: center;">
+	&#91;<a href="#URL_PAGE{spip_pass}" target="spip_pass" onclick="javascript:window.open(this.href, 'spip_pass', 'scrollbars=yes, resizable=yes, width=480, height=330'); return false;"><:login_motpasseoublie:></a>&#93;
+	&#91;[(#ENV{id_evenement}|!=={''}|?{' ',''})<a href="spip.php?page=commander&amp;inscription=provisoire&amp;id_evenement=#ENV{id_evenement}&amp;membre=ok"><:membre_souviens_rien:></a>]
+	[(#ENV{id_evenement}|=={''}|?{' ',''})<a href="[(#GET{url_membres}|parametre_url{inscription,provisoire}|parametre_url{membre,ok})]"><:membre_souviens_rien:></a>]&#93;
+	</p>]									
+	</div>
+</div>

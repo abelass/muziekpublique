@@ -1,0 +1,21 @@
+<B_activite_source>
+	<div>
+	Inscriptions pour tester
+	<ul>
+		[<li>(#PAGINJATION)</li>]
+	<BOUCLE_activite_source(spip_asso_activites){id_article}{id_activite_source=0}{pagination 5}>
+			<li><b>#NOM #PRENOM, prix: #MONTANT	</b>
+		<B_activites>
+			<ul>
+			<BOUCLE_activites(spip_asso_activites){id_activite_source=#ID_ACTIVITE}>
+				<li>
+					<BOUCLE_ev(EVENEMENTS){id_evenement}>#TITRE</BOUCLE_ev>, #HEURE
+				</li>
+			</BOUCLE_activites>
+			</ul>		
+		</B_activites>
+		</li>	
+	</BOUCLE_activite_source>
+	</ul>
+	</div>
+</B_activite_source>

@@ -1,0 +1,10 @@
+#CACHE{25*3600}
+<B_mots>
+	<ul>
+<BOUCLE_mots(MOTS) {par num titre,titre} {id_groupe}{id_mot !IN 239,257,259,260,264}>
+	<li>
+		<a href="[(#URL_RUBRIQUE|parametre_url{id_mot,#ID_MOT})]" [(#ID_MOT|=={#ENV{id_mot}}|?{'class="on"',''})] >#TITRE</a>
+	</li>
+</BOUCLE_mots>
+	</ul>
+</B_mots>

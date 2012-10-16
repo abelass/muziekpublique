@@ -1,0 +1,254 @@
+#CACHE{0}
+
+<?php 
+
+$type = "#ENV{type}";
+$nom_requete = "#ENV{nom_requete}";
+$id_requete = "#ENV{id_requete}";
+$defaut = "#ENV{defaut}";
+$save = "#ENV{save}";
+$modify = "#ENV{modify}";
+$url = "#ENV{url}";
+
+	if ($defaut){$req_defaut  = '<input	type="hidden"	name="defaut"	value="'.$defaut.'"/>';	};
+
+	if ($type =='membres') { 
+	$critere = "#ENV{critere}";
+	$affichage = "#ENV{affichage}";
+	$id_auteur = "#ENV{id_auteur}";
+	$nom = "#ENV{nom}";
+	$email = "#ENV{email}"; 
+	$nom_site = "#ENV{nom_site}";
+	$url_site = "#ENV{url_site}"; 
+	$id_asso = "#ENV{id_asso}";
+	$prenom = "#ENV{prenom}";
+	$code_postal = "#ENV{code_postal}";
+	$fax = "#ENV{fax}"; 
+	$mobile = "#ENV{mobile}";
+	$commentaire = "#ENV{commentaire}";
+	$validite = "#ENV{validite}";
+	$categorie = "#ENV{categorie}";
+	$partagedonnee = "#ENV{partagedonnee}";
+	$statut = "#ENV{statut}";
+	$maj = "#ENV{maj}";
+	$en_ligne = "#ENV{en_ligne}";
+	$nom_famille = "#ENV{nom_famille}";
+	$prenom = "#ENV{prenom}";
+	$adresse = "#ENV{adresse}";
+	$ville = "#ENV{ville}";
+	$telephone = "#ENV{telephone}";
+	$statut_interne = "#ENV{statut_interne}";
+	$creation = "#ENV{creation}";
+	$partage = "#ENV{partage}";
+	$validite = "#ENV{validite}";
+	$partagedonne = "#ENV{partagedonne}";
+	$statut_provisoire = "#ENV{statut_provisoire}";
+	$montant = "#ENV{montant}";
+	$benevole = "#ENV{benevole}";
+	$date_paiement = "#ENV{date_paiement}";
+	$sel_id_auteur = "#ENV{sel_id_auteur}";
+	$sel_nom = "#ENV{sel_nom}";
+	$sel_email = "#ENV{sel_email}"; 
+	$sel_nom_site = "#ENV{sel_nom_site}";
+	$sel_url_site = "#ENV{sel_url_site}"; 
+	$sel_statut = "#ENV{sel_statut}";
+	$sel_maj = "#ENV{sel_maj}";
+	$sel_en_ligne = "#ENV{sel_en_ligne}";
+	$sel_id_asso = "#ENV{sel_id_asso}";
+	$sel_prenom = "#ENV{sel_prenom}";
+	$sel_fax = "#ENV{sel_fax}";
+	$sel_mobile = "#ENV{sel_mobile}";
+	$sel_commentaire = "#ENV{sel_commentaire}";
+	$sel_categorie = "#ENV{sel_categorie}";
+	$sel_date_paiement = "#ENV{sel_date_paiement}";
+	$sel_nom_famille = "#ENV{sel_nom_famille}";
+	$sel_adresse = "#ENV{sel_adresse}";
+	$sel_ville = "#ENV{sel_ville}";
+	$sel_telephone = "#ENV{sel_telephone}";
+	$sel_statut_interne = "#ENV{sel_statut_interne}";
+	$sel_creation = "#ENV{sel_creation}";
+	$sel_partage = "#ENV{sel_partage}";
+	$sel_validite = "#ENV{sel_validite}";
+	$sel_partagedonne = "#ENV{sel_partagedonne}";
+	$sel_statut_provisoire = "#ENV{sel_statut_provisoire}";
+	$sel_montant = "#ENV{sel_montant}";
+	$sel_benevole = "#ENV{sel_benevole}";
+	$sel_code_postal = "#ENV{sel_code_postal}";
+
+		if ($id_auteur){	$req_id_auteur = '<input	type="hidden"	name="id_auteur"	value="'.$id_auteur.'"/>';};
+		if (	$nom 	){	$req_nom  = '<input	type="hidden"	name="nom"	value="'.$nom.'"/>';	};
+		if (	$email 	){	$req_email  = '<input	type="hidden"	name="email"	value="'.$email.'"/>';	};
+		if (	$nom_site 	){	$req_nom_site  = '<input	type="hidden"	name="nom_site"	value="'.$nom_site.'"/>';	};
+		if (	$url_site 	){	$req_url_site  = '<input	type="hidden"	name="url_site"	value="'.$url_site.'"/>';	};
+		if (	$id_asso 	){	$req_id_asso  = '<input	type="hidden"	name="id_asso"	value="'.$id_asso.'"/>';	};
+		if (	$prenom 	){	$req_prenom  = '<input	type="hidden"	name="prenom"	value="'.$prenom.'"/>';	};
+		if (	$code_postal 	){	$req_code_postal  = '<input	type="hidden"	name="code_postal"	value="'.$code_postal.'"/>';	};
+		if (	$fax 	){	$req_fax  = '<input	type="hidden"	name="fax"	value="'.$fax.'"/>';	};
+		if (	$mobile 	){	$req_mobile  = '<input	type="hidden"	name="mobile"	value="'.$mobile.'"/>';	};
+		if (	$commentaire 	){	$req_commentaire  = '<input	type="hidden"	name="commentaire"	value="'.$commentaire.'"/>';	};
+		if (	$categorie 	){	$req_categorie  = '<input	type="hidden"	name="categorie"	value="'.$categorie.'"/>';	};
+		if (	$statut 	){	$req_statut  = '<input	type="hidden"	name="statut"	value="'.$statut.'"/>';	};
+		if (	$maj 	){	$req_maj  = '<input	type="hidden"	name="maj"	value="'.$maj.'"/>';	};
+		if (	$en_ligne 	){	$req_en_ligne  = '<input	type="hidden"	name="en_ligne"	value="'.$en_ligne.'"/>';	};
+		if (	$nom_famille 	){	$req_nom_famille  = '<input	type="hidden"	name="nom_famille"	value="'.$nom_famille.'"/>';	};
+		if (	$adresse 	){	$req_adresse  = '<input	type="hidden"	name="adresse"	value="'.$adresse.'"/>';	};
+		if (	$ville 	){	$req_ville  = '<input	type="hidden"	name="ville"	value="'.$ville.'"/>';	};
+		if (	$telephone 	){	$req_telephone  = '<input	type="hidden"	name="telephone"	value="'.$telephone.'"/>';	};
+		if (	$statut_interne 	){	$req_statut_interne  = '<input	type="hidden"	name="statut_interne"	value="'.$statut_interne.'"/>';	};
+		if (	$creation 	){	$req_creation  = '<input	type="hidden"	name="creation"	value="'.$creation.'"/>';	};
+		if (	$partage 	){	$req_partage  = '<input	type="hidden"	name="partage"	value="'.$partage.'"/>';	};
+		if (	$validite 	){	$req_validite  = '<input	type="hidden"	name="validite"	value="'.$validite.'"/>';	};
+		if (	$partagedonne 	){	$req_partagedonne  = '<input	type="hidden"	name="partagedonne"	value="'.$partagedonne.'"/>';	};
+		if ($statut_provisoire ){$req_statut_provisoire  = '<input type="hidden" name="statut_provisoire" value="'.$statut_provisoire.'"/>';};
+		if (	$montant 	){	$req_montant  = '<input	type="hidden"	name="montant"	value="'.$montant.'"/>';};
+		if ($benevole){	$req_benevole  = '<input type="hidden"	name="benevole"	value="'.$benevole.'"/>';};
+		if (	$date_paiement 	){	$req_date_paiement  = '<input	type="hidden"	name="date_paiement"	value="'.$date_paiement.'"/>';	};
+		if ($critere){$req_critere  = '<input	type="hidden"	name="critere"	value="'.$critere.'"/>';	};
+		if ($affichage){$req_affichage  = '<input	type="hidden"	name="affichage"	value="'.$affichage.'"/>';	};
+		if ($sel_id_auteur){$req_sel_id_auteur  = '<input	type="hidden"	name="sel_id_auteur"	value="'.$sel_id_auteur.'"/>';};
+		if ($sel_nom ){$req_sel_nom  = '<input	type="hidden"	name="sel_nom"	value="'.$sel_nom.'"/>';};
+		if (	$sel_email 	){	$req_sel_email  = '<input	type="hidden"	name="sel_email"	value="'.$sel_email.'"/>';	};
+		if (	$sel_nom_site 	){	$req_sel_nom_site  = '<input	type="hidden"	name="sel_nom_site"	value="'.$sel_nom_site.'"/>';	};
+		if (	$sel_url_site 	){	$req_sel_url_site  = '<input	type="hidden"	name="sel_url_site"	value="'.$sel_url_site.'"/>';	};
+		if (	$sel_statut 	){	$req_sel_statut  = '<input	type="hidden"	name="sel_statut"	value="'.$sel_statut.'"/>';	};
+		if (	$sel_maj 	){	$req_sel_maj  = '<input	type="hidden"	name="sel_maj"	value="'.$sel_maj.'"/>';	};
+		if (	$sel_en_ligne 	){	$req_sel_en_ligne  = '<input	type="hidden"	name="sel_en_ligne"	value="'.$sel_en_ligne.'"/>';	};
+		if (	$sel_id_asso 	){	$req_sel_id_asso  = '<input	type="hidden"	name="sel_id_asso"	value="'.$sel_id_asso.'"/>';	};
+		if (	$sel_prenom 	){	$req_sel_prenom  = '<input	type="hidden"	name="sel_prenom"	value="'.$sel_prenom.'"/>';	};
+		if (	$sel_fax 	){	$req_sel_fax  = '<input	type="hidden"	name="sel_fax"	value="'.$sel_fax.'"/>';	};
+		if (	$sel_mobile 	){	$req_sel_mobile  = '<input	type="hidden"	name="sel_mobile"	value="'.$sel_mobile.'"/>';	};
+		if (	$sel_commentaire 	){	$req_sel_commentaire  = '<input	type="hidden"	name="sel_commentaire"	value="'.$sel_commentaire.'"/>';	};
+		if (	$sel_categorie 	){	$req_sel_categorie  = '<input	type="hidden"	name="sel_categorie"	value="'.$sel_categorie.'"/>';	};
+		if (	$sel_nom_famille 	){	$req_sel_nom_famille  = '<input	type="hidden"	name="sel_nom_famille"	value="'.$sel_nom_famille.'"/>';	};
+		if (	$sel_adresse 	){	$req_sel_adresse  = '<input	type="hidden"	name="sel_adresse"	value="'.$sel_adresse.'"/>';	};
+		if (	$sel_ville 	){	$req_sel_ville  = '<input	type="hidden"	name="sel_ville"	value="'.$sel_ville.'"/>';	};echo $data['id_requete'];
+		if (	$sel_telephone 	){	$req_sel_telephone  = '<input	type="hidden"	name="sel_telephone"	value="'.$sel_telephone.'"/>';	};
+		if (	$sel_statut_interne 	){	$req_sel_statut_interne  = '<input	type="hidden"	name="sel_statut_interne"	value="'.$sel_statut_interne.'"/>';	};
+		if (	$sel_creation 	){	$req_sel_creation  = '<input	type="hidden"	name="sel_creation"	value="'.$sel_creation.'"/>';	};
+		if (	$sel_partage 	){	$req_sel_partage  = '<input	type="hidden"	name="sel_partage"	value="'.$sel_partage.'"/>';	};
+		if (	$sel_validite 	){	$req_sel_validite  = '<input	type="hidden"	name="sel_validite"	value="'.$sel_validite.'"/>';	};
+		if (	$sel_partagedonne 	){	$req_sel_partagedonne  = '<input	type="hidden"	name="sel_partagedonne"	value="'.$sel_partagedonne.'"/>';	};
+		if (	$sel_statut_provisoire 	){	$req_sel_statut_provisoire  = '<input	type="hidden"	name="sel_statut_provisoire"	value="'.$sel_statut_provisoire.'"/>';	};
+		if (	$sel_montant 	){	$req_sel_montant  = '<input	type="hidden"	name="sel_montant"	value="'.$sel_montant.'"/>';	};
+		if (	$sel_benevole 	){	$req_sel_benevole  = '<input	type="hidden"	name="sel_benevole"	value="'.$sel_benevole.'"/>';	}
+		if (	$sel_date_paiement 	){	$req_sel_date_paiement  = '<input	type="hidden"	name="sel_date_paiement"	value="'.$sel_date.'"/>';	};
+		if (	$sel_code_postal 	){	$req_sel_code_postal  = '<input	type="hidden"	name="sel_code_postal"	value="'.$sel_code_postal.'"/>';	};		
+
+ // prepare les requetes
+
+	$request_affichage = $req_sel_id_auteur.$req_sel_nom .$req_sel_email.$req_sel_nom_site.$req_sel_url_site.$req_sel_statut.$req_sel_maj .$req_sel_en_ligne .$req_sel_id_asso .$req_sel_prenom .$req_sel_fax .$req_sel_mobile .$req_sel_commentaire .$req_sel_validite .$req_sel_categorie .$req_sel_partagedonne .$req_sel_datel .$req_sel_nom_famille .$req_sel_adresse .$req_sel_ville .$req_sel_telephone .$req_sel_statut_interne .$req_sel_creation .$req_sel_partage .$req_sel_validite .$req_sel_statut_provisoire .$req_sel_montant .$req_sel_date_paiement.$req_sel_code_postal.$req_sel_benevole ;
+
+	$request_selection = $req_id_auteur .$req_nom .$req_email .$req_nom_site .$req_url_site .$req_id_asso .$req_prenom .$req_code_postal .$req_fax .$req_mobile .$req_commentaire .$req_validite .$req_categorie .$req_partagedonnee.$req_statut .$req_maj .$req_en_ligne .$req_nom_famille .$req_prenom .$req_adresse .$req_ville .$req_telephone .$req_statut_interne .$req_creation .$req_partage .$req_validite .$req_partagedonne .$req_statut_provisoire .$req_montant .$req_defaut.$req_date_paiemenent.$req_critere.$req_affichage.$req_benevole ;
+	};
+
+
+	if ($type =='etiquettes'){
+	$nom_requete = "#ENV{nom_requete}";
+	$paper_size = "#ENV{paper_size}";
+	$marginLeft = "#ENV{marginLeft}";
+	$marginTop = "#ENV{marginTop}";
+	$NX = "#ENV{NX}";
+	$NY = "#ENV{NY}";
+	$SpaceX = "#ENV{SpaceX}";
+	$SpaceY = "#ENV{SpaceY}";
+	$width = "#ENV{width}";
+	$height = "#ENV{height}";
+	$metric = "#ENV{metric}";
+	$font_size = "#ENV{font_size}";
+                   if ($nom_requete){	$req_nom_requete = '<input	type="hidden"	name="nom_requete"	value="'.$nom_requete.'"/>';};
+                   if ($paper_size){$req_paper_size = '<input	type="hidden"	name="paper_size"	value="'.$paper_size.'"/>';};
+                   if ($marginLeft){	$req_marginLeft = '<input	type="hidden"	name="marginLeft"	value="'.$marginLeft.'"/>';};
+                   if ($marginTop){	$req_marginTop = '<input	type="hidden"	name="marginTop"	value="'.$marginTop.'"/>';};
+                   if ($NX){	$req_NX = '<input	type="hidden"	name="NX"	value="'.$NX.'"/>';};
+                   if ($NY){	$req_NY = '<input	type="hidden"	name="NY"	value="'.$NY.'"/>';};
+                  $req_SpaceX = '<input	type="hidden"	name="SpaceX"	value="'.$SpaceX.'"/>';
+                  $req_SpaceY = '<input	type="hidden"	name="SpaceY"	value="'.$SpaceY.'"/>';	
+                   if ($width){	$req_width = '<input	type="hidden"	name="width"	value="'.$width.'"/>';};
+                   if ($height){	$req_height = '<input	type="hidden"	name="height"	value="'.$height.'"/>';};
+                   if ($metric){	$req_metric = '<input	type="hidden"	name="metric"	value="'.$metric.'"/>';};
+                   if ($font_size){	$req_font_size = '<input	type="hidden"	name="font_size"	value="'.$font_size.'"/>';};
+                   if ($defaut){	$req_defaut = '<input	type="hidden"	name="defaut"	value="'.$defaut.'"/>';};
+
+ // prepare les requetes
+
+	$request_selection = $req_nom_requete.$req_paper_size.$req_marginLeft.$req_marginTop.$req_NX.$req_NY.$req_SpaceX.$req_SpaceY.$req_width.$req_height.$req_metric.$req_font_size.$req_defaut;
+};
+
+
+
+if (!$nom_requete) {
+		echo _T('indiquer_nom');
+		}
+else{
+	// enregistre la requete
+	
+		if ($save) {
+	
+				// si il s'agit d'une requete par defaut met l'ancien requete par defaut à 0
+		//		if ($defaut) {
+			
+		//			$query = spip_query( "SELECT * FROM spip_requetes WHERE defaut='defaut' AND type='$type' ");
+		//			while ($resultat = mysql_fetch_array ($query)){
+		//				$id_requete_sel = $resultat['id_requete'];
+		//				$request_selection_defaut =  str_replace("defaut", "", $resultat['selection']);
+		//				$defaut_change = '';
+		//				spip_query("UPDATE spip_requetes SET  selection="._q($request_selection_defaut).", defaut="._q($defaut_change)."  WHERE id_requete=".$id_requete_sel) ;
+		//				}
+					
+		//		};
+			
+			$sql = spip_query( "SELECT * FROM spip_requetes WHERE nom_requete ='$nom_requete' AND type ='$type' ");
+			
+			while ($data = mysql_fetch_array ($sql)){
+				$nom_requete_test = $data['nom_requete'];
+				$id_requete = $data['id_requete'];
+				}
+	
+			if (!$nom_requete_test) {
+	
+				// si il s'agit d'une requete par defaut met l'ancien requete par defaut à 0
+	
+				if ($defaut) {
+					$query = spip_query( "SELECT * FROM spip_requetes WHERE defaut='defaut' AND type='$type' ");
+					while ($resultat = mysql_fetch_array ($query)){
+						$id_requete_sel = $resultat['id_requete'];
+						$request_selection_defaut =  str_replace("defaut", "", $resultat['selection']);
+						$defaut_change = '';
+						spip_query("UPDATE spip_requetes SET  selection="._q($request_selection_defaut).", defaut="._q($defaut_change)."  WHERE id_requete=".$id_requete_sel) ;
+						}
+				
+					};
+	
+				spip_query ( " INSERT INTO spip_requetes (nom_requete, affichage, selection, type, defaut) VALUES ("._q($nom_requete).","._q($request_affichage).", "._q($request_selection).", "._q($type).", "._q($defaut).") ");
+				}
+			else {
+			echo _T('requete_existe_deja_changer_nom');
+				};
+			}
+	
+		// modifie la requete
+		elseif ($modify) {
+
+			if ($defaut) {
+		
+				$query = spip_query( "SELECT * FROM spip_requetes WHERE defaut='defaut' AND type='$type' ");
+				while ($resultat = mysql_fetch_array ($query)){
+					$id_requete_sel = $resultat['id_requete'];
+					$request_selection_defaut =  str_replace("defaut", "", $resultat['selection']);
+					$defaut_change = '';
+					spip_query("UPDATE spip_requetes SET  selection="._q($request_selection_defaut).", defaut="._q($defaut_change)."  WHERE id_requete=".$id_requete_sel) ;
+					}
+				
+				};
+
+		spip_query("UPDATE spip_requetes SET nom_requete="._q($nom_requete).", affichage="._q($request_affichage)." , selection="._q($request_selection)." , type="._q($type).", defaut="._q($defaut)."  WHERE id_requete=".$id_requete) ;
+
+		}; 
+	};
+
+// supprime la requete
+	if ($delete) {		
+		spip_query("DELETE FROM spip_requetes  WHERE id_requete =".$id_requete);
+		};
+
+?>

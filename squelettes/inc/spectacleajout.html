@@ -1,0 +1,141 @@
+<?
+// ************************************************************************************************
+// ************ Spectacles_ajout ******************************************************************
+// ************************************************************************************************
+
+	//----- Téléchargement de fichiers
+	require("chargerfichier.php");
+	$maxPhoto = 512000;	//--- 500 Ko taille maximum pour les fichiers image
+	$maxMulti = 5242880;	//--- 5 Mo taille maximum pour les fichiers multimedia
+
+	include('php/ediforme.php');
+
+	//----- Vérification du code donné par [.._ajout.php]
+	$sql = "SELECT IDcie FROM cie_membre WHERE id='$id' AND IDcie=$seln";
+	$req = mysql_query($sql) or die('Erreur SQL'); 
+	if (mysql_num_rows($req) == 0) {		//----- Redirection vers login
+		header("Location:login_com.php");
+		exit;
+	}
+
+	// compter le nombre de spectacles de cette compagnie
+	$sql = "SELECT count(*) AS nEnreg FROM cie_spect WHERE IDcie = $seln AND lng = 'F'"; 
+	$req = mysql_query($sql) or die('Erreur SQL'); 
+	if (! $data = mysql_fetch_array($req)) die('Erreur SQL: count(*)');
+	$nspect = $data['nEnreg'];
+	if ($nspect >= 3)		//----- déjà 3 spectacles
+		header('Location:Inscription,59');
+
+	// obtenir des infos sur la compagnie
+	$sql = "SELECT url, nformule FROM compagnies WHERE ID = $seln"; 
+	$req = mysql_query($sql) or die('Erreur SQL'); 
+	if (! $data = mysql_fetch_array($req)) die('Erreur: compagnie introuvable');
+	$dirPhoto = '_'.$data['url'].'/';
+	$secdType = ($data['nformule'] == 2 ? '2_multi' : '1_photo');
+
+	if (! isset($envoi)) $envoi = '';
+	if (! isset($titre)) $titre = '';
+	if (! isset($present)) $present = '';
+	$alerter = '';
+	$diriger = '';
+
+	//*************************************************************************
+	//***************************** Valider ***********************************
+	//*************************************************************************
+	if ($envoi == 'Valider') {
+		recupereredi('present');
+		if ($titre == '') {
+			if ($present or $premier['name'] or $second['name'])
+				$alerter = 'Veuillez compléter le champ Titre.';
+			else
+				header('Location:spip.php?article59');
+		}
+		else {
+			//------- Insérer le spectacle en DB
+			$sql = "INSERT INTO cie_spect (IDcie, titre, present, lng) VALUES ($seln, '$titre', '$present', 'F')";
+			$req = mysql_query($sql) or die('Erreur SQL');
+			
+			$spectacle = mysql_insert_id();
+
+			//------- Ajouter le 1er fichier photo en DB
+			if (! $alerter)
+				$premier = chargerFichier($premier['tmp_name'], $premier['name'], '', $premier['size'], '1_photo', $premier['error'], false, substr($premier['type'],0,5));
+			if (! $alerter && $premier) {
+				$sql = "SELECT ordre FROM cie_photo WHERE IDcie=$seln AND IDspe=$spectacle AND ordre=1 AND lng='F'";
+				$req = mysql_query($sql) or die('Erreur SQL');
+
+				if (! mysql_num_rows($req)) {
+					$sql = "INSERT INTO cie_photo (IDcie, IDspe, type, fichier, fichvign, special, ordre, lng) VALUES ($seln, $spectacle, '1_photo', '$premier[0]', '$premier[1]', '=5fo0', 1, 'F')";
+					$req = mysql_query($sql) or die('Erreur SQL');
+				}
+			}
+
+			//------- Ajouter le 2d fichier photo ou multimedia en DB
+			if (! $alerter)
+				$second = chargerFichier($second['tmp_name'], $second['name'], '', $second['size'], $secdType, $second['error'], false, substr($second['type'],0,5));
+			if (! $alerter && $second) {
+				$sql = "SELECT ordre FROM cie_photo WHERE IDcie=$seln AND IDspe=$spectacle AND ordre=2 AND lng='F'";
+				$req = mysql_query($sql) or die('Erreur SQL');
+
+				if (! mysql_num_rows($req)) {
+					$sql = "INSERT INTO cie_photo (IDcie, IDspe, type, fichier, fichvign, special, ordre, lng) VALUES ($seln, $spectacle, '$secdType', '$second[0]', '$second[1]', '=5fo0', 2, 'F')";
+					$req = mysql_query($sql) or die('Erreur SQL');
+				}
+			}
+			//----- Suite de l'inscription
+			$diriger = "-ajouter-spectacle-?id=$id&seln=$seln";
+		}
+	}
+	echo '<ul><li>Vous pouvez utiliser le formulaire suivant pour ajouter le spectacle&nbsp;<b>',$nspect+1,'</b>&nbsp;sur le site de Comedien.be.</li></ul><br />',"\n";
+
+	echo '<script language="javascript" type="text/javascript" src="php/ediforme.js"></script>',"\n";
+	echo '<form id="foinscr" action="-ajouter-spectacle-?id=',$id,'&amp;seln=',$seln,'" method="post" ENCTYPE="MULTIPART/FORM-DATA" onsubmit="enregistreredi();">',"\n";
+?>
+	<fieldset id="part0">
+                          <table border="0" cellspacing="0" class="tableform">
+                            <tr align="left" valign="top"> 
+                              <td class="normal"><label for="titre">Titre</label></td>
+                              <td class="normal">
+								<input name="titre" id="titre" type="text" class="champs2" size="50" value="<? echo htmlspecialchars(stripslashes($titre)); ?>" />
+                               </td>
+                            </tr>
+                            <tr align="left" valign="top"> 
+                              <td class="normal" colspan="2"><label for="txtedi0">Présentation du spectacle</label><br/>
+<?
+	ajoutertextedi('present', 'width:500px;height:120px;');
+?>
+                              </td>
+                            </tr>
+
+                            <tr> 
+                              <td width="90" class="normal"><label for="premier">Photo</label></td>
+                              <td>
+								<input name="premier" id="premier" type="file" class="champs2" size="40" />
+                              </td>
+                            </tr>
+                            <tr> 
+                              <td width="90" class="normal"><label for="second">
+<?
+                              if ($secdType == '2_multi') echo 'Son/vidéo'; else echo 'Photo';
+?>
+							  </label></td>
+                              <td>
+								<input name="second" id="second" type="file" class="champs2" size="40" />
+                              </td>
+                            </tr>
+
+                            <tr align="left" valign="top"> 
+                              <td colspan="2" align="center">
+                              		<input type="submit" value="Valider" class="bouton" name="envoi" /> 
+                              </td>
+                            </tr>
+                          </table>
+                        </fieldset></form>
+<script type="text/javascript">
+<!--
+<?
+	echo $alerter ? 'function pagechargee() { initialiseredi(); alert("'.$alerter.'"); ' : 'function pagechargee() { initialiseredi(); ';
+	echo isset($diriger) && $diriger ? 'window.location.href="'.$diriger.'"; }' : '}',"\n";
+?>
+//-->
+</script>

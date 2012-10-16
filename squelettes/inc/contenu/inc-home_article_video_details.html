@@ -1,0 +1,46 @@
+<BOUCLE_art(ARTICLES){id_article}>	
+	<BOUCLE_art1(ARTICLES){id_article}{lang}>
+	<div class="Item item_home">
+		<span class="Date">
+			<:video_du:> [(#DATE|affdate{'d/m/Y'})]
+		</span>
+		<h2><a href="[(#URL_ARTICLE})]">#TITRE</a></h2>
+		[<span class="Soustitre">(#SURTITRE)</span>]
+			<div class="Chapeau">
+			<a href="[(#URL_ARTICLE})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL|image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],[(#INCLURE{fond=inc/contenu/inc-logo_art}{id_article}{width=210}{height=140}{class=ChapeauImg})]})]</a>
+				<p class="ChapeauTxt"><:video_10_explicatif:></p>
+		</div>				
+		<span class="More"> >> <a href="[(#URL_ARTICLE)]"><:voir_video:></a></span>
+	</div>
+	</BOUCLE_art1>
+		<BOUCLE_art2(ARTICLES){traduction}{lang}>
+			<div class="Item item_home">
+				<span class="Date">
+					<:video_du:> [(#DATE|affdate{'d/m/Y'})]
+				</span>
+				<h2><a href="[(#URL_ARTICLE})]">#TITRE</a></h2>
+				[<span class="Soustitre">(#SURTITRE)</span>]
+					<div class="Chapeau">
+					<a href="[(#URL_ARTICLE})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL|image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],[(#INCLURE{fond=inc/contenu/inc-logo_art}{id_article}{width=210}{height=140}{class=ChapeauImg})]})]</a>
+						<p class="ChapeauTxt"><:video_10_explicatif:></p>
+				</div>				
+				<span class="More"> >> <a href="[(#URL_ARTICLE)]"><:voir_video:></a></span>
+			</div>
+	</BOUCLE_art2>
+		<BOUCLE_art3(ARTICLES){traduction}{origine_traduction}>
+			<div class="Item item_home">
+				<span class="Date">
+					<:video_du:> [(#DATE|affdate{'d/m/Y'})]
+				</span>
+				<h2><a href="[(#URL_ARTICLE})]">#TITRE</a></h2>
+				[<span class="Soustitre">(#SURTITRE)</span>]
+					<div class="Chapeau">
+					<a href="[(#URL_ARTICLE})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL|image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],[(#INCLURE{fond=inc/contenu/inc-logo_art}{id_article}{width=210}{height=140}{class=ChapeauImg})]})]</a>
+						<p class="ChapeauTxt"><:video_10_explicatif:></p>
+				</div>				
+				<span class="More"> >> <a href="[(#URL_ARTICLE)]"><:voir_video:></a></span>
+			</div>
+			</BOUCLE_art3>
+		<//B_art2>
+	<//B_art1>
+</BOUCLE_art>

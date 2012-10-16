@@ -1,0 +1,39 @@
+	<BOUCLE_art(ARTICLES){id_article}>
+		#SET{titre,#TITRE}
+		<BOUCLE_date(EVENEMENTS){id_article}{0,1}>
+		#SET{date,#DATE_DEBUT|affdate{d/m/Y}}
+		</BOUCLE_date>
+	</BOUCLE_art>
+		
+<:remercie_reservation_pour_le:> 
+
+<:vous_venez_reserver:>
+
+[(#MEMBRES|>{0}|oui)#MEMBRES <:place:> <:membres:> ([(#ENV{montant_membres})] Euro)]
+[(#NON_MEMBRES|>{0}|oui)#NON_MEMBRES <:place:> <:non_membres:> ([(#ENV{montant_non_membres})] Euro)]
+
+"[(#GET{titre})][ ((#GET{date}))]" 		
+<B_concerts>
+<:pour_concerts_suivants:>
+<BOUCLE_concerts(POUR){tableau #RESERVATIONS}><BOUCLE_eve(EVENEMENTS){id_evenement=#CLE}{0,1}>
+#TITRE : [(#VALEUR)]<BOUCLE_appart(MOTS){id_evenement}{id_groupe=26}{par titre}{0,1}>
+[(#DESCRIPTIF**|replace{'_',''}|extraire_multi)]</BOUCLE_appart></BOUCLE_eve>
+</BOUCLE_concerts>
+
+<:imprimer_plan:>
+ <BOUCLE_plan(DOCUMENTS){id_article}{tout}{titre LIKE Plan}>#URL_SITE_SPIP[/(#URL_DOCUMENT)]</BOUCLE_plan> 
+
+<:possibilites_paiements:>
+
+ 
+1) <:billeterie:>
+ 
+2) <:versement:>[(#REM) desactive
+
+3) <:billeterie_speciale:>]
+
+<:bien_a_vous:>
+	
+<:equipe_adresse:>
+ 
+

@@ -1,0 +1,73 @@
+#CACHE{3600*25}
+
+[(#REM) Portfolio : cherche tous les images des articles lié par traduction]
+
+<INCLURE{fond=inc/contenu/inc-form_upload_doc}{id_article} {id_form=1}>
+#SET{id_document,#ARRAY}
+	<BOUCLE_art_port(ARTICLES){id_article}>
+		<BOUCLE_art_trad_port(ARTICLES){traduction}{lang}>
+			<BOUCLE_docs(DOCUMENTS) {id_article}{tout}{extension IN png,jpg,gif,doc,pdf,odt}{logo_article<1}>
+				#SET_MERGE{id_document,#GET{id_document},#ARRAY{#COMPTEUR_BOUCLE,#ID_DOCUMENT}}
+			</BOUCLE_docs>
+				<BOUCLE_art_trad0(ARTICLES){traduction}{origine_traduction}>
+					<BOUCLE_docs_trad(DOCUMENTS) {id_article} {tout}{extension IN png,jpg,gif,doc,pdf,odt}{logo_article<1}>
+						#SET_MERGE{id_document,#GET{id_document},#ARRAY{#COMPTEUR_BOUCLE,#ID_DOCUMENT}}
+					</BOUCLE_docs_trad>
+					<BOUCLE_art_trad_autres(ARTICLES){traduction}>
+						<BOUCLE_docs_trad_autres(DOCUMENTS) {id_article} {tout}{extension IN png,jpg,gif,doc,pdf,odt}{logo_article<1}>
+							#SET_MERGE{id_document,#GET{id_document},#ARRAY{#COMPTEUR_BOUCLE,#ID_DOCUMENT}}
+						</BOUCLE_docs_trad_autres>				
+					</BOUCLE_art_trad_autres>		
+					<//B_docs_trad>		
+				</BOUCLE_art_trad0>
+			<//B_docs>			
+		</BOUCLE_art_trad_port>
+	</BOUCLE_art_port>
+
+[(#REM) Portfolio]
+<B_documents_portfolio_anonym>
+<div id="documents_portfolio">
+	<BOUCLE_documents_portfolio_anonym(DOCUMENTS) {tout}{id_document IN #GET{id_document}}{doublons}{extension IN png,jpg,gif} {par num titre, titre,date} {logo_article<1} {auteur ?}><div class="photos portfolio">
+	<a href="[(#URL_PHOTO|sinon{#FICHIER|image_reduire{1000}|extraire_attribut{src}})]" [(#URL_PHOTO|oui) class="spip_out"] [type="#MIME_TYPE" (#URL_PHOTO|non) onclick="location.href='[(#URL_ARTICLE
+		|parametre_url{id_document,#ID_DOCUMENT}
+		)]#documents_portfolio';return false;"[ class="(#EXPOSER)"]]
+		[ title="(#TITRE|attribut_html|couper{80})"]>[(#FICHIER
+		|copie_locale
+		|image_reduire_recadre{100,100}
+		|inserer_attribut{class,spip_logos}
+		|inserer_attribut{alt,[(#TITRE|attribut_html|couper{80})]})]</a>
+	</div></BOUCLE_documents_portfolio_anonym>
+</div>
+</B_documents_portfolio_anonym>
+
+
+[(#REM)
+	Afficher en grand le document demande dans l'URL
+]
+<BOUCLE_afficher_document(DOCUMENTS) {id_document} {mode=document}{extension IN png,jpg,gif} {auteur ?}>
+<div class="spip_documents spip_documents_center" id="document_actif">
+	[(#EMBED_DOCUMENT|image_reduire{500,0})]
+	[<div class="#EDIT{titre} spip_doc_titre">(#TITRE)</div>]
+	[<div class="#EDIT{descriptif} spip_doc_descriptif">(#DESCRIPTIF)</div>]
+</div>
+</BOUCLE_afficher_document>
+
+
+[(#REM) les docs et pdfs]
+<B_documents_autres>
+<br class="nettoyeur"/>
+<div class="documents">
+	<BOUCLE_documents_autres(DOCUMENTS) {id_document IN #GET{id_document}}{doublons}{extension IN doc,pdf,odt} {par num titre, titre,date} {auteur ?}>
+	<div class="docs">[
+	<a href="(#URL_DOCUMENT)" type="#MIME_TYPE">#LOGO_DOCUMENT</a>
+	]</div></BOUCLE_documents_autres>
+</div>
+</B_documents_autres>
+
+
+
+<br class="nettoyeur" />
+
+
+
+

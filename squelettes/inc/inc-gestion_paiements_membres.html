@@ -1,0 +1,22 @@
+<?php 
+$etat = "#ENV{etat}";
+$id_auteur = "#ENV{id_auteur}";
+$montant = "#ENV{montant}";
+$date_paiement = "#ENV{date_paiement}";
+$source_paiement = "#ENV{source_paiement}";
+$gestion_paiements = "#ENV{gestion_paiements}";
+$gestion_paypal = "#ENV{gestion_paypal}";
+$id_asso = "#ENV{id_asso}";
+
+// Actions inscription  provisoire
+
+if ($etat=="intermediaire") {
+$statut = "ok_prov";
+if ($gestion_paiements=="-"){
+	$statut = '';
+	}
+	// actualise la fiche et met le statut provisoire
+	spip_query("UPDATE spip_auteurs_elargis SET montant="._q($montant).", date_paiement="._q($date_paiement).", source_paiement="._q($source_paiement).", statut_interne="._q($statut).", id_asso="._q($id_asso)."  WHERE id_auteur=".$id_auteur) ;
+};
+	
+?>

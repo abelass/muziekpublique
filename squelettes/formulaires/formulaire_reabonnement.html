@@ -1,0 +1,21 @@
+<!--
+
+
+			<form action="?page=commander" method="post">
+			<legend>
+				<:confirmer_membre_echu_reabo:>
+			</legend>
+			<div>
+			<input name="url" type="hidden" value="#SELF" />
+			<input name="inscription" type="hidden" value="reabo" />
+			<input name="membre" type="hidden" value="#ENV{membre}" />	
+			<input name="type" type="hidden" value="membres" />		
+			<input type="submit" name="bouton" class="spip_bouton" value="ok" />
+			<input name="id_auteur" type="hidden" value="#ENV{id_auteur}" />
+			<input name="statut" type="hidden" value="paiement" />
+			</div>
+			</form>-->
+[(#SESSION{id_auteur}|non)#LOGIN_PUBLIC{#SELF}]			
+[(#SESSION{id_auteur}|oui)
+	<INCLURE{fond=formulaires/paiement}{env}{option=membres}{id_auteur=#SESSION{id_auteur}}/>
+]

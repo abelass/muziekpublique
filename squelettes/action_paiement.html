@@ -1,0 +1,48 @@
+#CACHE{0}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="#LANG_DIR" lang="#LANG">
+<?php
+	include_spip ('inc/charsets');
+	$url_retour = "#ENV{url_retour}";
+	$type = "#ENV{type}";
+	$statut = 'ok';
+	if (!$type){
+		if (isset($_REQUEST['id_activite'] ) ) {
+			$id_activite_tab=(isset($_REQUEST["id_activite"])) ? $_REQUEST["id_activite"]:array(); 
+			$count=count ($id_activite_tab);
+		
+			for ( $i=0 ; $i < $count ; $i++ ) {
+				$id = $id_activite_tab[$i];
+				spip_query("UPDATE spip_asso_activites SET statut="._q($statut)."  WHERE id_activite=".$id) ;
+			include_spip('inc/invalideur');
+			suivre_invalideur('spip_asso_activites/'.$id);					
+			}
+
+		}
+	}
+	elseif($type=="membres"){
+		$mois = ('12'); 
+		$jour = ('31');
+		$annee="[(#DATE|annee))]";
+		$validite=date("Y-m-d", mktime(0, 0, 0, $mois, $jour, $annee));
+
+		if ( isset( $_POST['id_auteur'] ) ) {
+			$id_auteur_tab=(isset($_POST["id_auteur"])) ? $_POST["id_auteur"]:array(); 
+			$count=count ($id_auteur_tab);
+		
+			for ( $i=0 ; $i < $count ; $i++ ) {
+				$id = $id_auteur_tab[$i];
+				spip_query("UPDATE spip_auteurs_elargis SET statut_interne="._q($statut).", validite="._q($validite)."  WHERE id_auteur=".$id) ;
+					//invalide le cache			   
+				include_spip('inc/invalideur');
+	   			suivre_invalideur("id='auteurs_elargis/$id'");	
+				}
+	
+			}
+
+		};	
+	
+	 header ('location:'.$url_retour);
+	
+?>
+</html>

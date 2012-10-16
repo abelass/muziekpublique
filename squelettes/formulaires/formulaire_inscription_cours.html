@@ -1,0 +1,119 @@
+#CACHE{0}
+
+[(#ENV{option}|?{#SET{id_evenement,#ENV{option}},#SET{id_evenement,#ENV{id_evenement}}})]
+
+<BOUCLE_cotisation(spip_asso_categories){id_categorie=1}>
+#SET{cotisation,#COTISATION} 
+</BOUCLE_cotisation>
+
+<BOUCLE_auteur_session(AUTEURS){id_auteur=#SESSION{id_auteur}}{tout}> 
+#SET{id_auteur,#ID_AUTEUR}
+</BOUCLE_auteur_session>
+
+<BOUCLE_auteur_email(AUTEURS){email==#ENV{email}}{tout}>
+#SET{id_auteur,#ID_AUTEUR}
+</BOUCLE_auteur_email>
+
+<//B_auteur_session>
+
+<BOUCLE_auteurs(AUTEURS){id_auteur=#GET{id_auteur}}{tout}>#SET{email,#EMAIL*} #SET{nom,#NOM}
+<BOUCLE_auteurs_el(spip_auteurs_elargis){id_auteur}>#SET{nr,#ID_AUTEUR} #SET{adresse,#ADRESSE} #SET{code_postal,#CODE_POSTAL} #SET{ville, #VILLE} </BOUCLE_auteurs_el>
+</BOUCLE_auteurs>
+
+
+<BOUCLE_lesevenements_edit(EVENEMENTS){id_evenement}>
+	<BOUCLE_mots(mots){id_evenement}{id_groupe=15}>
+	#SET{individuel,oui}
+	</BOUCLE_mots>
+	
+	#SET{prix_annee,#PRIX_PREVENTE_NON_MEMBRES}
+	#SET{prix_periode1,#PRIX_MEMBRES}
+	#SET{prix_periode2,#PRIX_NON_MEMBRES}
+
+	[(#ENV{membre}|=={'oui'}|?{#SET{prix,#PRIX_MEMBRES},#SET{prix,#GET{prix_avec_cotisation}}})]
+	#SET{titre,#TITRE}
+	[(#ENV{statut_provisoire}|=={'oui'}|?{#SET{prix,#PRIX_MEMBRES}})]
+
+<div class="inscription2" style="display: block;">
+<fieldset>
+<legend><:formulaire_inscription:></legend>
+	<form action="#SELF" method="post">
+	<input name="inscrits" type="hidden" value="1" />
+	<input name="url_retour" type="hidden" value="#SELF" />
+	<input name="id_evenement" type="hidden" value="[(#ENV{id_evenement,#GET{id_evenement}})]" />
+	<input name="membre" type="hidden" value="[(#ENV{membre,non})]" />
+	<input name="type" type="hidden" value="[(#ENV{type,#GET{type}})]" />
+	<input name="id_adherent" type="hidden" value="[(#GET{id_auteur})]" />
+	<input name="statut" type="hidden" value="confirmer" />
+	<input name="etat" type="hidden" value="paiement" />
+	<input name="retour" type="hidden" value="#ENV{retour}" />
+	[(#ENV{inscription}|=={'provisoire'}|?{<input name="statut_provisoire" type="hidden" value="oui"/>,''})]		
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="nom"><:asso:activite_libelle_nomcomplet:> :</label>
+		</span>
+		<input name="nom" type="hidden" id="nom" value="[(#ENV{nom,#GET{nom}})]" />[(#ENV{nom,#GET{nom}})]
+	</div>
+
+	[(#GET{nr}|!={''}|oui)<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="id_adherent"><:asso:activite_libelle_adherent:> :</label>
+		</span>
+		<input name="id_adherent" type="hidden" id="id_adherent" size="40" value="[(#GET{nr})]"/>[(#GET{nr})]
+	</div>]
+	
+
+
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="email"><:asso:activite_libelle_email:> :</label>
+		</span>
+	<input name="email" type="hidden" id="email" size="40" value="#ENV{email,#GET{email}}" /> #ENV{email,#GET{email}}
+	</div>
+	<div>
+	<label for="adresse"><:asso:activite_libelle_adresse_complete:> :</label>
+
+	<input name="adresse" type="hidden" value="[(#ENV{adresse})] [,(#ENV{code_postal})] [(#ENV{ville})][ - (#ENV{pays})]" />  [(#ENV{adresse,#GET{adresse}})] [,(#ENV{code_postal,#GET{code_postal}})] [(#ENV{ville,#GET{ville}})][ - (#ENV{pays,#GET{pays}})]
+	</div>
+
+
+	<div>
+		<span class='spip_form_label'>
+		<:cours:> :
+		</span>
+#GET{titre}
+	</div>
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="montant_cours"><:asso:activite_libelle_montant_inscription:> :</label>
+		</span><br/>
+<!--	[(#GET{individuel}|=={'oui2'}|oui)
+	<input  type="radio" name="montant_cours" value="#GET{prix_annee}" checked="checked" />
+	<:prix_annee:> : #GET{prix_annee} €<br/>
+	[(#GET{prix_periode1}|!={'0'}|oui)<input  type="radio" name="montant_cours" value="#GET{prix_periode1}"  />
+	<:prix_periode1:> : #GET{prix_periode1} €<br/>]
+	[(#GET{prix_periode2}|!={'0'}|oui)<input  type="radio" name="montant_cours" value="#GET{prix_periode2}"  />
+	<:prix_periode2:> : #GET{prix_periode2} €<br/>]
+	]-->
+
+	
+	<input  type="hidden" name="montant_cours" value="[(#GET{prix_periode1}|plus{#GET{cotisation}})]" checked="checked" />
+	<:prix_cours:> : #GET{prix_periode1} €<br/>
+	
+	<input name="montant_membre" type="hidden" value="#GET{cotisation}"/>
+
+		[(#ENV{membre}!=={ok}|?{' ',''})
+		<:prix_carte_de_membres:>: 
+		#GET{cotisation} €<br/>]
+
+	</div>	
+
+	<div>
+			<input type="submit" name="validation" class="spip_bouton" value="Valider" />
+
+
+	</div>
+</form>
+</fieldset>
+  </BOUCLE_lesevenements_edit>
+</div>

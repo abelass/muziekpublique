@@ -1,0 +1,92 @@
+#CACHE{0}
+
+
+<div class="spip_forms">
+<fieldset>
+<legend><:formulaire_inscription:></legend>
+	<form action="#SELF" method="post">
+	<input name="url_retour" type="hidden" value="#SELF" />
+
+<BOUCLE_auteur(AUTEURS){id_auteur}{tout}>
+	<input name="id_auteur" type="hidden" value="#ID_AUTEUR" />
+	<input name="nom" type="hidden" value="#NOM" />#NOM
+</BOUCLE_auteur>
+<BOUCLE_evenement(EVENEMENTS){id_auteur}{tout}>
+	<input name="id_evenement" type="hidden" value="#ID_EVENEMENT" />
+
+
+</BOUCLE_evenement>
+
+
+
+
+
+
+
+
+
+
+	<input name="statut" type="hidden" value="[(#ENV{membre}|!=={non}|?{'confirmer','soumettre'})]" />
+		
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="nom"><:asso:activite_libelle_nomcomplet:> :</label>
+		</span>
+		<input name="nom" type="hidden" id="nom" value="[(#ENV{nom,#GET{nom}})]" />[(#ENV{nom,#GET{nom}})]
+	</div>
+
+	[(#GET{nr}|!=={''}|?{' ','')<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="id_adherent"><:asso:activite_libelle_adherent:> :</label>
+		</span>
+		<input name="id_adherent" type="hidden" id="id_adherent" size="40" value="#GET{nr}"/>#GET{nr}
+	</div>]
+	
+
+  </BOUCLE_lesevenements_edit>
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="email"><:asso:activite_libelle_email:> :</label>
+		</span>
+	<input name="email" type="hidden" id="email" size="40" value="#ENV{email,#GET{email}}" /> #ENV{email,#GET{email}}
+	</div>
+	<div>
+	<label for="adresse"><:asso:activite_libelle_adresse_complete:> :</label>
+
+	<input name="adresse" type="hidden" value="[(#ENV{adresse})] [,(#ENV{code_postal})] [(#ENV{ville})][ - (#ENV{pays})]" />  [(#ENV{adresse,#GET{adresse}})] [,(#ENV{code_postal,#GET{code_postal}})] [(#ENV{ville,#GET{ville}})][ - (#ENV{pays,#GET{pays}})]
+	</div>
+
+
+	<div>
+		<span class='spip_form_label'>
+			<label for="montant"><:cours:> :</label>
+		</span>
+
+		<input name="titre" type="hidden" id="montant" size="40" value="#GET{titre}"/> #GET{titre}
+	</div>
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="montant"><:asso:activite_libelle_montant_inscription:> :</label>
+		</span>
+	<input name="montant" type="hidden" id="montant" size="40" value="#GET{prix}"/>
+
+
+		<input name="montant" type="hidden" id="montant" size="40" value="#GET{prix}"/>
+		[(#ENV{membre}!=={ok}|?{' ',''})
+		<:prix_cours:>: 
+		#GET{prix_membres} €<br/>
+		<:prix_carte_de_membres:>: 
+		#GET{cotisation} €<br/>
+		<b><:total:> :</b>]
+		#GET{prix} €
+	</div>	
+
+	<div>
+			<input type="submit" name="validation" class="spip_bouton" value="Valider" />
+
+
+	</div>
+</form>
+</fieldset>
+
+</div>

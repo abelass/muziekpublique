@@ -1,0 +1,84 @@
+#CACHE{86400}
+[(#REM)
+  Entete standard de toutes les pages ; les elements specifiques
+  (title, description) figurent dans le squelette article.html
+]
+[(#REM) Preciser le charset ]
+<meta http-equiv="Content-Type" content="text/html; charset=#CHARSET" />
+
+[(#REM) Fierement fabrique avec SPIP ]
+<meta name="generator" content="SPIP[ (#SPIP_VERSION)]" />
+
+<meta name="googlebot" content="noimageindex">
+
+[(#REM) Lien vers l'icone destinee a la barre de bookmarks ]
+[<link rel="shortcut icon" href="(#CHEMIN{favicon.ico})" />]
+
+[(#REM) Lien vers le flux RSS du site ]
+<link rel="alternate" type="application/rss+xml" title="<:syndiquer_site:>" href="#URL_PAGE{backend}" />
+
+[(#REM) Feuille de style par defaut pour le code genere par SPIP ]
+<link rel="stylesheet" href="[(#CHEMIN{spip_style.css}|direction_css)]" type="text/css" media="all" />
+
+
+
+
+[(#REM) Feuille de style CSS pour l'impression ]
+<link rel="stylesheet" href="[(#CHEMIN{impression.css}|direction_css)]" type="text/css" media="print" />
+
+[(#REM) Balise permettant aux plugins d'inserer des appels javascript ou css ]
+#INSERT_HEAD
+
+[(#REM) Feuille de style CSS pour l'affichage du site a l'ecran ]
+<link rel="stylesheet" href="[(#CHEMIN{styles/habillage.css}|direction_css)]" type="text/css" media="projection, screen, tv" />
+<link rel="stylesheet" href="[(#CHEMIN{styles/mp_style.css}|direction_css)]" type="text/css" media="projection, screen, tv" />
+<link rel="stylesheet" href="[(#URL_PAGE{styles_boutons}|parametre_url{lang,#ENV{lang}})]" type="text/css" media="projection, screen, tv" />
+
+[(#REM) Javascript pour les menus de selection]
+<script type="text/javascript">
+function go13() 
+{
+window.location=document.getElementById("menu13").value
+}
+</script>
+[(#REM) Javascript p�pur les menus de selection]
+<script type="text/javascript">
+function go17() 
+{
+window.location=document.getElementById("menu17").value
+}
+</script>
+[(#REM) Javascript p�pur les menus de selection]
+<script type="text/javascript">
+function go15() 
+{
+window.location=document.getElementById("menu15").value
+}
+</script>
+<script type="text/javascript">
+function go8()
+{
+window.location=document.getElementById("menu8").value
+}
+</script>
+<script type="text/javascript">
+function go9()
+{
+window.location=document.getElementById("menu9").value
+}
+</script>
+<script type="text/javascript">
+function go10()
+{
+window.location=document.getElementById("menu10").value
+}
+</script>
+<script type="text/javascript">
+function gopays()
+{
+window.location=document.getElementById("menupays").value
+}
+</script>
+
+ <link href="#CHEMIN{js/jquery_player/skin/jplayer.pink.flag.css}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="#CHEMIN{js/jquery_player/js/jquery.jplayer.min.js}"></script> 

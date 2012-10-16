@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+	<head>
+		<title>[(#TITRE|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+		<meta name="description" content="[(#INTRODUCTION{300}|attribut_html)]
+		      <BOUCLE_art_or(ARTICLES){traduction}{origine_traduction}>#SET{id_trad_art,#ID_ARTICLE}
+			      <BOUCLE_mots(MOTS){id_article}{', '}>#TITRE</BOUCLE_mots>"/>
+	      </BOUCLE_art_or>
+	      <INCLURE{fond=inc/inc-head}>
+</head>
+<body class="modifier_document">
+<?php
+     include_spip('inc/autoriser');
+?>
+<INCLURE{fond=prive/editer/document}{new=#ENV{id_document}}{parent=#ENV{id_article}}/>
+
+</body>
+</html>
+

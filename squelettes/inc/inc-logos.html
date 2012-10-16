@@ -1,0 +1,31 @@
+<div class="Logos">
+	<a href="#URL_SITE_SPIP">#LOGO_SITE_SPIP</a>
+	
+<ul>
+	<li>
+		<a href="#URL_PAGE{radio}" onclick="window.open(this.href, 'radio', 'height=400, width=245, top=100, left=100, toolbar=no, menubar=no, location=no, resizable=yes, scrollbars=no, status=no'); return false;"><span id="Radio">&nbsp;</span></a>
+	</li>	
+	
+<BOUCLE_rub0(RUBRIQUES mots_rubriques){id_trad=165}{lang}{tout}>
+	<li>
+		<a href="#URL_RUBRIQUE"><span id="Video">&nbsp;</span></a>
+	</li>
+</BOUCLE_rub0>
+		
+<BOUCLE_rub1(RUBRIQUES mots_rubriques){id_mot=193}{lang}{tout}>
+	<li>
+		<a href="#URL_RUBRIQUE"><span id="Reduction">&nbsp;</span></a>
+	</li>
+</BOUCLE_rub1>
+
+	[(#REM)<li>Désactivé
+		<a href="#"><span id="Forum">&nbsp;</span></a>
+		
+	</li>]
+<BOUCLE_rub2(RUBRIQUES mots_rubriques){id_mot=262}{lang}{tout}>
+	<li>
+		<a href="#URL_RUBRIQUE"><span id="Benevolat">&nbsp;</span></a>
+	</li>
+</BOUCLE_rub2>
+	</ul>
+</div>

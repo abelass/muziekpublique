@@ -1,0 +1,38 @@
+	// Envoie un mail de rappel des donnees
+	include_spip('inc/envoyer_mail');
+	include_spip('inc/mail');
+	$nom_site_spip = nettoyer_titre_email($GLOBALS['meta']["nom_site"]);
+	$adresse_site = $GLOBALS['meta']["adresse_site"];
+	
+	$prenom = (lire_config('inscription2/prenom')) ? "b.prenom," : "" ;
+	
+	$var_user=spip_fetch_array(spip_query("select a.nom, $prenom a.id_auteur, a.alea_actuel, a.login, a.email from spip_auteurs a join spip_auteurs_elargis b where a.id_auteur='$id_auteur_or' and a.id_auteur=b.id_auteur"));
+	
+	if($var_user['alea_actuel']==''){
+		$var_user['alea_actuel'] = rand(1,99999);
+		spip_query("UPDATE spip_auteurs SET alea_actuel='".$var_user['alea_actuel']."' WHERE id_auteur = ".$id_auteur_or);
+	};
+
+		$message = _T('inscription2:message_auto')."\n\n"
+			. _T('inscription2:email_bonjour', array('nom'=>sinon($var_user['prenom'],$var_user['nom'])))."\n\n"
+			. _T('inscription_provisoire_mail')."\n\n"			
+			. _T('inscription2:rappel_password')."\n\n"
+			. _T('inscription2:choisir_nouveau_password')."\n\n"
+			. $adresse_site."/?page=inscription2_confirmation&id="
+			. $var_user['id_auteur']."&cle=".$var_user['alea_actuel']."&mode=conf"."\n\n"
+			. _T('inscription2:rappel_login') . $var_user['login'] ;
+		$sujet = "[$nom_site_spip] "._T('inscription_provisoire_mail');
+		$from = $GLOBALS['meta']["email_webmaster"]; 
+		$expediteur= $nom_site_spip.'<'.$from.'>';		
+		$entete .= "Reply-To: ".$from."\n"; 
+		$entete .= "Return-Path: ".$from."\n"; 
+		$entete .= "MIME-Version: 1.0\n";
+		$entete .= "Content-Transfer-Encoding: 8bit\n";
+		$entete .= "X-Mailer: PHP/" . phpversion();     
+
+	if (envoyer_mail($var_user['email'],$sujet,$message,$from = $expediteur,$header = $entete))
+	header ('location:'.$url_retour);
+		else
+return _T('inscription2:probleme_email');
+
+	}

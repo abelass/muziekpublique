@@ -1,0 +1,12 @@
+#CACHE{3600}
+
+#SET{id_rubrique,#ARRAY{}}
+
+<BOUCLE_rub_annees(RUBRIQUES){id_trad}{tout}>
+	#SET{id_rubrique,#GET{id_rubrique}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_RUBRIQUE}}}
+</BOUCLE_rub_annees>
+
+<BOUCLE_art(ARTICLES){id_rubrique IN #GET{id_rubrique}}{0,1}{!par date}>	
+	<INCLURE{fond=inc/contenu/inc-list_article_video_details}{id_article}/>
+</BOUCLE_art>
+

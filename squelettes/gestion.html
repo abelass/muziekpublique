@@ -1,0 +1,95 @@
+#CACHE{0}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="#LANG_DIR" lang="#LANG">
+<head>
+	<title>[(#NOM_SITE_SPIP|textebrut)]</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=#CHARSET" />
+	[<meta name="description" content="(#DESCRIPTIF_SITE_SPIP|couper{150}|attribut_html)" />]
+	<meta name="generator" content="SPIP" />
+	[<link rel="shortcut icon" href="(#CHEMIN{favicon.ico})" />]
+
+<INCLURE{fond=inc/inc-head}>
+
+</head>
+
+<body>
+
+	<!-- HEADER : Debut -->
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc/inc-entete}{env}{lang}>
+
+	[(#REM) Contenu principal : contenu de l'article ]
+
+	<div class="Contenu">
+	
+
+		<div id="Podium">
+		
+
+
+			<h1>Gestion</h1>
+			[(#REM) Gere l'action de comparaisons]
+		[(#SESSION|oui)
+			[(#ENV{comparer}|oui)
+				<INCLURE{fond=inc/contenu/inc-gestion_comparer}{env}/>
+				]
+	
+			[(#ENV{gestion_paiements}|oui)
+				[(#REM) Gere la gestion des paiements des activités]
+				[(#ENV{type}|!=={'membres'}|oui)
+					[(#REM) Actualise la phase intermediaire]
+					[(#ENV{etat}|oui)<INCLURE{fond=inc/inc-gestion_paiements_activites}{env}>]
+					
+					[(#REM) Affiche le formulaire]
+					[(#ENV{etat}|!=={'enregistrer'}|oui)<INCLURE{fond=formulaires/gestion_paiements_activites}{id_activite}{env}>]
+					[(#ENV{etat}|=={'enregistrer'}|oui)<INCLURE{fond=formulaires/gestion_paiements_activites_valider}{id_activite}{validite}{env}>]
+				]
+		
+				[(#REM) Gere la gestion des paiements des membres]
+		
+				[(#ENV{type}|=={'membres'}|oui)
+					[(#REM) Actualise la phase intermediaire]
+					[(#ENV{etat}|oui)<INCLURE{fond=inc/inc-gestion_paiements_membres}{env}>]
+		
+					[(#REM) Affiche les formulaires]
+					[(#ENV{etat}|!=={'enregistrer'}|oui)<INCLURE{fond=formulaires/gestion_paiements_membres}{id_activite}{env}>]
+					[(#ENV{etat}|=={'enregistrer'}|oui)<INCLURE{fond=formulaires/gestion_paiements_membres_valider}{id_auteur}{env}>]
+					]
+				]
+	
+			[(#ENV{gestion_papypal}|?{' ',''})
+			[(#ENV{etat}|!=={''}|?{' ',''})
+			<INCLURE{fond=inc/inc-gestion_paiements_membres}{id_auteur=#ENV{id_auteur}}{etat=#ENV{etat}}{montant=#ENV{montant}}{date_paiement=#ENV{date_paiement}}{id_asso=#ENV{id_asso}}{source_paiement=#ENV{source_paiement}}{gestion_paiements=#ENV{gestion_paiements}} {url_retour=#ENV{url_retour}}>]
+	
+			[(#REM) Affiche les formulaires]
+			[(#ENV{etat}|!=={'enregistrer'}|?{' ',''})
+			<INCLURE{fond=formulaires/gestion_carte_membres_paypal}{solde=#ENV{solde}} {url_retour=#ENV{url_retour}}>]
+			[(#ENV{etat}|=={'enregistrer'}|?{' ',''})
+			<INCLURE{fond=formulaires/gestion_paiements_membres_valider}{id_auteur}{solde=#ENV{solde}} {url_retour=#ENV{url_retour}}>]
+			]
+	
+			<!-- @annotation:[(#REM) Futur : gestion des remise à jour des cours individuel pour une nouvelle pèriode
+	
+			[(#ENV{gestion_periode}|?{' ',''})
+			[(#REM) Actualise la phase intermediaire]
+			[(#ENV{etat}|!=={''}|?{' ',''})
+			<INCLURE{fond=inc/inc-gestion_periodes_cours}{id_auteur=#ENV{id_auteur}}{etat=#ENV{etat}}{montant=#ENV{montant}}{date_paiement=#ENV{date_paiement}}{id_asso=#ENV{id_asso}}{source_paiement=#ENV{source_paiement}}{gestion_paiements=#ENV{gestion_paiements}} {url_retour=#ENV{url_retour}}>]
+	
+	
+			[(#REM) Affiche les formulaires]
+			[(#ENV{etat}|!=={'enregistrer'}|?{' ',''})
+			<INCLURE{fond=formulaires/gestion_periodes_cours}{id_activite}{semaine=#ENV{semaine}} {id_mot=#ENV{id_mot}}{url_retour=#ENV{url_retour}}>]
+			[(#ENV{etat}|=={'enregistrer'}|?{' ',''})
+			<INCLURE{fond=formulaires/gestion_periodes_cours_valider}{id_auteur}{semaine=#ENV{semaine}} {url_retour=#ENV{url_retour}}>]
+			]>
+			] -->
+			
+			[(#ENV{actions}|oui)
+				<INCLURE{fond=inc/inc-gestion_actions}{env}>]
+			]
+		[(#SESSION|non)	#LOGIN_PUBLIC{#SELF}]
+		</div><!-- fin pODIUM -->
+
+	</div>
+</body>
+</html>

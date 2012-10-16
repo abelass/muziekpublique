@@ -1,0 +1,20 @@
+#CACHE{24*3600}
+
+[(#REM) Sites de la rubrique ]
+
+	<BOUCLE_mots(MOTS){id_groupe=21}{id_mot ?}{par num titre}>
+		<B_sites>
+		<div class="menu">
+		<h2>#TITRE</h2>
+			<ul>
+		<BOUCLE_sites(SITES) {par nom_site} {id_mot}>
+			<li>
+				<a href="#URL_SITE">#NOM_SITE</a><br/>
+				#DESCRIPTIF
+			</li>
+		</BOUCLE_sites>
+			</ul>
+		</div>
+		</B_sites>
+	</BOUCLE_mots>
+

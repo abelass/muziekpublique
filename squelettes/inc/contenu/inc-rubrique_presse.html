@@ -1,0 +1,72 @@
+#CACHE{24*3600}
+
+
+<BOUCLE_mot(MOTS){id_mot IN 237,238}>
+
+[(#REM)Compile tous les article qui contiennent des docs avec les mots clés dossier de presse ou article de presse]
+	<BOUCLE_filtre(DOCUMENTS){id_mot}> <BOUCLE_doc_art(SPIP_DOCUMENTS_ARTICLES){id_document}><BOUCLE_afficher_art(ARTICLES) {id_rubrique IN 8,26,39} {id_article}{doublons filtre#ID_MOT}{par date}></BOUCLE_afficher_art></BOUCLE_doc_art></BOUCLE_filtre>
+
+[(#REM)Filtre pour affichage homogène]
+	<BOUCLE_filtre_art(ARTICLES){id_rubrique IN 8,26,39} {doublons filtre#ID_MOT}{doublons voir#ID_MOT}{doublons voir2#ID_MOT}{par date}></BOUCLE_filtre_art>
+
+[(#REM)Affichage homogène de tous les articles contentnat un doc avec les mots clés déterminé]
+	<B_voir_art>
+		<BOUCLE_mot_titre(MOTS){id_mot} >
+	<div class="menu articles"><h2>#TITRE</h2>
+		<ul>
+		</BOUCLE_mot_titre>	
+	<BOUCLE_voir_art(ARTICLES) {id_rubrique IN 8,26,39}{lang}{doublons voir#ID_MOT}{par titre}{0,5}>
+		<B_docs_art>
+		<li class="titre"><h3><a href="#URL_ARTICLE">#TITRE</a></h3></li>
+			<BOUCLE_art_trad(ARTICLES){traduction}{origine_traduction}>
+				<B_eve>
+				<li><ul><li>
+				<BOUCLE_eve(EVENEMENTS) {id_article} {', '}>[(#DATE|affdate)]</BOUCLE_eve>
+				</li></ul></li>
+				</B_eve>
+			</BOUCLE_art_trad>
+			<li>
+				<ul>
+		<BOUCLE_docs_art(DOCUMENTS){id_article}{id_mot}>
+				<li><strong><a href="(#URL_DOCUMENT)" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a></strong>
+				<small>(<span>#TYPE_DOCUMENT[ &ndash; (#TAILLE|taille_en_octets)]</span>)</small>]
+				</li>
+		</BOUCLE_docs_art>
+				</ul>
+			</li>
+		</B_docs_art>
+	</BOUCLE_voir_art>
+		</ul>
+	</div>
+	</B_voir_art>
+		<B_voir_art_trad>
+			<BOUCLE_mot_titre_trad(MOTS){id_mot} >
+			<div class="menu articles"><h2>#TITRE</h2>
+			<ul>
+			</BOUCLE_mot_titre_trad>	
+		<BOUCLE_voir_art_trad(ARTICLES) {id_rubrique IN 8,26,39}{doublons voir2#ID_MOT}{par titre}{0,5}>
+			<B_docs_art_trad>
+			<li class="titre"><h3><a href="#URL_ARTICLE">#TITRE</a> [#LANG]</h3></li>
+				<BOUCLE_art_trad2(ARTICLES){traduction}{origine_traduction}>
+					<B_eve_trad>
+					<li><ul><li>
+					<BOUCLE_eve_trad(EVENEMENTS) {id_article} {', '}>[(#DATE|affdate)]</BOUCLE_eve_trad>
+					</li></ul></li>
+					</B_eve_trad>
+				</BOUCLE_art_trad2>
+				<li>
+					<ul>
+			<BOUCLE_docs_art_trad(DOCUMENTS){id_article}{id_mot}>
+					<li><strong><a href="(#URL_DOCUMENT)" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a></strong>
+					<small>(<span>#TYPE_DOCUMENT[ &ndash; (#TAILLE|taille_en_octets)]</span>)</small>]
+					</li>
+			</BOUCLE_docs_art_trad>
+					</ul>
+				</li>
+			</B_docs_art_trad>
+		</BOUCLE_voir_art_trad>
+			</ul>
+		</div>
+		</B_voir_art_trad>
+	<//B_voir_art>
+</BOUCLE_mot>

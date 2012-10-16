@@ -1,0 +1,57 @@
+#CACHE{12*3600}
+
+
+#SET{id_rubrique,#ARRAY{}}
+<div class="menu_ev Nav">
+	<BOUCLE_parent(RUBRIQUES){id_enfant=#ID_RUBRIQUE}>
+	<span><a href="#URL_RUBRIQUE"><:all_videos:></a>    </span>
+	</BOUCLE_parent>
+	
+	
+	
+<BOUCLE_rub_annees(RUBRIQUES){id_trad}{tout}>
+	#SET{id_rubrique,#GET{id_rubrique}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_RUBRIQUE}}}
+</BOUCLE_rub_annees>
+<B_video_precedent>
+	|
+<BOUCLE_video_precedent(ARTICLES){id_rubrique IN #GET{id_rubrique}} {jour_relatif>0}{!par date}{0,1}>
+			<BOUCLE_art(ARTICLES){id_article} {lang}>
+					<span class="fleche_futurs"><a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_precedent:>: #TITRE"><:precedents:></a></span>
+			</BOUCLE_art>
+
+				<BOUCLE_art_ref(ARTICLES){id_article}>
+					<BOUCLE_art_trad2(ARTICLES){traduction}{lang}>
+					<span class="fleche_futurs"><a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_precedent:>: #TITRE"><:precedents:></a></span>
+					</BOUCLE_art_trad2>
+						<BOUCLE_art_trad3(ARTICLES){traduction}{origine_traduction}{0,1}>
+							<span class="fleche_futurs"><a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_precedent:>: #TITRE"><:precedents:></a> </span>
+						</BOUCLE_art_trad3>
+					<//B_art_trad2>
+				</BOUCLE_art_ref>
+			<//B_art>
+</BOUCLE_video_precedent>
+ |
+<BOUCLE_video_futur(ARTICLES){id_rubrique IN #GET{id_rubrique}} {jour_relatif<0}{par date}{0,1}>
+			<BOUCLE_futur(ARTICLES){id_article}{lang}>
+					<span class="fleche_futurs">[<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_futur:>: (#TITRE)"><:prochains:></a>]</span>
+			</BOUCLE_futur>
+			<BOUCLE_art_futur(ARTICLES){id_article} {lang}>
+					<span class="fleche_futurs">[<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_futur:>: (#TITRE)"><:prochains:></a>]</span>
+			</BOUCLE_art_futur>
+
+				<BOUCLE_art_ref_futur(ARTICLES){id_article}>
+					<BOUCLE_art_trad2_futur(ARTICLES){traduction}{lang}>
+					<span class="fleche_futurs">[<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_futur:>: (#TITRE)"><:prochains:></a>]</span>
+					</BOUCLE_art_trad2_futur>
+						<BOUCLE_art_trad3_futur(ARTICLES){traduction}{origine_traduction}>
+							<span class="fleche_futurs"><a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_futur:>: #TITRE"><:prochains:></a></span>
+						</BOUCLE_art_trad3_futur>
+					<//B_art_trad2_futur>
+				</BOUCLE_art_ref_futur>
+			<//B_futur>
+</BOUCLE_video_futur>
+
+
+
+
+</div>

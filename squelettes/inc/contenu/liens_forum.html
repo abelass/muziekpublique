@@ -1,0 +1,15 @@
+<div class="Comment">
+	<:commentaires:>
+		<span><a href="#forum" name="forum" id="forum"></a>
+			<BOUCLE_forums(FORUMS){id_article}{plat}>
+			</BOUCLE_forums>
+			(#TOTAL_BOUCLE) 
+			[(#ENV{voir}|=={reponses}|non)<a class="ajax" href="[(#SELF|parametre_url{voir,reponses})]#forum"><:lire:></a>]			
+				[(#ENV{voir}|=={reponses}|oui)<a class="ajax" href="[(#SELF|parametre_url{voir,''})]#forum"><:fermer:></a>]
+				</B_forums> 
+				[<a href="(#PARAMETRES_FORUM|url_reponse_forum)" rel="noindex nofollow"> | <:ajouter:></a>]
+				</span>
+				[(#ENV{voir}|=={reponses}|oui)
+				<INCLURE{fond=inc-forum}{id_article} />
+				]		
+</div>

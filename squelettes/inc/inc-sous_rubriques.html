@@ -1,0 +1,15 @@
+<BOUCLE_rub_b(RUBRIQUES){id_rubrique}{tout}>
+<div class="Menu_accueil">
+	<ul>
+		<li[(#ENV{id_rub}|=={#ID_RUBRIQUE}|oui) class="on"]><a href="#URL_RUBRIQUE">#TITRE</a></li>
+	<BOUCLE_rub(RUBRIQUES){id_parent}{id_trad IN #ENV{id_trad,nada}}{par num titre}{tout}>
+		<li[(#ENV{id_rub}|=={#ID_RUBRIQUE}|oui) class="on"]><a href="#URL_RUBRIQUE">#TITRE</a></li>
+	</BOUCLE_rub>
+	</B_rub>
+		<BOUCLE_rub_par(RUBRIQUES){id_parent}{tout}{par num titre}>
+			<li[(#ENV{id_rub}|=={#ID_RUBRIQUE}|oui) class="on"]><a href="#URL_RUBRIQUE">#TITRE</a></li>
+		</BOUCLE_rub_par>
+	<//B_rub>
+	</ul>	
+</div>	
+</BOUCLE_rub_b>

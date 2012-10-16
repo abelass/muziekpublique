@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title>Radio - [(#NOM_SITE_SPIP|textebrut)]</title>
+<meta name="description" content="webradio muziekpublique" />
+<INCLURE{fond=inc/inc-head}>
+</head>
+<body class="radio">
+<BOUCLE_art(ARTICLES){id_rubrique=134}{id_article ?}{0,1} {!par date}>
+	#SET{id_article,#ID_ARTICLE}
+</BOUCLE_art>
+
+<INCLURE{fond=inc/contenu/radio}{id_art=#GET{id_article}}{id_article=#ENV{id_article,#GET{id_article}}}{env}{ajax}/>
+</body>
+</html>

@@ -1,0 +1,123 @@
+#CACHE{24*3600}
+
+<BOUCLE_filtre_art(ARTICLES){id_article}>
+	<BOUCLE_filtre_art_trad(ARTICLES){traduction}{origine_traduction}>
+ 		<BOUCLE_filtre(DOCUMENTS){id_article}{mode=document} {id_mot=239}{doublons filtre2}>
+		</BOUCLE_filtre>
+	</BOUCLE_filtre_art_trad>
+</BOUCLE_filtre_art>
+
+
+
+<BOUCLE_art(ARTICLES){id_article}{lang}>
+	<B_documents_joints>
+	<div class="menu mot#ENV{id_mot}">
+		<BOUCLE_mot(MOTS){id_mot}>
+		[(#ID_MOT|!=={'259'}|?{<h2>#TITRE</h2>,''})]
+		</BOUCLE_mot>
+			<h2><:titre_documents_joints:></h2>
+		<//B_mot>
+		<ul>
+	<BOUCLE_documents_joints(DOCUMENTS) {id_article} {tout}{doublons}{par num titre, titre,date} {type}{doublons filtre2}>
+		<li>
+						[(#TYPE_DOCUMENT|=={'Flash'}|?{[(#EMBED_DOCUMENT)],
+						[(#TYPE_DOCUMENT|=={'MP3'}|?{[(#MODELE{doc_player}{align=left})]<br class="nettoyeur" > </br>,<strong><a href="#URL_DOCUMENT" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a></strong>
+						<small>(<span>#TYPE_DOCUMENT[ &ndash; (#TAILLE|taille_en_octets)]</span>)</small>
+						#DESCRIPTIF})]})]
+		</li>
+	</BOUCLE_documents_joints>
+		</ul>
+	</div>
+	</B_documents_joints>
+				<BOUCLE_art_trad_origine2(ARTICLES){traduction}>
+					<B_documents_joints_trad_origine2>
+					<div class="menu mot#ENV{id_mot}">
+						<BOUCLE_mot_trad_origine2(MOTS){id_mot}>
+						[(#ID_MOT|!=={'259'}|?{<h2>#TITRE</h2>,''})]
+					</BOUCLE_mot_trad_origine2>
+					<h3>#LANG</h3>
+					<//B_mot_trad_origine2>
+						<ul>
+					<BOUCLE_documents_joints_trad_origine2(DOCUMENTS) {doublons}{mode=document}{id_article} {par num titre, titre,date} {type}{doublons filtre}{doublons filtre2}>
+						<li>
+						[(#TYPE_DOCUMENT|=={'Flash'}|?{[(#EMBED_DOCUMENT)],
+						[(#TYPE_DOCUMENT|=={'MP3'}|?{[(#MODELE{doc_player}{align=left})]<br class="nettoyeur" > </br>,<strong><a href="#URL_DOCUMENT" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a></strong>
+						<small>(<span>#TYPE_DOCUMENT[ &ndash; (#TAILLE|taille_en_octets)]</span>)</small>
+						#DESCRIPTIF})]})]
+						</li>
+					</BOUCLE_documents_joints_trad_origine2>
+					</ul>
+				</div>
+				</B_documents_joints_trad_origine2>
+			</BOUCLE_art_trad_origine2>
+	<//B_documents_joints>
+</BOUCLE_art>
+		<BOUCLE_art_ref(ARTICLES){id_article}>
+			<BOUCLE_art_trad(ARTICLES){traduction}{lang}>
+				<B_documents_joints_trad>
+				<div class="menu mot#ENV{id_mot}">
+					<BOUCLE_mot_trad(MOTS){id_mot}>
+					[(#ID_MOT|!=={'259'}|?{<h2>#TITRE</h2>,''})]	
+				</BOUCLE_mot_trad>
+					<h2><:titre_documents_joints:></h2>
+					<//B_mot_trad>
+					<ul>
+				<BOUCLE_documents_joints_trad(DOCUMENTS) {mode=document}{doublons}{id_article} {par num titre, titre,date} {type}{doublons filtre}{doublons filtre2}>
+					<li>
+						[(#TYPE_DOCUMENT|=={'Flash'}|?{[(#EMBED_DOCUMENT)],
+						[(#TYPE_DOCUMENT|=={'MP3'}|?{[(#MODELE{doc_player}{align=left})]<br class="nettoyeur" > </br>,<strong><a href="#URL_DOCUMENT" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a></strong>
+						<small>(<span>#TYPE_DOCUMENT[ &ndash; (#TAILLE|taille_en_octets)]</span>)</small>
+						#DESCRIPTIF})]})]
+					</li>
+				</BOUCLE_documents_joints_trad>
+				</ul>
+			</div>
+			</B_documents_joints_trad>
+			<BOUCLE_art_trad_origine1(ARTICLES){traduction}{origine_traduction}>
+				<B_documents_joints_trad_origine1>
+
+				<div class="menu mot#ENV{id_mot}">
+					<BOUCLE_mot_trad_origine1(MOTS){id_mot}>
+					[(#ID_MOT|!=={'259'}|?{<h2>#TITRE</h2>,''})]
+				</BOUCLE_mot_trad_origine1>
+					<h2><:titre_documents_joints:></h2>
+				<//B_mot_trad_origine1>
+					<ul>
+				<BOUCLE_documents_joints_trad_origine1(DOCUMENTS) {mode=document}{doublons}{id_article} {par num titre, titre,date} {type}{doublons filtre}{doublons filtre4}>
+					<li>
+						[(#TYPE_DOCUMENT|=={'Flash'}|?{[(#EMBED_DOCUMENT)],
+						[(#TYPE_DOCUMENT|=={'MP3'}|?{[(#MODELE{doc_player}{align=left})]<br class="nettoyeur" > </br>,<strong><a href="#URL_DOCUMENT" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a></strong>
+						<small>(<span>#TYPE_DOCUMENT[ &ndash; (#TAILLE|taille_en_octets)]</span>)</small>
+						#DESCRIPTIF})]})]
+					</li>
+				</BOUCLE_documents_joints_trad_origine1>
+				</ul>
+			</div>
+			</B_documents_joints_trad_origine1>
+		</BOUCLE_art_trad_origine1>
+			<//B_documents_joints_trad>
+		</BOUCLE_art_trad>
+			<BOUCLE_art_trad_origine(ARTICLES){traduction}{origine_traduction}>
+				<B_documents_joints_trad_origine>
+				<div class="menu mot#ENV{id_mot}">
+					<BOUCLE_mot_trad_origine(MOTS){id_mot}>
+					[(#ID_MOT|!=={'259'}|?{<h2>#TITRE</h2>,''})]		
+				</BOUCLE_mot_trad_origine>
+					<h2><:titre_documents_joints:></h2>
+				<//B_mot_trad_origine>
+					<ul>
+				<BOUCLE_documents_joints_trad_origine(DOCUMENTS){mode=document}{doublons} {id_article} {par num titre, titre,date}  {type}{doublons filtre}{doublons filtre2}>
+					<li>
+						[(#TYPE_DOCUMENT|=={'Flash'}|?{[(#EMBED_DOCUMENT)],
+						[(#TYPE_DOCUMENT|=={'MP3'}|?{[(#MODELE{doc_player}{align=left})]<br class="nettoyeur" > </br>,<strong><a href="#URL_DOCUMENT" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a></strong>
+						<small>(<span>#TYPE_DOCUMENT[ &ndash; (#TAILLE|taille_en_octets)]</span>)</small>
+						#DESCRIPTIF})]})]
+					</li>
+				</BOUCLE_documents_joints_trad_origine>
+				</ul>
+			</div>
+			</B_documents_joints_trad_origine>
+		</BOUCLE_art_trad_origine>
+		<//B_art_trad>
+	</BOUCLE_art_ref>
+<//B_art>

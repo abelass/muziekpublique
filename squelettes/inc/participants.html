@@ -1,0 +1,42 @@
+[(#ENV{html}|non)
+<:asso:prets_entete_reservation:> 
+[	<:membre:> : (#ENV{membres})]
+[	<:non_membre:> : (#ENV{non_membres})]
+[	<:prix_prevente_non_membres:> : (#ENV{prevente_non_membre})]
+[	#ENV{prix_ext_1_titre} : (#ENV{prix_ext_1_valeur})]
+[	#ENV{prix_ext_2_titre} : (#ENV{prix_ext_2_valeur})]
+[	#ENV{prix_ext_3_titre} : (#ENV{prix_ext_3_valeur})]
+<:asso:tarif_reservation:> [(#ENV{montant}) Euro]
+	
+<:asso:tarif_reservation_explication:>
+
+[<:asso:tarif_prevente:> (#ENV{montant_prevente}) Euro 
+
+<:asso:tarif_prevente_explication_titre:>
+	1. <:asso:tarif_prevente_explication_texte_1:>
+	2. <:asso:tarif_prevente_explication_texte_2:>]
+]
+[(#ENV{html}|oui)
+			<dl>
+		<dt><:asso:prets_entete_reservation:> </dt>
+		[<dd><:membre:> : (#ENV{membres})</dd>]	
+		[<dd><:non_membre:> : (#ENV{non_membres})</dd>]
+		[<dd><:prix_prevente_non_membres:> : (#ENV{prevente_non_membre})</dd>]		
+		[<dd>#ENV{prix_ext_1_titre} : (#ENV{prix_ext_1_valeur})</dd>]			
+		[<dd>#ENV{prix_ext_2_titre} : (#ENV{prix_ext_2_valeur})</dd>]
+		[<dd>#ENV{prix_ext_3_titre} : (#ENV{prix_ext_3_valeur})</dd>]				
+ </dl>
+ 
+ <dl>
+	 <dt><:asso:tarif_reservation:>[ (#ENV{montant}) €]</dt>
+	 <dd><:asso:tarif_reservation_explication:></dd>
+ </dl>
+ 
+[<dl>
+<dt><:asso:tarif_prevente:> (#ENV{montant_prevente}) €</dt>
+
+	<dd><:asso:tarif_prevente_explication_titre:></dd>
+		<dd>1. <:asso:tarif_prevente_explication_texte_1:></dd>
+		<dd>2. <:asso:tarif_prevente_explication_texte_2:></dd>	
+ </dl>]
+]

@@ -1,0 +1,11 @@
+#CACHE{48*3600}
+
+	<B_en_ligne>
+	<select name="en_ligne"  class="forml">
+	[<option value="#ENV{en_ligne}"  selected="selected">(#ENV{en_ligne}|affdate{j-m-Y})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_en_ligne(AUTEURS){tout}{!par en_ligne} {en_ligne!=#ENV{en_ligne}}>
+	[<option value="[(#EN_LIGNE)]" >(#EN_LIGNE|affdate|unique{en_ligne})</option>]
+	</BOUCLE_en_ligne>	
+	</select>
+	</B_en_ligne>

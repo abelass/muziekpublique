@@ -1,0 +1,130 @@
+#CACHE{24*3600}
+#SET{date,#DATE}
+
+
+#SET{id_evenement,#ARRAY{}}
+
+<BOUCLE_art_ensemble(ARTICLES){id_auteur}>
+	<BOUCLE_ev_ens(EVENEMENTS){id_article}>
+	#SET{id_evenement,#GET{id_evenement}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_EVENEMENT}}}
+	</BOUCLE_ev_ens>
+</BOUCLE_art_ensemble>
+
+
+<B_ev>
+<h2><:concerts_futurs:></h2>
+<div class="agenda">
+<BOUCLE_ev(EVENEMENTS){id_evenement_source=0}{par date_debut}{age<=0}{id_evenement IN #GET{id_evenement}}>
+	<div class="ev_corp">
+<BOUCLE_art_0(ARTICLES){id_auteur}{id_article}{id_rubrique IN 8,26,39}{lang=#ENV{lang}}>
+<a href="#URL_ARTICLE"> #SET{lien0,</a>}
+</BOUCLE_art_0>
+	<BOUCLE_art2_0(ARTICLES){id_article}{id_rubrique IN 8,26,39}>
+		<BOUCLE_art_trad_0(ARTICLES){traduction} {lang=#ENV{lang}}>
+			<a href="#URL_ARTICLE"> #SET{lien0,</a>}
+		</BOUCLE_art_trad_0>
+			<BOUCLE_art1_0(ARTICLES){id_article}{id_rubrique IN 8,26,39}>#ID_ARTICLE
+				<BOUCLE_art_trad_or_0(ARTICLES){traduction} {id_rubrique IN 8,26,39}{origine_traduction}{lang!=#ENV{lang}}>
+				<a href="#URL_ARTICLE"> #SET{lien0,</a>} #SET{langue0,[#LANG]}
+				</BOUCLE_art_trad_or_0>
+			</BOUCLE_art1_0>
+		<//B_art_trad_0>
+	</BOUCLE_art2_0>
+[(#DESCRIPTIF|?{' ',''})<a href="[(#DESCRIPTIF|supprimer_tags)]">[(#SET{lien0,</a>})]]
+<//B_art_0>
+
+[(#DESCRIPTIF|?{' ',''})<a href="[(#DESCRIPTIF|supprimer_tags)]">#TITRE [(#SET{lien,</a>})]][(#DATE_DEBUT|jour|=={[(#DATE_FIN|jour)]}|?{
+  [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+[(#HORAIRE|=={oui}|?{
+   [(#REM) memes heures ?]
+     [(#DATE_DEBUT|=={#DATE_FIN}|?{ <:a:>  
+[(#DATE_DEBUT|heures)]h[(#DATE_DEBUT|minutes)],''})]
+   [(#REM) pas memes heures ?]
+     [(#DATE_DEBUT|!={#DATE_FIN}|?{<:from:> 
+[(#DATE_DEBUT|heures)]:[(#DATE_DEBUT|minutes)] <:a:>
+[(#DATE_FIN|heures)]:[(#DATE_FIN|minutes)],''})]
+,''})]
+,
+ [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+[(#HORAIRE|=={oui}|?{ : 
+  [(#DATE_DEBUT|heures)]H[(#DATE_DEBUT|minutes)],''})] <:a:> 
+[(#DATE_FIN|nom_jour)]
+  [(#DATE_FIN|affdate)] [(#HORAIRE|=={oui}|?{ : 
+  [(#DATE_FIN|heures)]H[(#DATE_FIN|minutes)],''})]  })]#GET{lien0} #GET{langue0}
+	<BOUCLE_mots_groupe(MOTS){id_evenement}{id_groupe!=14}>
+		<B_mots_titre>
+:
+		<BOUCLE_mots_titre(MOTS){id_groupe}{id_evenement}>
+#TITRE [, (#DESCRIPTIF)]
+		</BOUCLE_mots_titre>
+		</B_mots_titre>
+	</BOUCLE_mots_groupe>
+[: (#LIEU)]
+	<//B_mots_groupe>
+
+</div>
+</BOUCLE_ev>
+</div>
+<br class="nettoyeur" />
+</B_ev>
+
+<B_ev_passe>
+<h2><:archive:></h2>
+<div class="agenda">
+[<p>(#PAGINATION)</p>]
+<BOUCLE_ev_passe(EVENEMENTS){id_evenement_source=0}{par date_debut}{age>0}{id_evenement IN #GET{id_evenement}}{pagination}>
+	<div class="ev_corp">
+
+<BOUCLE_art(ARTICLES){id_auteur}{id_article}{id_rubrique IN 8,26,39}{lang=#ENV{lang}}>#TITRE
+<a href="#URL_ARTICLE"> #SET{lien,</a>}
+</BOUCLE_art>
+	<BOUCLE_art2(ARTICLES){id_article}{id_rubrique IN 8,26,39}>
+		<BOUCLE_art_trad(ARTICLES){traduction} {lang=#ENV{lang}}>
+			<a href="#URL_ARTICLE"> #SET{lien,</a>}
+		</BOUCLE_art_trad>
+			<BOUCLE_art1(ARTICLES){id_article}{id_rubrique IN 8,26,39}>
+				<BOUCLE_art_trad_or(ARTICLES){traduction} {id_rubrique IN 8,26,39}{origine_traduction}{lang!=#ENV{lang}}>
+				<a href="#URL_ARTICLE"> #SET{lien,</a>} #SET{langue#ID_EVENEMENT,[#LANG]}
+				</BOUCLE_art_trad_or>
+			</BOUCLE_art1>
+		<//B_art_trad>
+	</BOUCLE_art2>
+<BOUCLE_art_exclus(EVENEMENTS){id_evenement}{id_rubrique !IN 8,26,39}>
+[(#DESCRIPTIF|?{' ',''})<a href="[(#DESCRIPTIF|supprimer_tags)]">#TITRE [(#SET{lien,</a>})]]
+</BOUCLE_art_exclus>
+<//B_art>
+
+[(#DATE_DEBUT|jour|=={[(#DATE_FIN|jour)]}|?{
+  [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+[(#HORAIRE|=={oui}|?{
+   [(#REM) memes heures ?]
+     [(#DATE_DEBUT|=={#DATE_FIN}|?{ <:a:>  
+[(#DATE_DEBUT|heures)]h[(#DATE_DEBUT|minutes)],''})]
+   [(#REM) pas memes heures ?]
+     [(#DATE_DEBUT|!={#DATE_FIN}|?{<:from:> 
+[(#DATE_DEBUT|heures)]:[(#DATE_DEBUT|minutes)] <:a:>
+[(#DATE_FIN|heures)]:[(#DATE_FIN|minutes)],''})]
+,''})]
+,
+ [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+[(#HORAIRE|=={oui}|?{ : 
+  [(#DATE_DEBUT|heures)]H[(#DATE_DEBUT|minutes)],''})] <:a:> 
+[(#DATE_FIN|nom_jour)]
+  [(#DATE_FIN|affdate)] [(#HORAIRE|=={oui}|?{ : 
+  [(#DATE_FIN|heures)]H[(#DATE_FIN|minutes)],''})]  })] #GET{lien} #GET{langue#ID_EVENEMENT}
+
+	<BOUCLE_mots_groupe2(MOTS){id_evenement}{id_groupe!=14}>
+		<B_mots_titre2>
+:
+		<BOUCLE_mots_titre2(MOTS){id_groupe}{id_evenement}>
+#TITRE [, (#DESCRIPTIF)]
+		</BOUCLE_mots_titre2>
+		</B_mots_titre2>
+	</BOUCLE_mots_groupe2>
+[: (#LIEU)]
+	<//B_mots_groupe2>
+</div>
+</BOUCLE_ev_passe>
+[<p>(#PAGINATION)</p>]
+</div>
+</B_ev_passe>

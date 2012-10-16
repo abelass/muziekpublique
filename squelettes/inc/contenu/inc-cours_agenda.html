@@ -1,0 +1,40 @@
+#CACHE{24*3600}
+
+#SET{date,#DATE}
+
+#SET{jours,#ARRAY}
+#SET{evenements,#ARRAY{}}
+
+[(#REM)Trie pour affichage par jour de semaine]
+
+
+
+#SET{jours,#ENV{id_article}|nombres_jours}
+
+
+<BOUCLE_lister(POUR){tableau #GET{jours}} {par cle}>
+
+	<B_ev>
+	<div>
+		<b>
+		[(#EVAL{date('Y-m-d', strtotime("2011W02#CLE"))}|nom_jour)]
+		</b>	
+	<BOUCLE_ev(EVENEMENTS){id_evenement IN #VALEUR}{date_fin>=#DATE}{date_fin>=#DATE}>
+	<p>[(#TITRE|couper{20}) : ] [(#DATE_DEBUT|affdate{d/m/Y})]-[(#DATE_FIN|affdate{d/m/Y})]<B_niveau> (<BOUCLE_niveau(MOTS){id_groupe=13}{id_evenement}{', '}>#TITRE</BOUCLE_niveau>)</B_niveau></p>
+	<B_sauf>
+	<p>
+	<:interruptions:> :
+	<BOUCLE_sauf(EVENEMENTS){id_evenement_source=#ID_EVENEMENT}{', '}{date_debut>=#DATE}>[(#DATE_DEBUT|affdate{d/m/Y})]</BOUCLE_sauf>
+	</p>
+	</B_sauf>
+	</BOUCLE_ev>
+	</div>
+	</B_ev>
+</BOUCLE_lister>
+
+
+
+
+
+
+

@@ -1,0 +1,23 @@
+#CACHE{3600*24}
+#SET{date,(#DATE|modifier_jours{-10,'Y-m-d'})}
+
+<BOUCLE_evenement(EVENEMENTS){id_rubrique IN 1,27,40}{id_evenement_source=0}{id_mot=229}{id_mot!=287}>
+
+	<BOUCLE_cours_premier_rappel(spip_asso_activites){id_evenement}{statut !IN ok,rappel1,rappel2,ok_prov,sorti} {date<#GET{date}}>
+	<INCLURE{fond=inc/inc-mail_relance_cours_envoi}{email} {sujet=<:premier_rappel_sujet:> : #TITRE} {nom}{message=<:premier_rappel_message:>} {statut=rappel1}{id_activite}{date=#ENV{date}}>
+	</BOUCLE_cours_premier_rappel>
+<!--	
+
+<BOUCLE_cours_deuxieme_rappel(spip_asso_activites){id_evenement}{statut=rappel1}{rappel<#GET{date}}>
+	<INCLURE{fond=inc/inc-mail_relance_cours_envoi}{email} {sujet=<:deuxieme_rappel_sujet:> : #TITRE} {nom}{message=<:deuxieme_rappel_message:>} {statut=rappel2}{id_activite}{date=#ENV{date}}>
+</BOUCLE_cours_deuxieme_rappel>
+-->
+<!--	
+
+<BOUCLE_cours_troisieme_rappel(spip_asso_activites){id_evenement}{statut=rappel2}{rappel<#GET{date}}>
+	<INCLURE{fond=inc/inc-mail_relance_cours_envoi}{email} {sujet=<:troisieme_rappel_sujet:> : #TITRE} {nom}{message=<:troisieme_rappel_message:>} {statut="rappel3"}{id_activite}{date=#ENV{date}}>
+</BOUCLE_cours_troisieme_rappel>
+	
+-->
+	
+</BOUCLE_evenement>

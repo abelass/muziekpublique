@@ -1,0 +1,17 @@
+#CACHE{0}
+
+[<div>(#ENV*{message})</div>]
+
+[<div style="color:red; font-style:bold;">(#ENV*{commentaires}|=={1}|?{'',' '}) #ENV*{commentaires} </div>]
+
+
+<div>
+[(#ENV*{commentaires}|=={1}|?{' ',''})
+
+<div style= "padding-bottom:10px">
+<h2>Confirmation</h2>
+
+
+#FORMULAIRE_INSCRIPTION_COURS]
+
+</div>

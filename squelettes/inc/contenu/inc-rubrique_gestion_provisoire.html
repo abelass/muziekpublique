@@ -1,0 +1,117 @@
+
+<BOUCLE_auteur_elargis_prenom(spip_auteurs_elargis){prenom LIKE %(#ENV{prenom})%} {statut_provisoire!=oui}{doublons}{0,10}>
+<BOUCLE_auteur_principale_prenom(AUTEURS){id_auteur}{tout}{statut!=5poubelle}>
+<tr class="odd">
+<td class="cell" align="center"><input  type="radio" name="id_auteur_or"  value="#ID_AUTEUR" class="checkbox" /></td>
+<td class="cell">#ID_AUTEUR</td>
+<td class="cell">#PRENOM</td>
+<td class="cell">#NOM_FAMILLE</td>
+<td class="cell">#NAISSANCE</td>
+<td class="cell">#ADRESSE</td>
+<td class="cell">#CODE_POSTAL</td>
+<td class="cell">#VILLE</td>
+<td class="cell">#EMAIL</td>
+</tr>
+</BOUCLE_auteur_principale_prenom>
+</BOUCLE_auteur_elargis_prenom>
+
+<BOUCLE_auteur_elargis_nom_famille(spip_auteurs_elargis) {nom_famille LIKE %(#ENV{nom_famille})%}{statut_provisoire!=oui}{doublons}{0,10}>
+<BOUCLE_auteur_principale_nom_famille(AUTEURS){id_auteur}{tout}{statut!=5poubelle}>
+<tr class="odd">
+<td class="cell" align="center"><input  type="radio" name="id_auteur_or"  value="#ID_AUTEUR" class="checkbox" /></td>
+<td class="cell">#ID_AUTEUR</td>
+<td class="cell">#PRENOM</td>
+<td class="cell">#NOM_FAMILLE</td>
+<td class="cell">#NAISSANCE</td>
+<td class="cell">#ADRESSE</td>
+<td class="cell">#CODE_POSTAL</td>
+<td class="cell">#VILLE</td>
+<td class="cell">#EMAIL</td>
+</tr>
+</BOUCLE_auteur_principale_nom_famille>
+</BOUCLE_auteur_elargis_nom_famille>
+
+<BOUCLE_auteur_elargis_naissance(spip_auteurs_elargis) {naissance LIKE %(#ENV{naissance})%}{statut_provisoire!=oui}{doublons}{0,10}>
+<BOUCLE_auteur_principale_naissance(AUTEURS){id_auteur}{tout}{statut!=5poubelle}>
+<tr class="odd">
+<td class="cell" align="center"><input  type="radio" name="id_auteur_or"  value="#ID_AUTEUR" class="checkbox" /></td>
+<td class="cell">#ID_AUTEUR</td>
+<td class="cell">#PRENOM</td>
+<td class="cell">#NOM_FAMILLE</td>
+<td class="cell">#NAISSANCE</td>
+<td class="cell">#ADRESSE</td>
+<td class="cell">#CODE_POSTAL</td>
+<td class="cell">#VILLE</td>
+<td class="cell">#EMAIL</td>
+</tr>
+</BOUCLE_auteur_principale_naissance>
+</BOUCLE_auteur_elargis_naissance>
+
+
+<BOUCLE_auteur_elargis_adresse(spip_auteurs_elargis) {adresse LIKE %(#ENV{adresse})%}{statut_provisoire!=oui}{doublons}{0,10}>
+<BOUCLE_auteur_principale_adresse(AUTEURS){id_auteur}{tout}{statut!=5poubelle}>
+<tr class="odd">
+<td class="cell" align="center"><input  type="radio" name="id_auteur_or"  value="#ID_AUTEUR" class="checkbox" /></td>
+<td class="cell">#ID_AUTEUR</td>
+<td class="cell">#PRENOM</td>
+<td class="cell">#NOM_FAMILLE</td>
+<td class="cell">#NAISSANCE</td>
+<td class="cell">#ADRESSE</td>
+<td class="cell">#CODE_POSTAL</td>
+<td class="cell">#VILLE</td>
+<td class="cell">#EMAIL</td>
+</tr>
+</BOUCLE_auteur_principale_adresse>
+</BOUCLE_auteur_elargis_adresse>
+
+
+
+<BOUCLE_auteur_elargis_code_postal(spip_auteurs_elargis) {code_postal LIKE %(#ENV{code_postal})%}{statut_provisoire!=oui}{doublons}{0,10}>
+<BOUCLE_auteur_principale_code_postal(AUTEURS){id_auteur}{tout}{statut!=5poubelle}>
+<tr class="odd">
+<td class="cell" align="center"><input  type="radio" name="id_auteur_or"  value="#ID_AUTEUR" class="checkbox" /></td>
+<td class="cell">#ID_AUTEUR</td>
+<td class="cell">#PRENOM</td>
+<td class="cell">#NOM_FAMILLE</td>
+<td class="cell">#NAISSANCE</td>
+<td class="cell">#ADRESSE</td>
+<td class="cell">#CODE_POSTAL</td>
+<td class="cell">#VILLE</td>
+<td class="cell">#EMAIL</td>
+</tr>
+</BOUCLE_auteur_principale_code_postal>
+</BOUCLE_auteur_elargis_code_postal>
+
+<BOUCLE_auteur_elargis_ville(spip_auteurs_elargis) {ville LIKE %(#ENV{ville})%}{statut_provisoire!=oui}{doublons}{0,10}>
+<BOUCLE_auteur_principale_ville(AUTEURS){id_auteur}{tout}{statut!=5poubelle}>
+<tr class="odd">
+<td class="cell" align="center"><input  type="radio" name="id_auteur_or"  value="#ID_AUTEUR" class="checkbox" /></td>
+<td class="cell">#ID_AUTEUR</td>
+<td class="cell">#PRENOM</td>
+<td class="cell">#NOM_FAMILLE</td>
+<td class="cell">#NAISSANCE</td>
+<td class="cell">#ADRESSE</td>
+<td class="cell">#CODE_POSTAL</td>
+<td class="cell">#VILLE</td>
+<td class="cell">#EMAIL</td>
+</tr>
+</BOUCLE_auteur_principale_ville>
+</BOUCLE_auteur_elargis_ville>
+
+<BOUCLE_auteur_principale_email(AUTEURS){tout}{email LIKE %(#ENV{email})%}{statut!=5poubelle}{0,10}>
+<BOUCLE_auteur_elargis_email(spip_auteurs_elargis){id_auteur}{statut_provisoire!=oui}{doublons}>
+<tr class="odd">
+<td class="cell" align="center"><input  type="radio" name="id_auteur_or"  value="#ID_AUTEUR" class="checkbox" /></td>
+<td class="cell">#ID_AUTEUR</td>
+<td class="cell">#PRENOM</td>
+<td class="cell">#NOM_FAMILLE</td>
+<td class="cell">#NAISSANCE</td>
+<td class="cell">#ADRESSE</td>
+<td class="cell">#CODE_POSTAL</td>
+<td class="cell">#VILLE</td>
+<td class="cell">#EMAIL</td>
+</tr>
+</BOUCLE_auteur_elargis_email>
+</BOUCLE_auteur_principale_email>
+
+

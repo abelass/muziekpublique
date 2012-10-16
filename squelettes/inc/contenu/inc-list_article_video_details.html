@@ -1,0 +1,71 @@
+#CACHE{12*3600}
+<BOUCLE_art(ARTICLES){id_article}>
+			#SET{donnees_logo,''}
+			#SET{donnees_logo,#INCLURE{fond=inc/contenu/inc-logo_art,id_article,width=248,survol=ok}}				
+			#SET{fichier,''}
+			#SET{fichier,#GET{donnees_logo}|table_valeur{fichier}}			
+			#SET{width,''}
+			#SET{width,#GET{donnees_logo}|table_valeur{width}}
+			#SET{height,''}
+			#SET{height,#GET{donnees_logo}|table_valeur{height}}
+			#SET{auteur,''}
+			#SET{auteur,#GET{donnees_logo}|table_valeur{auteur}}		
+			#SET{icone,''}
+			#SET{icone,#GET{donnees_logo}|table_valeur{icone}}			
+			#SET{url_photo,''}
+			#SET{url_photo,#GET{donnees_logo}|table_valeur{url_photo}}			
+			#SET{logo,''}
+			#SET{logo,#GET{donnees_logo}|table_valeur{logo}}			
+
+			
+			[(#SET{icone,[(#CHEMIN{styles/img/icone_play.png}|image_reduire{40}|inserer_attribut{class,icone})]})]
+										
+					
+			#SET{class,class=#ENV{class,spip_logos}}
+			
+			#SET{style,style=width:#GET{width}px;}			
+			
+			#SET{attribut_div,(#GET{style}) (#GET{class})}
+					
+			[(#GET{logo}|oui)
+				[(#SET{logo_fini,
+					<div #GET{attribut_div}>
+					#GET{icone}	
+					#GET{logo}					
+					</div>
+				})]
+			]
+	
+	
+	<BOUCLE_art1(ARTICLES){id_article}{lang}>[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+		<div class="Item highlight">
+			<h3><a href="#GET{url}">#TITRE</a></h3>	
+			[<span class="Soustitre">(#SURTITRE)</span>]
+			<a href="#GET{url}">
+				[(#LOGO_ARTICLE_SURVOL|!=={''}|?{
+				[(#LOGO_ARTICLE_SURVOL|image_reduire{248})],
+				#GET{logo_fini}}
+				)]
+			</a>
+			<span class="More"> >> <a href="[(#GET{url})]"><:voir_video:></a></span>
+		</div>
+	</BOUCLE_art1>
+		<BOUCLE_art2(ARTICLES){traduction}{lang}>[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+			<div class="Item highlight">
+				<h3><a href="#GET{url}">#TITRE</a></h3>	
+				[<span class="Soustitre">(#SURTITRE)</span>]
+				<a href="#GET{url}">[(#LOGO_ARTICLE_SURVOL|!=={''}|?{[(#LOGO_ARTICLE_SURVOL|image_reduire{248})],#GET{logo_fini}})]</a>
+				<span class="More"> >> <a href="[(#GET{url})]"><:voir_video:></a></span>
+			</div>
+		</BOUCLE_art2>
+		<BOUCLE_art3(ARTICLES){traduction}{origine_traduction}>[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+			<div class="Item highlight">
+				<h3><a href="#GET{url}">#TITRE</a></h3>	
+				[<span class="Soustitre">(#SURTITRE)</span>]
+				<a href="#GET{url}">[(#LOGO_ARTICLE_SURVOL|!=={''}|?{[(#LOGO_ARTICLE_SURVOL|image_reduire{248})],#GET{logo_fini}})]</a>
+				<span class="More"> >> <a href="[(#GET{url})]"><:voir_video:></a></span>
+			</div>
+		</BOUCLE_art3>
+		<//B_art2>
+	<//B_art1>
+</BOUCLE_art>	

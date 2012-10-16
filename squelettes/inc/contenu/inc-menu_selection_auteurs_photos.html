@@ -1,0 +1,14 @@
+#CACHE{24*3600}
+#SET{url_rubrique,#URL_RUBRIQUE}
+<B_mots>
+	<select id="menupays" class="forml"
+        onchange="gopays()">
+		<option selected="selected" value=""><BOUCLE_auteur(MOTS) {id_mot=#ENV{id_mot}}>#TITRE</BOUCLE_auteur><:auteur:><//B_auteur></option>
+<BOUCLE_mots(MOTS){id_groupe=20}{tout}{id_mot!=#ENV{id_mot}}>
+	<B_doc>
+		[<option value="[(#GET{url_rubrique}|parametre_url{id_mot,#ID_MOT}|parametre_url{id_groupe,#ID_GROUPE}|parametre_url{lang,#ENV{lang}})]">(#TITRE|unique)</option>]
+	<BOUCLE_doc(DOCUMENTS){id_mot}{0,1}>
+	</BOUCLE_doc>
+	</BOUCLE_mots>
+		</select>
+</B_mots>

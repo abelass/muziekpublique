@@ -1,0 +1,91 @@
+#CACHE{0}
+#SET{date,#DATE}
+<BOUCLE_art(EVENEMENTS){id_evenement}>
+
+[(#REM) Détermine la validité de la carte de membre]
+<BOUCLE_auteurs_el(spip_auteurs_elargis){id_auteur=#SESSION{id_auteur}}>
+[(#VALIDITE|>{#DATE}|?{#SET{membre,ok},#SET{membre,echu} })]
+</BOUCLE_auteurs_el>
+	<BOUCLE_auteur(AUTEURS){id_auteur=#SESSION{id_auteur}}>
+		#SET{membre,inactif}
+	</BOUCLE_auteur>
+		#SET{membre,non}
+	<//B_auteur>
+<//B_auteurs_el>
+
+<div class="Detail">
+
+	<ul>
+		<li>
+			[(#ENV{voir}|=={horaire}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:horaire:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,horaire})]"><:horaire:></a>})]
+		</li>
+		[(#REM) desactivé<li>
+			[(#ENV{voir}|=={15}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:methode:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,15})]"><:methode:></a>})]
+		</li>]
+		[(#REM) desactivé
+		<li>
+			[(#ENV{voir}|=={13}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:niveau:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,13})]"><:niveau:></a>})]
+		</li>]
+		<li>
+			[(#ENV{voir}|=={11}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:lieu:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,11})]"><:lieu:></a>})]
+		</li>
+		[(#REM) desactivé<li>
+			[(#ENV{voir}|=={detail}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:detail:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,detail})]"><:detail:></a>})]
+		</li>]
+		[(#CACHER_PRIX|non)<li>
+			[(#ENV{voir}|=={prix}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:prix:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,prix})]"><:prix:></a>})]
+		</li>]
+		<li>
+			[(#ENV{voir}|=={agenda}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:agenda:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,agenda})]"><:agenda:></a>})]
+		</li>		
+		
+		<li>
+		<BOUCLE_inscr(MOTS){id_evenement}{id_groupe=14}>
+			<span class="Inscriptions" style="color:red;" >#TITRE</span>
+		</BOUCLE_inscr>
+			[(#ENV{voir}|=={inscription}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:inscription:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,inscription})]"><:inscription:></a>})]
+			
+		<//B_inscr>
+		
+		</li>
+	</ul>
+</div>
+<br class="nettoyeur"/>
+
+
+[(#ENV{voir}|=={prix}|oui)<INCLURE{fond=inc/contenu/inc-cours_prix}{env}{membre=#GET{membre}}{id_article=#ENV{id_trad}}/>
+#SET{defaut,non}
+]
+
+[(#REM) desactivé
+	[(#ENV{voir}|=={detail}|oui)#SET{defaut,non}<INCLURE{fond=inc/contenu/inc-cours_details}{env}{membre=#GET{membre}}/>]
+	]
+
+[(#ENV{voir}|=={horaire}|oui)#SET{defaut,non}<INCLURE{fond=inc/contenu/inc-cours_horaire}{env}{id_article=#ENV{id_trad}}/>]
+
+[(#ENV{voir}|=={agenda}|oui)#SET{defaut,non}<INCLURE{fond=inc/contenu/inc-cours_agenda}{env}{id_article=#ENV{id_trad}}/>]
+
+
+[(#REM)Informations tirés des mots clés attachés à l'événement]
+[(#GET{defaut}|non|et{#ENV{voir}|oui})
+<INCLURE{fond=inc/contenu/inc-cours_mots}{env}{id_groupe=#ENV{voir}}{id_article=#ENV{id_trad}}/>
+]
+#SET{type,cours}
+
+[(#ENV{voir}|=={inscription}|oui)
+
+	[(#REM) Desactive pour le moment. Ceux qui sont connectés, directement aux formulaires de cours
+		[(#SESSION{id_auteur}|oui)#FORMULAIRE_INSCRIPTION_COURS ]
+
+		[(#SESSION{id_auteur}|non) 
+		[(#INCLURE{fond=inc/contenu/inc-bouton_inscription}{id_evenement}{env}{type=cours})]]
+			
+	]
+	<div><:message_inscription_cours:></div>
+]
+	</BOUCLE_art>
+	<BOUCLE_ev_alter(EVENEMENTS){id_article=#ENV{id_trad}}{0,1}>
+		<INCLURE{fond=inc/contenu/inc-article_cours}{env}{id_evenement}{ajax}{self}/>
+	</BOUCLE_ev_alter>
+
+<//B_art>

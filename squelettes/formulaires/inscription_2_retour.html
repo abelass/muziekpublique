@@ -1,0 +1,31 @@
+
+
+<BOUCLE_auteurs(spip_auteurs_elargis){id_auteur=#ENV{id_auteur}}{tout}>
+	<form action="#SELF" method="post">
+	<input name="nom"  value="#NOM" type="hidden">
+
+	<input  name="username" value="#ENV{usernamne}" type="hidden">
+
+	<input name="email"  value="#ENV{email}" type="hidden">
+
+	<input name="categories" value="#CATEGORIES" type="hidden">
+
+	<input  name="nom_famille"  value="#NOM_FAMILLE" type="hidden">
+
+	<input  name="prenom" value="#PRENOM" type="hidden"/>
+
+	<input name="adresse" value="#ADRESSE" type="hidden"/>
+
+	<input  name="code_postal"  value="#CODE_POSTAL" type="hidden">
+
+	<input  name="ville"  value="#VILLE" type="hidden">
+
+	<input  name="partagedonne" value="#PARTAGEDONNEE" type="hidden">
+
+	<input  name="partage" value="#PARTAGE" type="hidden">
+
+	<input  name="telephone" value="#TELEPHONE" type="hidden">
+	<input  name="retour" value="Retour" type="hidden">
+	<input type="submit" name="modifier" class="spip_bouton" value="<:modifier_donner_perso:>" />
+</BOUCLE_auteurs>
+

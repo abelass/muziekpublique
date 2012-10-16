@@ -1,0 +1,124 @@
+#CACHE{0}
+
+<BOUCLE_rubrique(RUBRIQUES){id_mot}{tout}>
+#SET{id_rub#COMPTEUR_BOUCLE,#ID_RUBRIQUE}
+</BOUCLE_rubrique>
+
+#SET{id_rubrique,(#GET{id_rub1})|(#GET{id_rub2})|(#GET{id_rub3})}
+[(#GET{id_rubrique}|=={''}|?{#SET{id_rubrique,'0'}})]
+
+
+#SET{date,#DATE}
+
+<BOUCLE_montant(ASSO_ACTIVITES){statut=ok_prov}>
+<BOUCLE_evenements_montants(EVENEMENTS){id_evenement=#ID_EVENEMENT}{id_rubrique==#GET{id_rubrique}}>
+#SET{montant,(#MONTANT|plus{#GET{montant}})}
+</BOUCLE_evenements_montants>
+</BOUCLE_montant>
+
+
+
+</B_montant>
+<div class="solde">
+<div>
+<form method="post" action="#SELF">
+<legend>
+	<:solde_imputer:>
+</legend><br/>
+<input type="hidden" name="etat" value="" />
+<input class="fondl" name="solde" value="#ENV{solde}" type="text"/>
+<input name="url_retour" value="#ENV{url_retour}" type="hidden">
+<input class="fondl" name="gestion_paiements" value="OK" type="submit"/>
+</form>
+</div>
+<div><:montant_comptabilise:> : #GET{montant}</div>
+
+#SET{difference,(#ENV{solde}|moins{#GET{montant}})}
+
+<div [(#GET{difference}|=={'0'}|?{'style="font-weight:bold;"',style="color:red;"})]><:montant_difference:> : #GET{difference}</div>
+</div>
+
+[(#GET{montant}|?{' ',''})[(#GET{difference}|=={'0'}|?{' ',''})
+<form method="post" action="#SELF">
+<legend>
+	<:valider:>
+</legend>
+<input type="hidden" name="etat" value="enregistrer" />
+<input type="hidden" name="solde" value="#ENV{solde}" />
+<input name="url_retour" value="#ENV{url_retour,#SELF}" type="hidden">
+<input class="fondl" name="gestion_paiements" value="OK" type="submit"/>
+</form>
+ ]]
+
+<B_activites>
+
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td width="10%"><strong><:valider:></strong></td>
+		<td width="8%"><strong><:id_activite:></strong></td>
+		<td width="10%"><strong><:titre:></strong></td>
+		<td width="10%"><strong><:nom:></strong></td>
+		<td width="10%"><strong><:montant:></strong></td>
+		<td width="8%"><strong><:asso:activite_libelle_statut:></strong></td>
+		<td width="12%"><strong><:date_paiement:></strong></td>
+		<td width="13%"><strong><:source_paiement:></strong></td>
+		[(#ENV{id_mot{!=={'191'}|?{' ',''})<td width="12%"><strong><:validite_cours:></strong></td>
+		<td width="15%"><strong><:type_paiement:></strong>]
+		</tr>
+	</thead>
+		<tbody>
+<BOUCLE_activites(spip_asso_activites){statut!=ok}>
+<BOUCLE_evenements(EVENEMENTS){id_evenement=#ID_EVENEMENT}{id_rubrique==#GET{id_rubrique}}>
+
+<tr [(#STATUT|=={ok_prov}|?{style="background:grey;"})]>
+<td colspan="[(#ENV{id_mot{=={'191'}|?{'8','10'})]">
+<form method="post" action="#SELF">
+	<table border=0 cellpadding=2 cellspacing=0   >
+	<tr>
+	<td  width="10%" class="cell" align="center">
+	<input type="hidden" name="etat" value="intermediaire" />
+	<input type="hidden" name="solde" value="#ENV{solde}" />
+	<input class="fondl" name="gestion_paiements" value="+" type="submit"/>
+	<input class="fondl" name="gestion_paiements" value="-" type="submit"/>	
+	</td>
+	<td width="8%" class="cell"><input  type="hidden" name="id_activite"  value="#ID_ACTIVITE"/>#ID_ACTIVITE</td>
+	<td width="10%" class="cell">#TITRE</td>
+	<td width="10%" class="cell">#NOM</td>
+	<td width="10%" class="cell"><input style="width:90%;" type="text" name="montant"  value="#MONTANT"/></td>
+	<td width="8%" class="cell" style="margin-left:2px;">[(#STATUT|sinon{rien})]</td>
+	<td width="12%" class="cell"><input style="width:90%;" type="text" name="date_paiement"  value="[(#GET{date}|affdate{Y-m-d})]"/></td>
+	<td width="13%" class="cell"><select  style="width:90%;" name="source_paiement" >
+		<option value="transference_bancaire" [(#SOURCE_PAIEMENT|=={'transference_bancaire'}|?{selected="selected"})]>Transference bancaire</option>
+		<option value="cash" [(#SOURCE_PAIEMENT|=={'cash'}|?{selected="selected"})]>Cash</option>
+		<option value="paypal" [(#SOURCE_PAIEMENT|=={'paypal'}|?{selected="selected"})]>Paypal</option>
+		</select>
+	</td>
+	<BOUCLE_dernier_cours_periode(EVENEMENTS){id_evenement_source=#ID_EVENEMENT}{!par date_debut}{0,1}>
+#SET{validite,#DATE_DEBUT}
+	</BOUCLE_dernier_cours_periode>
+	[(#ENV{id_mot{!=={'191'}|?{' ',''})<td width="12%" class="cell"><input style="width:90%;" type="text" name="validite"  value="[(#VALIDITE|!=={'0000-00-00'}|?{#VALIDITE,#GET{validite}})]"/></td>
+
+	<td width="15%" class="cell"><select  style="width:100%;" name="type_paiement" >
+		<option value="annee" [(#TYPE_PAIEMENT|=={'annee'}|?{selected="selected"})]>Annee</option>
+		<option value="periode1" [(#TYPE_PAIEMENT|=={'periode1'}|?{selected="selected"})]>Période 1</option>
+		<option value="priode2" [(#TYPE_PAIEMENT|=={'priode2'}|?{selected="selected"})]>Période 2</option>
+		</select>
+	</td>]
+
+	</tr>
+
+	</table>
+</form>
+</td>
+</tbody>	
+</tr>
+</BOUCLE_evenements>
+</BOUCLE_activites>
+
+		
+</table>
+
+</B_activites>
+
+

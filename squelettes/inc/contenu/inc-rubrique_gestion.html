@@ -1,0 +1,465 @@
+#CACHE{0}
+<?php
+		//Petite routine pour mettre à jour les statuts de cotisation et activités "échus"
+		spip_query("UPDATE spip_auteurs_elargis SET statut_interne='echu'  WHERE statut_interne = 'ok' AND validite < CURRENT_DATE() ");
+		spip_query("UPDATE spip_asso_activites SET statut='echu'  WHERE statut = 'ok' AND validite < CURRENT_DATE() ");
+?>
+
+<div class="menu selection">
+<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+<thead>
+<tr bgcolor="#DBE1C5">
+	<td width="33%">
+<BOUCLE_membres(RUBRIQUES){id_mot=282} {tout}{lang}>
+	#SET{url_membres,#URL_RUBRIQUE} #SET{titre_membres,#TITRE}
+<h2>#TITRE</h2>
+</BOUCLE_membres>
+	</td>
+	<td width="33%">
+<BOUCLE_concerts(RUBRIQUES){id_mot=283} {tout}{lang}>
+<h2>#TITRE</h2>#SET{url_concerts,#URL_RUBRIQUE} #SET{titre_concerts,#TITRE}
+</BOUCLE_concerts>
+	</td>
+	<td width="33%">
+<BOUCLE_cours(RUBRIQUES){id_mot=284} {tout}{lang}>
+<h2>#TITRE</h2> #SET{titre_cours,#TITRE}#SET{url_cours,#URL_RUBRIQUE}
+</BOUCLE_cours>
+	</td>
+
+	<td width="33%">
+<BOUCLE_festivals(RUBRIQUES){id_trad=171} {tout}{lang}>
+<h2>#TITRE</h2> #SET{titre_festivals,#TITRE}#SET{url_festivals,#URL_RUBRIQUE}
+</BOUCLE_festivals>
+	</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>
+
+[(#REM) Acceès consultation rapide et impression étiquettes]
+
+<BOUCLE_requete_membres_liste(spip_requetes){defaut=defaut}{type=membres}>
+<form method="get" action="[(#GET{url_membres}|parametre_url{id_requete,#ID_REQUETE})]">
+<strong><:consulter_liste:></strong></legend><br/>
+#AFFICHAGE
+#SELECTION
+<input type="hidden" name="nom_requete" value="#NOM_REQUETE"/>
+<input type="hidden" name="id_requete" value="#ID_REQUETE"/>
+<input type="submit" name="requete" class="spip_bouton" value="OK"/>
+</form>
+</BOUCLE_requete_membres_liste>
+
+<form method="get" action="#GET{url_membres}">
+<BOUCLE_requete_membres_etiquettes(spip_requetes){defaut=defaut}{type=etiquettes}>
+<legend><strong><:etiquettes:></strong></legend><br/>
+#AFFICHAGE
+#SELECTION
+<input type="hidden" name="id_requete" value="#ID_REQUETE"/>
+</BOUCLE_requete_membres_etiquettes>
+<input type="submit" name="editer_labels" class="spip_bouton" value="<:etiquettes:>"/>
+</form>
+
+
+<a href="ecrire/?exec=ajouter_adherent" title="<:inscription2:ajouter_adherent:>"><img src="#CHEMIN{images/adherent.png}" alt="<:inscription2:ajouter_adherent:>"/></a>
+	</td>
+	<td>
+<form method="get" action="#GET{url_concerts}">
+<legend><strong><:consulter_liste:></strong></legend><br/>
+<input type="submit" name="consulter" class="spip_bouton" value="Ok"/>
+</form>
+	</td>
+	<td>
+<form method="get" action="#GET{url_cours}">
+<legend><strong><:consulter_liste:></strong></legend><br/>
+<input type="submit" name="consulter" class="spip_bouton" value="Ok"/>
+</form>
+	</td>
+	<td>
+<form method="get" action="#GET{url_festivals}">
+<legend><strong><:consulter_liste:></strong></legend><br/>
+<input type="submit" name="consulter" class="spip_bouton" value="Ok"/>
+</form>
+	</td>
+</tr>
+<tr>
+
+	<td>
+[(#REM) Des liens pour actions rapide renvoi vers d'autre page]
+
+	[(#REM) Le inscriptions membres pas payés, lien vers la gestion]
+<BOUCLE_membres_non_actifs(AUTEURS_ELARGIS){statut_interne!=ok}{categorie=1}>
+
+</BOUCLE_membres_non_actifs>
+<p><a href="spip.php?page=gestion&amp;gestion_paiements=oui&amp;type=membres&amp;url_retour=[(#SELF|entites_html)]" title="<:membres_non_actifs:>"> <:membres_non_actifs:></a>: #TOTAL_BOUCLE</p>
+</B_membres_non_actifs>
+
+	[(#REM) Le inscriptions membres echuis á relancer]
+
+<BOUCLE_membres_echus(spip_auteurs_elargis){statut_interne=echu}{categorie=1}>
+
+</BOUCLE_membres_echus>
+<p><a href="ecrire/?exec=edit_relances&amp;url_retour=[(#SELF|entites_html)]" title="<:membres_non_actifs:>" onclick="window.open(this.href); return false;"> <:asso:menu2_titre_relances_cotisations:></a>: #TOTAL_BOUCLE</p>
+</B_membres_echus>
+
+	[(#REM) Le inscriptions membres par paypal qui n'ont pas encore leur numéro de carte de membre actuel]
+
+<BOUCLE_membres_inscrits_paypal(spip_auteurs_elargis){statut_interne=ok_cm_maj}{categorie=1}>
+
+</BOUCLE_membres_inscrits_paypal>
+<p><a href="spip.php?page=gestion&amp;gestion_papypal=oui&amp;url_retour=[(#SELF|entites_html)]" title="<:membre_paypal_carte_membre:>"> <:membre_paypal_carte_membre:></a>: #TOTAL_BOUCLE</p>
+</B_membres_inscrits_paypal>
+
+
+[(#REM) Des liens pour actions rapide dans la même page]
+
+	[(#REM) Inscriptions provisoires, ceux qui ne se souvenait plus de leurs donnes d'accès]
+
+<BOUCLE_statut_provisoire_index(spip_auteurs_elargis){statut_provisoire=oui}{0,1}>
+<p><a href="#membres_provisoires"><:inscriptions_provisoires:></a></p>
+</BOUCLE_statut_provisoire_index>
+
+	[(#REM) Inscriptions partage, ceux qui ne veulent recevoir le bulletin qu'une fois]
+<BOUCLE_partage_index(spip_auteurs_elargis){partage=attente}{0,1}>
+<p><a href="#membres_partage"><:inscriptions_partage:></a></p>
+</BOUCLE_partage_index>
+
+	[(#REM) Le montant payé est inféreieur à la cotisation fixé]
+<BOUCLE_cotisation(spip_asso_categories){id_categorie=1}>
+#SET{cotisation,#COTISATION}
+</BOUCLE_cotisation>
+
+<BOUCLE_montant_index(spip_auteurs_elargis){statut_interne=ok}{montant<#GET{cotisation}}{0,1}>
+<p><a href="#membres_montants"><:montant_carte_membre_insuffisant:></a></p>
+</BOUCLE_montant_index>
+
+	[(#REM) Le derniers inscrits]
+
+<p><a href="#derniers_auteurs"><:derniers_inscrits:></a></p>
+	</td>
+	<td>
+[(#REM) Le inscriptions concerts pas payés, lien vers la gestion]
+#SET{id_eve,#ARRAY}
+<BOUCLE_montant_nonpayes(spip_asso_activites){statut!=ok}>
+	<BOUCLE_e(EVENEMENTS){id_evenement=#ID_EVENEMENT}{id_rubrique IN 8,26,39}>
+
+	</BOUCLE_e>
+	#SET{concerts,oui} #SET{compteur_concerts,(#TOTAL_BOUCLE|plus{#GET{compteur_concerts}})}
+	</B_e>
+
+</BOUCLE_montant_nonpayes>
+[(#GET{concerts}|?{' ',''})<p><a href="spip.php?page=gestion&amp;gestion_paiements=oui&amp;id_mot=191&amp;url_retour=[(#SELF|entites_html)]" title="Concerts"><:gestion_paiements:></a>: #GET{compteur_concerts}</p>]
+
+<BOUCLE_prochains_concerts_index(EVENEMENTS){age<0}{id_evenement_source=0}{id_rubrique IN 39,26,8}{pagination}{0,1}>
+<p><a href="#prochains_concerts"><:concerts_futurs:></a></p>
+</BOUCLE_prochains_concerts_index>
+
+	</td>
+	<td>
+[(#REM) Le inscriptions cours pas payés, lien vers la gestion]
+<BOUCLE_montant_cours(spip_asso_activites){statut!=ok}>
+	<BOUCLE_evenements_montants_cours(EVENEMENTS){id_evenement=#ID_EVENEMENT}{id_rubrique IN 1,27,40}>
+
+	</BOUCLE_evenements_montants_cours>
+	#SET{cours,oui} #SET{compteur_cours,(#TOTAL_BOUCLE|plus{#GET{compteur_cours}})}
+</B_evenements_montants_cours>
+</BOUCLE_montant_cours>
+
+[(#REM) Gestion manuel des paiements de cours - hors paiements paypal]
+[(#GET{cours}|?{' ',''})<p><a href="spip.php?page=gestion&amp;gestion_paiements=oui&amp;id_mot=199&amp;url_retour=[(#SELF|entites_html)]" title="Cours"><:gestion_paiements:></a>: #GET{compteur_cours}</p>]
+
+[(#REM) Pas activé: gestion de remise à jour des cours individuels au début d'une nouvelle période de cours
+<a href="spip.php?page=gestion&amp;gestion_periode=oui&amp;id_mot=199&amp;url_retour=[(#SELF|entites_html)]" title="<:gestion_periode_cours_individue:>"><:gestion_periode_cours_individuel:></a>]
+
+<p><a href="#prochains_cours"><:periode_courante:></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+
+
+
+<div class="menu gestion">
+
+[(#REM) Gestion des membres]
+
+<h2>#GET{titre_membres}</h2>
+
+[(#REM) Liste compartatives des inscriptions provisoires (membres qui ont perdu leurs données d'accès]
+<B_statut_provisoire>
+<a name="membres_provisoires"></a>
+<h3><:inscriptions_provisoires:></h3>
+	<form action="[(#GET{url_membres}|parametre_url{comparer,provisoire})]" method="post">
+	<input  type="hidden" name="url_retour"  value="[(#SELF|parametre_url{lang,''})]#membres_provisoire"/>
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td><strong><:comparer:></strong></td>
+		<td><strong><:id_auteur:></strong></td>
+		<td><strong><:prenom:></strong></td>
+		<td><strong><:nom_famille:></strong></td>
+		<td><strong><:adresse:></strong></td>
+		<td><strong><:code_postal:></strong></td>	
+		<td><strong><:ville:></strong></td>
+		<td><strong><:email:></strong></td>
+		</tr>
+	</thead>
+<BOUCLE_statut_provisoire(spip_auteurs_elargis){statut_provisoire=oui}>
+
+	<tbody>	
+		<tr>
+		<td class="cell"><input name="id_auteur" value="#ID_AUTEUR" type="radio"/></td>
+		<td class="cell">#ID_AUTEUR</td>
+		<td class="cell">#PRENOM</td>
+		<td class="cell">#NOM_FAMILLE</td>
+		<td class="cell">#ADRESSE</td>
+		<td class="cell">#CODE_POSTAL</td>
+		<td class="cell">#VILLE</td>
+
+<BOUCLE_statut_provisoire_auteurs(AUTEURS){id_auteur}{tout}>
+		<td class="cell">#EMAIL</td>#SET{email,#EMAIL}
+</BOUCLE_statut_provisoire_auteurs>
+		</tr>
+</BOUCLE_statut_provisoire>
+<tr>
+<td>
+
+<input  type="submit" name="spip_bouton"  value="ok"/>
+</td>
+</tr>
+
+	</tbody>
+	</table>
+</B_statut_provisoire>
+[(#REM) Liste comparatives des nouveaux inscrits avec partage (ceux qui disent habiter avec quelqu'un qui re&ccedil;oit déjà le bulletin)]
+<B_partage>
+<a name="membres_partage"></a>
+<h3><:inscriptions_partage:></h3>
+<BOUCLE_partage(spip_auteurs_elargis){partage=attente}>
+	<form action="[(#GET{url_membres}|parametre_url{comparer,partage})]" method="post">
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td><strong><:comparer:></strong></td>
+		<td><strong><:id_auteur:></strong></td>
+		<td><strong><:prenom:></strong></td>
+		<td><strong><:nom_famille:></strong></td>
+		<td><strong><:adresse:></strong></td>
+		<td><strong><:code_postal:></strong></td>	
+		<td><strong><:ville:></strong></td>
+		<td><strong><:partagedonne:></strong></td>
+		</tr>
+	</thead>
+	<tbody>	
+		<tr>
+		<td class="cell"><input name="id_auteur" value="#ID_AUTEUR" type="radio"/></td>
+		<td class="cell">#ID_AUTEUR</td>
+		<td class="cell">#PRENOM</td>
+		<td class="cell">#NOM_FAMILLE</td>
+		<td class="cell">#ADRESSE</td>
+		<td class="cell">#CODE_POSTAL</td>
+		<td class="cell">#VILLE</td>
+		<td class="cell">#PARTAGEDONNE</td>
+		</tr>
+<tr bgcolor="#E1E5E2"><td colspan="8" style="text-align:center;"><strong><:entrees_semblables:></strong></td></tr>
+<tr>
+<td class="cell" colspan="8" ><a href="[(#GET{url_membres}|parametre_url{type,partage}||parametre_url{id_auteur_prov,#ID_AUTEUR}|parametre_url{sel_nom,ok}|parametre_url{sel_prenom,ok}|parametre_url{sel_nom_famille,ok}|parametre_url{sel_email,ok}|parametre_url{sel_code_postal,ok}|parametre_url{sel_ville,ok}|parametre_url{affichage,30})]"><:recherche_manuel:></a>
+</td>
+</tr>
+<tr>
+<td class="cell" colspan="8" >
+<input  type="hidden" name="url_retour"  value="[(#SELF|parametre_url{lang,''})]#membres_partage"/>
+<input  type="hidden" name="type"  value="partage"/>
+<input  type="submit" name="spip_bouton"  value="ok"/>
+</td>
+
+</tr>
+	</tbody>
+	</table>
+	</form>
+</BOUCLE_partage>
+
+<B_montant>
+<a name="membres_montants"></a>
+<h3><:montant_carte_membre_insuffisant:></h3>
+<p><:prix:> : #GET{cotisation}</p>
+<BOUCLE_montant(spip_auteurs_elargis){statut_interne=ok}{montant<#GET{cotisation}}>
+	<form action="spip.php?page=gestion" method="post">
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td colspan="4"><strong><:action:></strong></td>
+		<td><strong><:id_auteur:></strong></td>
+		<td><strong><:prenom:></strong></td>
+		<td><strong><:nom_famille:></strong></td>
+		<td><strong><:adresse:></strong></td>
+		<td><strong><:code_postal:></strong></td>	
+		<td><strong><:ville:></strong></td>
+		<td><strong><:Montant:></strong></td>
+		</tr>
+	</thead>
+	<tbody>	
+		<tr>
+		
+<td class="cell impair"><a href="ecrire/?exec=auteur_infos&amp;id_auteur=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/admin-12.gif}" title="Modifier le visiteur"/></a></td>
+<td  class="cell" ><a href="ecrire/?exec=ajout_cotisation&amp;id=#ID_AUTEUR&amp;url_retour=#SELF" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/cotis-12.gif}" title="Ajouter une cotisation"></a></td>
+<td class="cell" ><a href="ecrire/?exec=voir_adherent&amp;id=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/voir-12.png}" title="Voir le membre"/></a></td>
+<td class="cell" ><a href="[(#GET{url_membres}|parametre_url{comparer,doublons}|parametre_url{id_auteur,#ID_AUTEUR}|parametre_url{url_retour,#SELF})]"><img src="#CHEMIN{images/doublons.png}" title="Chercher des doublons"/></a></td>
+
+		<td class="cell">#ID_AUTEUR</td>
+		<td class="cell">#PRENOM</td>
+		<td class="cell">#NOM_FAMILLE</td>
+		<td class="cell">#ADRESSE</td>
+		<td class="cell">#CODE_POSTAL</td>
+		<td class="cell">#VILLE</td>
+		<td class="cell">#MONTANT</td>
+		</tr>
+
+	</tbody>
+	</table>
+</BOUCLE_montant>
+
+<B_derniers_auteurs>
+<a name="derniers_auteurs"></a>
+<h3><:derniers_inscrits:></h3>
+[<p>(#PAGINATION)</p>]
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td colspan="4"><strong><:action:></strong></td>
+		<td><strong><:id_auteur:></strong></td>
+		<td><strong><:prenom:></strong></td>
+		<td><strong><:nom_famille:></strong></td>
+		<td><strong><:adresse:></strong></td>
+		<td><strong><:code_postal:></strong></td>	
+		<td><strong><:ville:></strong></td>
+		<td><strong><:creation:></strong></td>
+		</tr>
+	</thead>
+<BOUCLE_derniers_auteurs(spip_auteurs_elargis){tout}{!par creation}{pagination}{traitement!=ok}>
+<B_derniers>
+
+<BOUCLE_derniers(AUTEURS){id_auteur}{tout}>
+
+	<tbody>	
+		<tr>
+<td class="cell impair"><a href="ecrire/?exec=auteur_infos&amp;id_auteur=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/admin-12.gif}" title="Modifier le visiteur"/></a></td>
+<td  class="cell" ><a href="ecrire/?exec=ajout_cotisation&amp;id=#ID_AUTEUR&amp;url_retour=#SELF" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/cotis-12.gif}" title="Ajouter une cotisation"></a></td>
+<td class="cell" ><a href="ecrire/?exec=voir_adherent&amp;id=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/voir-12.png}" title="Voir le membre"/></a></td>
+<td class="cell" ><a href="[(#GET{url_membres}|parametre_url{comparer,doublons}|parametre_url{id_auteur,#ID_AUTEUR}|parametre_url{url_retour,#SELF})]"><img src="#CHEMIN{images/doublons.png}" title="Chercher des doublons"/></a></td>
+		<td class="cell">#ID_AUTEUR</td>
+		<td class="cell">#PRENOM</td>
+		<td class="cell">#NOM_FAMILLE</td>
+		<td class="cell">#ADRESSE</td>
+		<td class="cell">#CODE_POSTAL</td>
+		<td class="cell">#VILLE</td>
+		<td class="cell">#CREATION</td>
+		</tr>
+
+	</tbody>
+</BOUCLE_derniers>
+</BOUCLE_derniers_auteurs>
+	</table>
+[<p>(#PAGINATION)</p>]
+</B_derniers_auteurs>
+</div>
+
+[(#REM) inscriptions concerts]
+<div class="menu gestion">
+
+<h2>#GET{titre_concerts}</h2>
+<B_prochains_concerts>
+<a name="prochains_concerts"></a>
+   [<p>(#PAGINATION)</p>]
+<h3><:concerts_futurs:></h3>
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td colspan="5"><strong><:action:></strong></td>
+		<td><strong><:id_evenement:></strong></td>
+		<td><strong><:date_debut:></strong></td>
+		<td><strong><:nom:></strong></td>
+		<td><strong><:asso:activite_libelle_nombre_inscrit:></strong></td>
+		</tr>
+	</thead>
+	<tbody>	
+
+<BOUCLE_prochains_concerts(EVENEMENTS){age<0}{id_evenement_source=0}{id_rubrique IN 39,26,8}{pagination}>
+		<tr>
+		
+<td class="cell"><a href="ecrire/?exec=articles&amp;id_article=#ID_ARTICLE" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/edit-12.gif}" title="<:asso:activite_bouton_modifier_article:>"/></a>
+</td>
+<td class="cell"><a href="ecrire/?exec=edit_activite&amp;id_evenement=#ID_EVENEMENT&amp;prix_membres=#PRIX_MEMBRES&amp;prix_non_membres=#PRIX_NON_MEMBRES&amp;type=#concert" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/creer-12.gif}" title="<:asso:activite_bouton_ajouter_inscription:>"/></a></td>
+<td class="cell"><a href="ecrire/?exec=voir_activites&amp;id=#ID_EVENEMENT" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/voir-12.png}" title="<:asso:activite_bouton_voir_liste_inscriptions:>"/></a>
+</td>
+<td class="cell"><a href="#URL_ACTION_AUTEUR{export,#ID_EVENEMENT,#SELF}" title="<:imprimer_liste_inscriptions:>"><img src="#CHEMIN{images/print-24.png}" alt="<:imprimer_liste_inscriptions:>"/></a></td>
+<td class="cell"><a href="[(#GET{url_concerts}|parametre_url{envoi,email}|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{url_retour,[(#SELF|attribut_html)]#prochains_concerts})]" title="<:email_inscrits:>"><img src="#CHEMIN{images/mail-12.png}" alt="<:email_inscrits:>"/></a></td>
+		<td class="cell">#ID_EVENEMENT</td>
+		<td class="cell">[(#DATE_DEBUT|affdate)]</td>
+		<td class="cell">#TITRE</td>
+<BOUCLE_activites_prochains_concerts(spip_asso_activites){id_evenement}>
+#SET{compteur#ID_EVENEMENT,(#INSCRITS|plus{#GET{compteur#ID_EVENEMENT}})}
+</BOUCLE_activites_prochains_concerts>
+		<td class="cell">#GET{compteur#ID_EVENEMENT}</td>
+
+		</tr>
+</BOUCLE_prochains_concerts>
+	</tbody>
+	</table>
+
+   [<p>(#PAGINATION)</p>]
+</B_prochains_concerts>
+</div>
+
+[(#REM) inscriptions cours]
+<div class="menu gestion">
+<a name="prochains_cours"></a>
+<h2>#GET{titre_cours}</h2> 
+<BOUCLE_prochains_cours_derniere_semaine(EVENEMENTS){id_evenement_source=0}{!par date}{id_rubrique IN 1,27,40}{0,1}>#SET{annee,(#DATE_DEBUT|annee)}
+#SET{mois,(#DATE_DEBUT|mois)}
+<h3><:periode_cours:> : [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|annee)]</h3>
+
+<B_prochains_cours>
+   [<p>(#PAGINATION)</p>]
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td colspan="6"><strong><:action:></strong></td>
+		<td><strong><:id_evenement:></strong></td>
+		<td><strong><:jour:></strong></td>
+		<td><strong><:nom:></strong></td>
+		<td><strong><:asso:activite_libelle_nombre_inscrit:></strong></td>
+		</tr>
+	</thead>
+	<tbody>	
+
+<BOUCLE_prochains_cours(EVENEMENTS){id_evenement_source=0}{agendafull date_debut,date_fin, mois, #GET{annee}, #GET{mois}}{id_rubrique IN 1,27,40}{pagination}{par date}>
+		<tr>
+<td class="cell"><a href="ecrire/?exec=articles&amp;id_article=#ID_ARTICLE" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/edit-12.gif}" title="<:asso:activite_bouton_modifier_article:>"/></a>
+</td>
+<td class="cell"><a href="ecrire/?exec=edit_activite&amp;id_evenement=#ID_EVENEMENT&amp;prix_membres=#PRIX_MEMBRES&amp;type=cours" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/creer-12.gif}" title="<:asso:activite_bouton_ajouter_inscription:>"/></a></td>
+<td class="cell"><a href="ecrire/?exec=voir_activites&amp;id=#ID_EVENEMENT" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/voir-12.png}" title="<:asso:activite_bouton_voir_liste_inscriptions:>"/></a>
+</td>
+<td class="cell"><a href="#URL_ACTION_AUTEUR{export,#ID_EVENEMENT,#SELF}" title="<:imprimer_liste_inscriptions:>"><img src="#CHEMIN{images/print-24.png}" alt="<:imprimer_liste_inscriptions:>"/></a></td>
+<td class="cell"><a href="ecrire/?exec=pdf_fiche_participants&amp;id=#ID_EVENEMENT" title="Liste Participants pour professeur"><img src="#CHEMIN{images/liste.png}" alt="Liste Participants pour professeur"/></a></td>
+<td class="cell"><a href="[(#GET{url_cours}|parametre_url{envoi,email}|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{url_retour,[(#SELF|attribut_html)]#prochains_cours})]" title="<:email_inscrits:>"><img src="#CHEMIN{images/mail-12.png}" alt="<:email_inscrits:>"/></a></td>
+		<td class="cell">#ID_EVENEMENT</td>
+		<td class="cell">[(#DATE_DEBUT|nom_jour)]</td>
+		<td class="cell">#TITRE</td>
+		<td class="cell">
+<BOUCLE_activites_prochains_cours(spip_asso_activites){id_evenement}>
+</BOUCLE_activites_prochains_cours>
+		#COMPTEUR_BOUCLE
+</B_activites_prochains_cours>
+		</td>
+		</tr>
+</BOUCLE_prochains_cours>
+	</tbody>
+	</table>
+   [<p>(#PAGINATION)</p>]
+</B_prochains_cours>
+</BOUCLE_prochains_cours_derniere_semaine>
+</div>

@@ -1,0 +1,246 @@
+<BOUCLE_principale(ARTICLES) {id_article}>
+	#SET{titre,#TITRE}
+	#SET{date_article,#DATE}
+	
+[(#REM)Définit l'id_trad pour le cas ou l'id_evenement n'est pas présent dans l'environnement]
+
+[(#ID_TRAD|>{0}|?{#SET{id_trad_art,#ID_TRAD},#SET{id_trad_art,#ID_ARTICLE}})]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title>[(#TITRE|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+<meta name="description" content="[(#INTRODUCTION{300}|attribut_html)]
+<BOUCLE_art_or(ARTICLES){traduction}{origine_traduction}>#SET{id_trad_art,#ID_ARTICLE}
+<BOUCLE_mots(MOTS){id_article}{', '}>#TITRE</BOUCLE_mots>"/>
+</BOUCLE_art_or>
+<INCLURE{fond=inc/inc-head}>
+</head>
+
+<body>
+		<BOUCLE_rub_t(RUBRIQUES){id_rubrique}>#SET{id_trad,#ID_TRAD}
+	<!-- HEADER : Debut -->
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc/inc-entete}{env}{lang=#ENV{lang}}{id_rubrique}{id_trad}>
+
+	[(#REM) Contenu principal : contenu de l'article ]
+
+	<div class="Contenu">
+
+	<!-- LOGOS : Debut -->
+
+	<INCLURE{fond=inc/inc-logos}/>
+            
+	<!-- LOGOS : Fin -->
+	
+	[(#REM) Contenu principal : contenu de la rubrique ]
+
+	<!-- PODIUM : Debut -->
+
+		<div class="Podium">
+
+		[(#REM) Affiche les fleches prochain concert et concert précedents pour articles dans rubrique concerts]
+
+			[(#ID_TRAD|=={39}|oui|et{#ENV{voir}|=={photos}|non})
+				<INCLURE{fond=inc/contenu/inc-menu_evenements}{env}{id_article=#GET{id_trad_art}}/> #SET{upload,oui}
+				]
+				
+		[(#REM) Affiche les fleches prochain et précedents pour articles dans rubrique vidéos]
+
+			[(#ID_TRAD|=={165}|oui)
+				<INCLURE{fond=inc/contenu/inc-menu_videos}{env}{date=#GET{date_article}}{id_trad}{id_rubrique}/>
+				]				
+			<h1>#TITRE</h1>
+
+
+	[(#REM)Différents menus de sélection]
+	
+		 [(#REM)Différents menus de sélection]
+        	
+			[(#REM) menus de selection pour rubrique cours ][(#ID_TRAD|=={40}|et{#ENV{voir}|!={photos}}|oui)
+				<INCLURE{fond=inc/contenu/inc-cours_selection_menu}{env}{id_rubrique}/>
+				]
+							
+			[(#REM) menus de selection pour rubrique concerts ]
+			[(#ID_TRAD|=={39}|et{#ENV{voir}|!={photos}}|oui) 
+				<INCLURE{fond=inc/contenu/inc-agenda_selection_menu}{env}{id_rubrique}/>
+				]
+			[(#REM) menus de selection pour rubrique médias]
+			[(#ID_TRAD|=={35}|oui)
+				<INCLURE{fond=inc/contenu/inc-menu_selection_auteurs_photos}{id_rubrique} {id_mot=#ENV{id_mot}}>
+				]
+		</BOUCLE_rub_t>	
+		
+		#SET{affichage_date,#ARRAY{0,39,1,40,1,165,2,168}}
+		[(#GET{id_trad}|in_array{#GET{affichage_date}}|oui)
+			#SET{div,</div>}
+   		<div class="Item"> 
+   		    		
+				[(#GET{id_trad}|=={39}|oui)<INCLURE{fond=inc/contenu/inc-article_evenements_donnes_titre}{env}{id_article=#GET{id_trad_art}}/>]
+				
+				[(#GET{id_trad}|=={168}|oui)<INCLURE{fond=inc/contenu/inc-article_festival_donnes_titre}{env}{id_article=#GET{id_trad_art}}/>]
+				
+				[(#GET{id_trad}|=={165}|oui)
+						<span class="Date">[(#DATE|nom_jour)] [(#DATE|affdate{'d'})] [(#DATE|nom_mois)] [(#DATE|affdate{'Y'})]
+						</span>
+					]
+			]
+						
+				[(#REM) Affiche menus des articles dans articles de la sousrubrique groupes]
+				
+				<BOUCLE_rub_par(RUBRIQUES){id_rubrique} {tout}>#SET{id_rub,#ID_RUBRIQUE}
+					<BOUCLE_rub(RUBRIQUES){id_enfant}{id_mot=196}{tout}>
+					<div class="plat plat production_rubrique">
+					<INCLURE{fond=inc/inc-rubriques_articles_liens_article}{id_rubrique=#GET{id_rub}}{id_article}{id_mot=#ENV{id_mot}}>
+					</div>
+					</BOUCLE_rub>
+	
+					<h2 class="#EDIT{titre} entry-title">#GET{titre}</h2>
+					
+					<//B_rub>				
+				</BOUCLE_rub_par>
+
+				[<span class="#EDIT{soustitre} Soustitre">(#SURTITRE)</span>]
+
+			#SET{donnees_logo,#INCLURE{fond=inc/contenu/inc-logo_art,id_article,width=280,height=187}}				
+			#SET{auteur,#GET{donnees_logo}|table_valeur{auteur}}						
+			#SET{logo,#GET{donnees_logo}|table_valeur{logo}}	
+			
+								
+			[(#GET{auteur}|oui)
+				[(#GET{auteur}|oui)#SET{auteur,<div class="legende">© #GET{auteur}</div>}]
+				]
+					
+			#SET{class,class=#ENV{class,spip_logos}}
+								
+			#SET{attribut_div,(#GET{style}) (#GET{class})}
+					
+			[(#GET{logo}|oui)
+				[(#SET{logo_fini,
+					<div #GET{attribut_div}>
+					#GET{logo}
+					#GET{auteur}
+					</div>
+				})]
+			]
+				<div class="Chapeau">
+				[(#REM)Pas de logo pour les article de la rubrique vidéo et quand on est en mode galerie photo]	
+				[(#GET{id_trad}|!={165}|et{#ENV{voir}|!={photos}}|oui)				 
+					[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL|image_reduire{280,187})], #GET{logo_fini}})]	
+					]			
+				
+
+				[(#REM) Affiche les date et auteurs pour la section nouvelles, si utilisé]
+				
+				<BOUCLE_auteur(MOTS){id_rubrique} {id_mot IN 194}>
+           	 			<p><small><abbr class="published" title="[(#DATE|date_iso)]">[(#DATE|nom_jour) ][(#DATE|affdate)]</abbr>[, <:par_auteur:> (#LESAUTEURS)]</small></small></p>
+				</BOUCLE_auteur>
+        			</div>
+		        			
+		 		[(#REM) Rubrique vidéos ]
+				[(#GET{id_trad}|=={165}|oui)
+					<INCLURE {fond=inc/contenu/inc-documents_video}{voir=video}{autostart=true}{id_article}>
+				]       			
+        			
+				[(#ENV{voir}|!={photos}|oui)
+        			[<div class="surlignable">
+					[<div class="#EDIT{chapo} chapo">(#CHAPO|image_reduire{500,0})</div>]
+					<div class="#EDIT{texte} texte entry-content">(#TEXTE|image_reduire{500,0})</div>
+					
+					</div>]
+					]
+		
+				[(#REM) Contenu articles concerts ou cours]
+			<BOUCLE_sel_cont(RUBRIQUES){id_rubrique} {id_trad IN 39,40}>#SET{document,non}	
+				[(#ID_TRAD|=={39}|et{#ENV{voir}|!={photos}}|oui)
+					<INCLURE{fond=inc/contenu/inc-article_evenement}{env}{ajax}{self}{id_trad=#GET{id_trad_art}}{session}{url_art=#URL_ARTICLE}{id_article=#ID_ARTICLE}/>]
+				[(#REM) Contenu spécifique articles contenant des Cours]
+				[(#ID_TRAD|=={40}|et{#ENV{voir}|!={photos}}|oui)
+					<INCLURE{fond=inc/contenu/inc-article_cours}{env}{ajax}{id_trad=#GET{id_trad_art}}/>
+				]
+			
+
+			</BOUCLE_sel_cont>
+			
+			<BOUCLE_art(AUTEURS){photographe=oui}{id_auteur=#SESSION{id_auteur}}{tout}>
+				<INCLURE{fond=inc/contenu/portfolio_document_public}{objet=article}{id_objet=#ID_ARTICLE} {ouvert=#ENV{voir}}{env}{ajax}/>
+			</BOUCLE_art>			
+			
+			
+			[(#REM) Affichage Rubrique Festival]
+			[(#GET{id_trad}|=={168}|oui)#SET{document,non}
+				[(#SESSION{statut}|=={0minirezo}|oui)
+				<div class="action">
+					<a href="#URL_ACTION_AUTEUR{export_festival,#ID_ARTICLE,#SELF}">Télécharger les Réservations</a>
+				</div>]	
+				<INCLURE{fond=inc/contenu/inc-article_festival}{env}{ajax}{id_trad=#GET{id_trad_art}}/>
+				]
+			
+
+			<BOUCLE_rub_enfant(RUBRIQUES){id_rubrique}>
+				<BOUCLE_rub_par_prod(RUBRIQUES){id_enfant} {id_trad=46} {tout}>							<BOUCLE_aut_cd(AUTEURS){id_article}{doublons}>
+						[(#GET{titre}|=={CD}|oui)<INCLURE {fond=inc/contenu/inc-article_production_cd}{id_auteur}>]
+						[(#GET{titre}|=={Agenda}|oui)
+						[(#REM) désactive<INCLURE {fond=inc/contenu/inc-article_production_evenement} {id_article}{id_auteur}>]]	
+					</BOUCLE_aut_cd>
+					<INCLURE {fond=inc/contenu/inc-documents_video}{env}{id_article}>
+					<INCLURE {fond=inc/contenu/inc-documents_audio}{id_document}{id_article}>
+					[(#REM)<INCLURE {fond=inc/contenu/inc-documents_presse}{id_article}{env}>]
+				</BOUCLE_rub_par_prod>
+
+			</BOUCLE_rub_enfant>
+
+
+
+		[(#ENV{voir}|=={photos}|oui)
+			#SET{document,''}	
+		]
+		
+		[(#GET{document}|non)
+			<INCLURE{fond=inc/contenu/inc-documents}{id_article}{id_document}{env}>
+			]
+
+		[(#REM) Div de fermeture pour les cas specéiale des concerts cours et vidéos]
+		#GET{div}
+		
+			<INCLURE{fond=inc/contenu/social}{env}>		
+
+		
+		
+	<br class="nettoyeur" />
+	<BOUCLE_form_upload(RUBRIQUES){id_rubrique} {id_mot IN 191}>
+		[(#GET{upload}|!=={'oui'}|?{' ',''})<div class="upload">[(#SESSION{id_auteur}|?{'',' '})<a href="[(#URL_PAGE{login}|parametre_url{url,#SELF})]" rel="nofollow" class='login_modal'><:upload_images:></a><br />
+		<a href="/spip.php?page=inscription"><:inscription:></a>
+		][(#ID_ARTICLE|afficher_documents_colonne)]</div>]
+	</BOUCLE_form_upload>
+
+	[(#REM)Contenu spécifique pour les sousrubriques productions]
+
+
+
+			[<div class="notes surlignable"><h2 class="pas_surlignable"><:info_notes:></h2>(#NOTES)</div>]
+
+		[(#REM) Forum de l'article ]
+		<INCLURE{fond=inc/contenu/liens_forum}{env}{ajax}/>
+		
+		</div>
+
+            
+		<!-- PODIUM : Fin -->
+
+
+		<!-- LIST : Debut -->
+		<INCLURE{fond=inc/contenu/inc-list}{env}{debut=#GET{debut}}{id_rubrique=#ID_SECTEUR}{lang=#ENV{lang}}/>            
+			
+		<!-- LIST : Fin -->
+		<!-- NEWS : Debut -->
+
+		<INCLURE{fond=inc/contenu/inc-news}{env}{debut=#ENV{debut}}{ajax}{lang=#ENV{lang}}/>        
+
+		<!-- NEWS : Fin -->
+		
+		[(#REM) Pied de page ]
+		<INCLURE{fond=inc/inc-pied}>
+	</div>
+</body>
+</html>
+</BOUCLE_principale>

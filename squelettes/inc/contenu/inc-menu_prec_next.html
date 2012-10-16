@@ -1,0 +1,10 @@
+#CACHE{24*3600}
+
+<div class="Nav">
+	<BOUCLE_evs_p(EVENEMENTS){par date}{spip_articles.statut=publie}{id_rubrique IN 8,26,39}{id_evenement_source=0}{par date}{age<=0}{age_fin<=0}{#ENV{p},1}>
+		<a class="ajax" href="[(#SELF|parametre_url{debut,#ENV{p}})]">Previous</a>
+	</BOUCLE_evs_p> | 
+	<BOUCLE_evs_n(EVENEMENTS){par date}{spip_articles.statut=publie}{id_rubrique IN 8,26,39}{id_evenement_source=0}{par date}{age<=0}{age_fin<=0}{#ENV{n},1}>
+		<a class="ajax" href="[(#SELF|parametre_url{debut,#ENV{n}})]">Next</a>	
+	</BOUCLE_evs_n>
+</div>

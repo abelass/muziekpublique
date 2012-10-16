@@ -1,0 +1,52 @@
+[(#REM) Teste si on se trouve au premier ou deuxième niveau ]
+<BOUCLE_rub_filtre(RUBRIQUES){id_trad ?}{id_trad IN 21,39,40,83,46,61,74,102,125}{lang}{tout}>
+#SET{id_rubrique,#ID_RUBRIQUE} #SET{id_rub,#ID_RUBRIQUE}
+</BOUCLE_rub_filtre>
+  <BOUCLE_rub(RUBRIQUES){id_trad}{lang}{tout}>
+  #SET{id_rubrique,#ID_PARENT}
+  #SET{id_rub,#ID_RUBRIQUE}
+  </BOUCLE_rub>
+<//B_rub_filtre>
+
+[(#REM) Menu premier niveau]  
+
+<div class="Menu">
+  <ul>
+    <BOUCLE_accueil(RUBRIQUES){id_trad IN 21,39,40,83,125,46,74,61}{lang}{tout}{doublons}>#SET{id_trad,#ID_TRAD}
+    [(#ID_TRAD|=={21}|oui)
+      [(#ID_RUBRIQUE|!={#GET{id_rubrique}}|?{<li id="accueil"><a href="#URL_RUBRIQUE"><:accueil:></a></li>,<li><:accueil:></li>
+      [(#REM) Sélection du sous menus]
+      [(#SET{id_trad,#ARRAY{1,47,2,78,3,84,4}})]})]
+      ]
+    [(#ID_TRAD|=={39}|oui)
+      [(#ID_RUBRIQUE|!={#GET{id_rubrique}}|?{<li id="concerts"><a href="#URL_RUBRIQUE">#TITRE</a></li>,<li>#TITRE</li>})]
+    ]    
+    [(#ID_TRAD|=={40}|oui)
+      [(#ID_RUBRIQUE|!={#GET{id_rubrique}}|?{<li id="cours"><a href="#URL_RUBRIQUE">#TITRE</a></li>,<li>#TITRE</li>})]
+    ]
+    [(#ID_TRAD|=={83}|oui)
+      [(#ID_RUBRIQUE|!={#GET{id_rubrique}}|?{<li id="production"><a href="#URL_RUBRIQUE">#TITRE</a></li>,<li>#TITRE</li>})]
+    ]        
+    [(#ID_TRAD|=={46}|oui)
+      [(#ID_RUBRIQUE|!={#GET{id_rubrique}}|?{<li id="medias"><a href="#URL_RUBRIQUE">#TITRE</a></li>,<li>#TITRE</li>})]
+    ]          
+    [(#ID_TRAD|=={74}|oui)
+      [(#ID_RUBRIQUE|!={#GET{id_rubrique}}|?{<li id="et"><a href="#URL_RUBRIQUE">#TITRE</a></li>,<li>#TITRE</li>})]
+    ]
+    [(#ID_TRAD|=={125}|oui)
+      [(#ID_RUBRIQUE|!={#GET{id_rubrique}}|?{<li id="label"><a href="#URL_RUBRIQUE">#TITRE</a></li>,<li>#TITRE</li>})]
+    ]    
+    
+    [(#SESSION|oui)        
+      [(#ID_TRAD|=={61}|oui)
+        [(#ID_RUBRIQUE|!={#GET{id_rubrique}}|?{<li id="gestion"><a href="#URL_RUBRIQUE">#TITRE</a></li>,<li>#TITRE</li>})]
+        ]
+      ]
+              
+    </BOUCLE_accueil>
+  </ul>
+</div>
+
+[(#REM) Menu deuxième niveau]
+
+<INCLURE{fond=inc/inc-sous_rubriques}{id_rubrique=#GET{id_rubrique}}{id_trad=#GET{id_trad}}{id_rub=#GET{id_rub}}/>

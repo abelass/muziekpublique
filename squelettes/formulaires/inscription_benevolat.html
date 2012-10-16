@@ -1,0 +1,96 @@
+#CACHE{0}
+	<BOUCLE_lesevenements_edit(EVENEMENTS) {id_evenement}>
+#SET{date_debut,(#DATE_DEBUT|heures)} 
+
+
+#SET{date_fin,(#DATE_FIN|heures)} 
+[(#DATE_DEBUT|>={#DATE_FIN}|?{' ',''}) [(#SET{date_fin,[(#DATE_DEBUT|Agenda_dateplus{5*3600,'H'})]})] ]
+  </BOUCLE_lesevenements_edit>
+
+
+<div class="inscription2" style="display: block;">
+	<BOUCLE_auteurs(AUTEURS){id_auteur=#SESSION{id_auteur}}{tout}>
+	#SET{nom,#NOM}#SET{email,#EMAIL*} #SET{id_auteur,#ID_AUTEUR} #SET{url_auteur,#URL_AUTEUR}
+		<BOUCLE_auteurs_el(spip_auteurs_elargis){id=#SESSION{id_auteur}}> #SET{nr,#ID_ASSO} #SET{adresse,#ADRESSE} #SET{code_postal,#CODE_POSTAL}  #SET{ville, #VILLE} #SET{telephone,#TELEPHONE} #SET{prenom,#PRENOM}  #SET{nom_famille,#NOM_FAMILLE} 
+		</BOUCLE_auteurs_el>
+	</BOUCLE_auteurs>
+
+
+<fieldset>
+<legend><:formulaire_inscription:></legend>
+<form action="#SELF" method="post">
+<input name="statut" type="hidden" value="#ENV{statut,Soumettre}" />
+<input name="url_retour" type="hidden" value="#GET{url_auteur}" />
+<input name="id_evenement" type="hidden" value="[(#ENV{id_evenement})]" />
+<input name="id_auteur" type="hidden" value="#GET{id_auteur}" />
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="nom"><:asso:activite_libelle_nomcomplet:> :</label>
+		</span>
+		#GET{prenom}&nbsp;#GET{nom_famille}
+	</div>
+
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="id_adherent"><:asso:activite_libelle_adherent:> :</label>
+		</span>
+		<input name="id_adherent" type="hidden" id="id_adherent" size="40" value="#GET{nr}"/>#GET{nr}
+	</div>
+
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="date_debut"><:heure_debut:> :</label>
+			<span class='spip_form_label_obligatoire'>(Obligatoire)</span>
+		</span>
+		<input name="date_debut" type="text" id="date_debut" size="3" value="[(#GET{date_debut})]"/>
+	</div>
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="date_fin"><:heure_fin:> :</label>
+			<span class='spip_form_label_obligatoire'>(Obligatoire)</span>
+		</span>
+		<input name="date_fin" type="text" id="date_debut" size="3" value="[(#GET{date_fin})]"/>
+	</div>
+
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="poste"><:poste:> :</label>
+		</span>
+		<select name="poste">
+	<BOUCLE_postes(MOTS){id_groupe=
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="telephone"><:asso:activite_libelle_telephone:> :</label>
+		</span>
+		<input name="telephone" type="[(#GET{telephone}|?{'hidden','text'})]" id="telephone" size="40" />
+	</div>
+
+
+	<p class='spip_form_label'><:nombre:tickets:> :</p>
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="membres"><:membre:> :</label>
+		</span>
+		<input name="membres" type="text" id="membres" size="40" />
+	</div>	
+		<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="non_membres"><:non_membre:> :</label>
+		</span>
+		<input name="non_membres" type="text" id="non_membres" size="40" />
+	</div>
+		<input name="inscrits" type="hidden" id="inscrits" value="#SET{inscrits,(#GET{membres}|plus{#GET{non_membres}})}" size="40" />	
+		<input name="montant" type="hidden" id="montant" size="40" value="#GET{prix}"/>
+
+	
+	<div>
+		<input type="submit" name="bouton" class="spip_bouton" value="Soumettre" />
+		<input type="reset" class="spip_bouton" value="Effacer" />
+	</div>
+</form>
+</fieldset>
+
+
+
+
+</div>

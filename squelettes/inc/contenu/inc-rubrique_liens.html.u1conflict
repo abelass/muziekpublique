@@ -1,0 +1,16 @@
+#CACHE{24*3600}
+
+[(#REM) Sites de la rubrique ]
+<div class="menu liens">
+  <BOUCLE_mots(MOTS){id_groupe=21}{par num titre}>
+
+   <B_sites>
+        <a class="ajax" href="[(#SELF|parametre_url{id_mot,#ID_MOT})]"><h2>#TITRE</h2></a>
+        <BOUCLE_sites(SITES) {id_mot=#ID_MOT}{par nom_site}>      
+    </BOUCLE_sites>
+  </BOUCLE_mots>
+          
+     <ul>   
+      <INCLURE{fond=inc/contenu/inc-rubrique_liens_details}{id_mot=#ENV{id_mot}}/>
+     </ul>
+</div>

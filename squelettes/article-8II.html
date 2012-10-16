@@ -1,0 +1,131 @@
+#CACHE{0} 
+<BOUCLE_article_principal(ARTICLES) {id_article}>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html dir="#LANG_DIR" lang="#LANG">
+<head>
+<title>[(#TITRE|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+[<meta name="description" content="(#INTRODUCTION|couper{150}|textebrut)" />]
+<INCLURE{fond=inc/inc-head}>
+
+</head>
+<body class="rub12">
+<div id="page">
+
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc/inc-entete}{id_rubrique}{affichage=article}{id_article}{affichage=agenda}{affichage=article}{id_evenement}>
+
+			
+<div class="colmask holygrail">
+
+		[(#REM) Contenu principal : contenu de l'article ]
+    <div class="colmid">
+        <div class="colleft">
+            <div class="col1wrap">
+                <div class="col1">		
+<BOUCLE_rubrique(RUBRIQUES){id_rubrique}>
+<h2 class="spip">#TITRE</h2>
+</BOUCLE_rubrique>
+<h3>#TITRE</h3>
+<p><a href="[(#URL_RUBRIQUE|parametre_url{lang,#ENV{lang}})]" title="<:monthly_view:>"<:monthly_view:>"><:monthly_view:></a></p>
+		[(#REM) Liens si pas connecté]  
+		[(#SESSION{id_auteur}|?{'',' '})<a href="[(#URL_PAGE{login}|parametre_url{url,#SELF})]" class='login_modal'><:lien_connecter:></a>]
+		[(#SESSION{id_auteur}|?{' '})[<div>(#ENV{ajout_evenement}=={'oui'}|?{'',' '})
+<a href='[(#URL_ARTICLE|parametre_url{ajout_evenement,oui}|parametre_url{editer,oui})]'><:agenda:titre_cadre_ajouter_evenement:></a></div>]
+				[(#ID_EVENEMENT|?{<div [style='(#ENV{editer}|?{display:none,''})']>
+<a href="[(#SELF|parametre_url{editer,oui})]"title="<:edit:>" ><:edit:></a></div>,''
+})]
+]
+
+
+		[(#REM) Formulaire édition ou ajout evenement si connecté et édition sélectionnée]  
+		<a name="select"></a>
+		[(#SESSION{id_auteur}|?{' '})[(#ENV{editer}|=={'oui'}|?{' ',''})<div>#FORMULAIRE_EDITION_EVENEMENT</div>]]
+
+<B_lesevenements> 
+<ul [(#ENV{ajout_evenement}=={oui}|?{style='display:none;',class='spip'})]>
+<BOUCLE_lesevenements(EVENEMENTS) {id_evenement_source} {!par date}{0,1}>
+#FORMULAIRE_INSCRIPTION_ACTIVITE
+<li
+class="spip"><strong><a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{date,#DATE_DEBUT})]" title="#TITRE">[(#TITRE|supprimer_numero|couper{80})]</a>&nbsp;:</strong>
+  [(#DATE_DEBUT|jour|=={[(#DATE_FIN|jour)]}|?{
+  le [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+[(#HORAIRE|=={oui}|?{
+   [(#REM) memes heures ?]
+     [(#DATE_DEBUT|=={#DATE_FIN}|?{ <:a:>  
+[(#DATE_DEBUT|heures)]h[(#DATE_DEBUT|minutes)],''})]
+   [(#REM) pas memes heures ?]
+     [(#DATE_DEBUT|!={#DATE_FIN}|?{<:from:> 
+[(#DATE_DEBUT|heures)]:[(#DATE_DEBUT|minutes)] <:a:>
+[(#DATE_FIN|heures)]:[(#DATE_FIN|minutes)],''})]
+,''})]
+,
+ [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+[(#HORAIRE|=={oui}|?{ : 
+  [(#DATE_DEBUT|heures)]H[(#DATE_DEBUT|minutes)],''})] <:a:> 
+[(#DATE_FIN|nom_jour)]
+  [(#DATE_FIN|affdate)] [(#HORAIRE|=={oui}|?{ : 
+  [(#DATE_FIN|heures)]H[(#DATE_FIN|minutes)],''})]  })]
+[-&nbsp;<:lieu:>&nbsp;: (#LIEU)] <BOUCLE_pays(MOTS) {id_evenement}{id_groupe=1}>(#TITRE)</BOUCLE_pays>
+[<br />(#DESCRIPTIF)]
+</li>
+
+  </BOUCLE_lesevenements>
+</ul>
+</B_lesevenements>
+<B_lesevenements_edit> 
+<ul>
+<BOUCLE_lesevenements_edit(EVENEMENTS) {par date}{age<=0} {id_article}>
+<li
+class="spip"><strong>[(#TITRE|supprimer_numero|couper{80})]&nbsp;:</strong>
+  [(#DATE_DEBUT|jour|=={[(#DATE_FIN|jour)]}|?{
+  le [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+[(#HORAIRE|=={oui}|?{
+   [(#REM) memes heures ?]
+     [(#DATE_DEBUT|=={#DATE_FIN}|?{ <:a:>  
+[(#DATE_DEBUT|heures)]h[(#DATE_DEBUT|minutes)],''})]
+   [(#REM) pas memes heures ?]
+     [(#DATE_DEBUT|!={#DATE_FIN}|?{<:from:> 
+[(#DATE_DEBUT|heures)]:[(#DATE_DEBUT|minutes)] <:a:>
+[(#DATE_FIN|heures)]:[(#DATE_FIN|minutes)],''})]
+,''})]
+,
+ [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate)] 
+[(#HORAIRE|=={oui}|?{ : 
+  [(#DATE_DEBUT|heures)]H[(#DATE_DEBUT|minutes)],''})] <:a:> 
+[(#DATE_FIN|nom_jour)]
+  [(#DATE_FIN|affdate)] [(#HORAIRE|=={oui}|?{ : 
+  [(#DATE_FIN|heures)]H[(#DATE_FIN|minutes)],''})]  })]
+[-&nbsp;<:lieu:>&nbsp;: (#LIEU)]
+</li>
+
+  </BOUCLE_lesevenements_edit>
+</ul>
+</B_lesevenements_edit>
+<//B_lesevenements>
+
+				<!-- Column 1 end -->
+                </div>
+            </div>
+	    [(#REM)première colonne ]
+			<div class="col2">	<!-- Column 2 start -->
+			<INCLURE{fond=inc/inc-rubriques}{id_rubrique}>			
+			</div><!-- Column 2 end -->
+			
+			<div class="col3"><!-- Column 3 start -->
+col3
+			</div><!-- Column 3 end -->
+		</div>
+	</div>
+</div>
+
+	[(#REM) Pied de page ]
+	<INCLURE{fond=inc/inc-pied}{skel=#SQUELETTE}>
+</body>
+</html>
+</BOUCLE_article_principal>
+</B_article_principal>
+[(#ID_ARTICLE|AccesRestreint_article_restreint|?{' ',''})    
+#LOGIN_PUBLIC]
+[(#ID_ARTICLE|AccesRestreint_article_restreint|?{'',' '})
+<center>Page does not exist, please go back to the <a href="#URL_SITE_SPIP" title="URL_SITE"> Home Page"</a></center> ]
+<//B_article_principal>

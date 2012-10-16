@@ -1,0 +1,38 @@
+#CACHE{0}
+<form method="post" action="spip.php?page=envoyer_mail">
+<fieldset><legend>Message</legend>
+<label for="sujet"><strong>Sujet :</strong></label>
+<input style="width: 455px;" name="sujet" value="Sujet" id="sujet" class="formo" type="text">
+<br />
+<label for="message"><strong>Message :</strong></label>
+<br />
+	<textarea style="width: 455px;" name="message" rows="15" id="message" class="formo">
+	</textarea>
+</fieldset>
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+		<tr bgcolor="#DBE1C5">
+		<td><strong><:nom:></strong></td>
+		<td><strong><:email:></strong></td>
+		<td><strong>Env</strong></td>
+		</tr>
+<BOUCLE_auteur_elargis_principale(spip_asso_activites){id_evenement}>
+			<tr> 
+			<td class ="" style="border-top: 1px solid #CCCCCC;">#NOM</td>
+			<td class ="" style="border-top: 1px solid #CCCCCC;">#EMAIL</td>
+			<td class ="" style="border-top: 1px solid #CCCCCC;text-align:center;"/>
+			<input name="email[]" type="hidden" value="#EMAIL*" >
+			<input name="id[]" type="checkbox" value="#ID_AUTEUR" checked="checked" >
+			</td>
+			</tr>
+</BOUCLE_auteur_elargis_principale>
+			<tr> 
+<td>
+<input name="url_retour" value="#ENV{url_retour,#SELF}" type="hidden">
+<input name="url_form" value="spip.php?page=envoyer_mail" type="hidden">
+<input name="etat" value="confirm" type="hidden">
+<input name="submit" value="Envoyer" class="fondo" type="submit">
+</td>
+			</tr>
+	</table>
+
+</form>

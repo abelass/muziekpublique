@@ -1,0 +1,56 @@
+#CACHE{0}
+[(#REM) Liste compartatives des inscriptions provisoires (membres qui ont perdu leurs données d'accès]
+<B_statut_provisoire>
+<a name="membres_provisoires"></a>
+<h3><:inscriptions_provisoires:></h3>
+<BOUCLE_statut_provisoire(AUTEURS_ELARGIS){id_auteur}>
+	<form action="#URL_PAGE{gestion}" method="post">
+	<input  type="hidden" name="url_retour"  value="#ENV{url_retour}"/>
+	<input  type="hidden" name="type"  value="provisoire"/>
+	<input  type="hidden" name="id_auteur_prov"  value="#ID_AUTEUR"/>	
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td><strong><:comparer:></strong></td>
+		<td><strong><:id_auteur:></strong></td>
+		<td><strong><:prenom:></strong></td>
+		<td><strong><:nom_famille:></strong></td>
+		<td><strong><:naissance:></strong></td>
+		<td><strong><:adresse:></strong></td>
+		<td><strong><:code_postal:></strong></td>	
+		<td><strong><:ville:></strong></td>
+		<td><strong><:email:></strong></td>
+		</tr>
+	</thead>
+	<tbody>	
+		<tr>
+		<td class="cell"><input name="id_auteur_prov" value="#ID_AUTEUR" type="hidden"/></td>
+		<td class="cell">#ID_AUTEUR</td>
+		<td class="cell">#PRENOM</td>
+		<td class="cell">#NOM_FAMILLE</td>
+		<td class="cell">#NAISSANCE</td>
+		<td class="cell">#ADRESSE</td>
+		<td class="cell">#CODE_POSTAL</td>
+		<td class="cell">#VILLE</td>
+<BOUCLE_statut_provisoire_auteurs(AUTEURS){id_auteur}{tout}>
+		<td class="cell">#EMAIL</td>#SET{email,#EMAIL}
+</BOUCLE_statut_provisoire_auteurs>
+		</tr>
+<tr bgcolor="#E1E5E2"><td colspan="8" style="text-align:center;"><strong><:entrees_semblables:></strong></td></tr>
+<tr>
+<INCLURE{fond=inc/contenu/inc-rubrique_gestion_provisoire}{id_auteur=#ENV{id_auteur}}{prenom}{nom_famille}{adresse}{code_postal}{ville}{naissance}{email=#ENV{email}}{sel_prenom=ok}>
+</tr>
+<tr>
+<td class="cell" colspan="8" ><a href="[(#SELF|parametre_url{type,provisoire}|parametre_url{id_auteur_prov,#ID_AUTEUR}|parametre_url{sel_nom,ok}|parametre_url{sel_prenom,ok}|parametre_url{sel_nom_famille,ok}|parametre_url{sel_email,ok}|parametre_url{sel_code_postal,ok}|parametre_url{sel_ville,ok}|parametre_url{affichage,30})]"><:recherche_manuel:></a>
+<label for="id_auteur_prov_man">
+</td>
+</tr>
+<tr>
+<td class="cell" colspan="8" >
+<input  type="submit" name="comparer"  value="ok"/>
+</td>
+
+</tr>
+	</tbody>
+	</table>
+</BOUCLE_statut_provisoire>

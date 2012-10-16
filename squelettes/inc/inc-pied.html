@@ -1,0 +1,35 @@
+<!-- FOOTER : Debut -->       	
+
+            <div class="Footer">
+		<BOUCLE_rub1(RUBRIQUES){id_mot=302}{lang}{tout}>
+            	<a href="#URL_RUBRIQUE"><span id="Moliere">&nbsp;</span></a>
+            	</BOUCLE_rub1>
+                <p><multi>[fr]Galerie de la Porte de Namur,  3 Square du Bastion, 1050 Bruxelles[nl]Naamsepoortgalerij 3, Bolwerksquare 3, 1050 Brussel[en]Galerie de la Porte de Namur,  3 Square du Bastion, 1050 Brussels</multi> - 02 / 217.26.00  -  [(#VAL{mailto:info@muziekpublique.be?subject=Général}|cs_lien{info@muziekpublique.be})]<br/>
+                <multi>[en]Concept[fr]Concept[es]Concepto[de]Konzept</multi> <a href="http://www.spip.net/" title="<:site_realise_avec_spip:>">SPIP</a> <:par_auteur:> <a href="http://www.mychacra.net/" title="My Chacra Web Solutions - <multi>[en]Let your ideas grow![fr]Cultivez vos idées ![es]¡Cultiva tus ideas![de]Lassen Sie Ihre Ideen wachsen![nl]Laat uw ideeën groeien!</multi>" target="_blank">My Chacra</a>
+                </p>
+                <a href="#URL_SITE_SPIP"><span id="Muziekpublique">&nbsp;</span></a><br/>
+               
+            </div>
+
+<!-- FOOTER : Fin --> 
+
+[(#REM)
+	Cette balise permet de deporter les calculs lourds (indexation etc)
+	dans une image cachee, ce qui evite de ralentir l'affichage des pages.
+]#SPIP_CRON
+[(#REM)
+<INCLURE{fond=inc/inc-mail_relance_cours}>
+]
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26111893-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>

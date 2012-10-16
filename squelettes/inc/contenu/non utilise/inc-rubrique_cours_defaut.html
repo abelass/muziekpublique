@@ -1,0 +1,34 @@
+<BOUCLE_article_rub(ARTICLES){id_rubrique}{par date} >#SET{titre,#TITRE}
+
+<B_lesevenements_edit>
+	#DATE
+	[(#ENV{inscription}|=={''}|?{' ',''})
+	<div class="ev_corp">
+		<h2><a href="#URL_ARTICLE">#TITRE</a></h2>
+		<div>#TEXTE</div>
+	</div>]
+	<div class="inscription">
+		[(#ENV{inscription}|=={''}|?{' ',''})<ul>]
+			<BOUCLE_lesevenements_edit(EVENEMENTS) {id_article}{id_evenement ?}{id_evenement_source=0}{par date}{tout}>
+				[(#ENV{inscription}|=={''}|?{' ',''})<li>[(#TITRE|!={[(#GET{titre})]}|?{<b><a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]">[(#TITRE)]</a></b>,''})]
+					
+					[(#GET{membre}|=={'oui'}|?{' ',''})<form action="[(#SELF|parametre_url{id_evenement,[(#ID_EVENEMENT)]}|parametre_url{inscription,oui}|parametre_url{membres,oui}|parametre_url{type,cours})]" method="post">
+						<input name="url" type="hidden" value="#SELF" />
+						<input type="submit" name="bouton" class="spip_bouton" value="<:inscrire:>" />
+						</form>]
+						[(#SESSION{id_auteur}||?{'',' '})<form action="[(#SELF|parametre_url{id_evenement,[(#ID_EVENEMENT)]}|parametre_url{inscription,oui}|parametre_url{membres,oui}|parametre_url{type,cours})]" method="post">
+							<input name="url" type="hidden" value="#SELF" />
+							<input type="submit" name="bouton" class="spip_bouton" value="<:membre:>" />
+							</form>]
+							[(#GET{membre}|=={'non'}|?{' ',''})<form action="[(#SELF|parametre_url{id_evenement,[(#ID_EVENEMENT)]}|parametre_url{inscription,oui}|parametre_url{membres,non}|parametre_url{type,cours})]" method="post">
+								<input name="url" type="hidden" value="#SELF" />
+								<input type="submit" name="bouton" class="spip_bouton" value="[(#SESSION{id_auteur}|?{<:inscrire:>,<:non_membre:>})]" />
+									</form>]
+								</li>]
+								
+								[(#ENV{afficher}|=={'liste'}|?{<:inscription_enregistre:><br/><a href="[(#URL_RUBRIQUE)]"><:retour:></a>})]
+									</BOUCLE_lesevenements_edit>
+									[(#ENV{inscription}|=={''}|?{' ',''})</ul>]
+							</div>
+						</B_lesevenements_edit>
+				</BOUCLE_article_rub>

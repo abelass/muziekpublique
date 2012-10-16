@@ -1,0 +1,11 @@
+#CACHE{48*3600}
+
+	<B_prenom>
+	<select name="prenom"  class="forml">
+	[<option value="#ENV{prenom}"  selected="selected">(#ENV{prenom})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_prenom(spip_auteurs_elargis){tout}{par prenom} {prenom!=#ENV{prenom}}>
+	[<option value="[(#PRENOM)]" >(#PRENOM|unique)</option>]
+	</BOUCLE_prenom>	
+	</select>
+	</B_prenom>

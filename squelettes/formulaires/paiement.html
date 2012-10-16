@@ -1,0 +1,94 @@
+#CACHE{0}
+
+#SET{annee,#DATE|annee}
+<BOUCLE_assoc(ASSOCIATION_METAS){nom=compte}>
+#SET{compte,#VALEUR}
+</BOUCLE_assoc>
+
+
+<BOUCLE_auteur(spip_auteurs_elargis){id_auteur}>
+#SET{membre,#STATUT_INTERNE}
+#SET{id_auteur,#ID_AUTEUR}
+</BOUCLE_auteur>
+
+<BOUCLE_auteur_nom(AUTEURS){id_auteur}{tout}>
+#SET{id_auteur,#ID_AUTEUR}
+#SET{nom,#NOM}
+</BOUCLE_auteur_nom>
+	<BOUCLE_auteur_nom_alter(AUTEURS){email=#ENV{email,-nada-nada-nada-}} {tout}>
+	#SET{nom,#NOM}	#SET{id_auteur,#ID_AUTEUR}
+	</BOUCLE_auteur_nom_alter>
+<//B_auteur_nom>
+
+
+<BOUCLE_cotisation(spip_asso_categories){id_categorie=1}>
+#SET{cotisation,#COTISATION}
+#SET{nom_cat,#LIBELLE} 
+</BOUCLE_cotisation>
+
+<h1><:paiement:></h1>
+<div class="paiement">
+	<div><:nom:>: [(#NOM|?{#NOM,#GET{nom}})]</div>
+
+	<BOUCLE_activite(spip_asso_activites){email} {!par id_activite}{0,1}>
+		<BOUCLE_evenement(EVENEMENTS){id_evenement}>
+		#SET{titre_ev,#TITRE}
+		<div>[(#ENV{type}|!=={'membres'}|?{
+					[(#ENV{option}|!=={'membres'}|?{<:cours:>: [(#TITRE)],#GET{nom_cat}})
+						],
+					#GET{nom_cat}}	
+					)]</div>
+		</BOUCLE_evenement>
+	[(#ENV{option}|!=={'membres'}|oui)<div style="font-weight:bold;"><:total:>:[(#ENV{type}|!=={'membres'}|?{[(#MONTANT|plus{#GET{cotisation}})],#GET{cotisation}})] €</div>
+
+	<form name="_xclick" action="[(#CONFIG{'gopaypal_paypal/url_paypal'})]" method="post">
+		<input type="hidden" name="lc" value="[(#ENV{lang})]" />
+		<input type="hidden" name="cmd" value="_xclick" />
+		<input type="hidden" name="item_number" value="#ID_ACTIVITE-#ID_EVENEMENT-#ID_AUTEUR" />
+		<input type="hidden" name="item_name" value="[(#ENV{type}|!=={'membres'}|?{#GET{titre_ev},#GET{nom_cat}})]" />
+		<input type="hidden" name="amount" value="[(#MONTANT|plus{#GET{cotisation}})]" />
+		<input type="hidden" name='currency_code' value="EUR"/>
+		<input type="hidden" name="business" value="[(#CONFIG{gopaypal_paypal/compte_paypal})]" />
+		<input type="hidden" name="page_style" value="[(#CONFIG{gopaypal_paypal/style_page})]" />
+		<input type="hidden" name="return" value="#URL_SITE_SPIP/[(#SELF)]&retour=oui" /> 
+		<img src="https://www.paypal.com/en_AU/i/btn/btn_buynowCC_LG.gif" style="margin: 0px; border: 0px none transparent; cursor:pointer; vertical-align: middle;" onclick="_xclick.submit();" alt=""/>
+		<input type="hidden" name="custom" value="#NOM - #ID_AUTEUR" />        
+		<input type="hidden" name="notify_url" value="#URL_SITE_SPIP/[(#CONFIG{gopaypal_paypal/notify_url}|parametre_url{type,#ENV{type}}|parametre_url{id_activite,#ID_ACTIVITE}|parametre_url{id_auteur,#ID_AUTEUR}|parametre_url{source_paiement,paypal}||parametre_url{membre,#GET{membre}})]" />
+	</form>
+	]
+	</BOUCLE_activite>
+
+	<BOUCLE_auteur1(AUTEURS){id_auteur=#ENV{id_auteur,#GET{id_auteur}}{tout}>
+
+		<BOUCLE_paiement_membres_check(spip_auteurs_elargis){id_auteur=#ENV{id_auteur,#GET{id_auteur}}}{tout}>
+		[(#STATUT_INTERNE|!=={'ok'}|oui)
+			[(#STATUT_INTERNE|=={'ok'}|oui)<:deja_abonne:>]
+			]
+		</BOUCLE_paiement_membres_check>
+
+	[(#ENV{option}|=={'membres'}|oui)
+<!--	<div style="font-weight:bold;"><:total:>: #GET{cotisation} €</div>
+	<form name="_xclick" action="[(#CONFIG{'gopaypal_paypal/url_paypal'})]" method="post">
+		<input type="hidden" name="lc" value="[(#ENV{lang})]" />
+		<input type="hidden" name="cmd" value="_xclick" />
+		<input type="hidden" name="item_number" value="Carte de membre-#ID_AUTEUR" />
+		<input type="hidden" name="item_name" value="Carte de membre" />
+		<input type="hidden" name="amount" value="#GET{cotisation}" />
+		<input type="hidden" name='currency_code' value="EUR"/>
+		<input type="hidden" name="business" value="[(#CONFIG{gopaypal_paypal/compte_paypal})]" />
+		<input type="hidden" name="page_style" value="[(#CONFIG{gopaypal_paypal/style_page})]" />
+		<input type="hidden" name="return" value="#URL_SITE_SPIP/[(#SELF)]&retour=oui" /> 
+		<img src="https://www.paypal.com/en_AU/i/btn/btn_buynowCC_LG.gif" style="margin: 0px; border: 0px none transparent; cursor:pointer; vertical-align: middle;" onclick="_xclick.submit();" alt=""/>
+		<input type="hidden" name="custom" value="#NOM - #GET{id_auteur}" />        
+		<input type="hidden" name="notify_url" value="#URL_SITE_SPIP/[(#CONFIG{gopaypal_paypal/notify_url}|parametre_url{type,#ENV{type}}|parametre_url{id_auteur,#ENV{id_auteur}}|parametre_url{membre,#GET{membre}})]" />
+		
+	</form>-->
+	<h2><:virement:></h2>
+	
+	<:texte_virement_cotisation{compte=#GET{compte},id_asso=#ID_AUTEUR,montant=#GET{cotisation},annee=#GET{annee}}:>
+	]
+	
+			
+	</BOUCLE_auteur1>
+			</div>
+

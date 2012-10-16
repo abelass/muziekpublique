@@ -1,0 +1,27 @@
+[(#REM)compose un tableau avec les infos  du document]
+
+#SET{donnees,#ARRAY{}}
+<BOUCLE_docs(DOCUMENTS){id_article}{extension IN png,jpg,gif}{logo_article}{tout}{0,1}>
+  #SET_MERGE{donnees,#GET{donnees},#ARRAY{fichier,#FICHIER}}
+  [(#REM) La largeur]
+  [(#ENV{width}|>{#LARGEUR}|?{
+    #SET_MERGE{donnees,#GET{donnees},#ARRAY{width,#ENV{width}}},  
+    #SET_MERGE{donnees,#GET{donnees},#ARRAY{width,#LARGEUR}}}
+    )]
+  [(#REM) L'hauteur]    
+  [(#ENV{height}|>{#HAUTEUR}|?{
+    #SET_MERGE{donnees,#GET{donnees},#ARRAY{height,#ENV{height}}},  
+    #SET_MERGE{donnees,#GET{donnees},#ARRAY{height,#HAUTEUR}}}
+    )]
+  [(#REM) L'auteur de l'image]   
+  [(#AUTEUR|?{
+    #SET_MERGE{donnees,#GET{donnees},#ARRAY{auteur,#INCLURE{fond=inc/contenu/inc-auteur_doc}{id_auteur=#AUTEUR}}},  
+    #SET_MERGE{donnees,#GET{donnees},#ARRAY{auteur,#CREDITS}}}   
+    )]
+   [(#REM) Incruster une icone?]      
+    [(#ICONE|oui)#SET_MERGE{donnees,#GET{donnees},#ARRAY{icone,#ICONE}}]
+    [(#REM) Surcharger un lien]        
+    [(#URL_PHOTO|oui)#SET_MERGE{donnees,#GET{donnees},#ARRAY{url_photo,#URL_PHOTO}}]
+</BOUCLE_docs>
+
+[(#GET{donnees}|serialize)]

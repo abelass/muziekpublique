@@ -1,0 +1,28 @@
+#CACHE{0}
+
+<?php 
+include_spip ('inc/charsets');
+$etat = "#ENV{etat}";
+$id_activite = "#ENV{id_activite}";
+$montant = "#ENV{montant}";
+$date_paiement = "#ENV{date_paiement}";
+$source_paiement = "#ENV{source_paiement}";
+$gestion_paiements = "#ENV{gestion_paiements}";
+
+
+// Actions inscription  provisoire
+if ($etat=="enregistrer") {
+	$statut = 'ok';
+	if ( isset( $_POST['id_activite'] ) ) {
+		$id_activite_tab=(isset($_POST["id_activite"])) ? $_POST["id_activite"]:array(); 
+		$count=count ($id_activite_tab);
+		
+		for ( $i=0 ; $i < $count ; $i++ ) {
+			$id = $id_activite_tab[$i];
+			spip_query("UPDATE spip_asso_activites SET statut="._q($statut)."  WHERE id_activite=".$id) ;
+		}
+	}
+
+
+	};
+?>

@@ -1,0 +1,13 @@
+#CACHE{48*3600}
+
+	<B_creation>
+	<select name="creation"  class="forml">
+	[<option value="#ENV{creation}"  selected="selected">(#ENV{creation})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_creation(spip_auteurs_elargis){tout}{!par creation} {creation!=#ENV{creation}}>
+	[<option value="[(#CREATION)]" >(#CREATION|unique)</option>]
+	</BOUCLE_creation>	
+	</select>
+	</B_creation>
+
+

@@ -1,0 +1,9 @@
+<ul>
+	[(#REM) Test si inscription ouverte ou non]
+	<BOUCLE_inscr(MOTS){id_evenement}{id_groupe=14}{0,#ENV{affichage}}>
+		<li style="color:red;" >#TITRE</li>
+	</BOUCLE_inscr>
+		[(#ENV{date_debut}|>={#ENV{date}}|oui)<INCLURE{fond=inc/contenu/inc-bouton_inscription} {membre=#GET{membre}} {id_evenement} {afficher=#ENV{afficher}}{session}{type=concerts}>
+			]
+	<//B_inscr>
+</ul>

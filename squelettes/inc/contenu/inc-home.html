@@ -1,0 +1,81 @@
+#CACHE{24*3600}
+
+#SET{rub_concerts,#ARRAY{0,8,1,26,2,39}}
+#SET{date,#DATE}
+
+<BOUCLE_rub(RUBRIQUES){id_trad}{lang}>
+
+	<BOUCLE_art1(ARTICLES pb_selection){lang}{par ordre}{spip_pb_selection.id_rubrique=#ID_RUBRIQUE}{0,4}>#SET{d,non}
+			#SET{donnees_logo,''}
+			#SET{logo_fini,''}	
+			#SET{donnees_logo,#INCLURE{fond=inc/contenu/inc-logo_art,id_article,width=210,height=140,class=ChapeauImg}}				
+			#SET{auteur,''}
+			#SET{auteur,#GET{donnees_logo}|table_valeur{auteur}}		
+			#SET{icone,''}
+			#SET{icone,#GET{donnees_logo}|table_valeur{icone}}			
+			#SET{url_photo,''}
+			#SET{url_photo,#GET{donnees_logo}|table_valeur{url_photo}}			
+			#SET{logo,''}
+			#SET{logo,#GET{donnees_logo}|table_valeur{logo}}	
+			
+			[(#SET{texte_lien,<:lire_article:>})]#ICONE
+			[(#GET{icone}|=={ecouter}|oui)[(#SET{texte_lien,<:ecouter_playliste:>})]]
+			[(#GET{icone}|=={play}|oui)[(#SET{texte_lien,<:voir_video:>})]]		
+		
+
+			[(#GET{icone}|oui)
+				[(#SET{icone,
+				<img src="[(#CHEMIN{styles/img/icone_[(#GET{icone})].png})]" class="icone"/>})]
+				]						
+					
+			#SET{class,class=#ENV{class,ChapeauImg}}
+					
+			[(#GET{logo}|oui)
+				[(#SET{logo_fini,
+					<div #GET{class}>
+					#GET{icone}	
+					#GET{logo}
+					</div>
+				})]
+			]
+			[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]		
+	 [(#ID_RUBRIQUE|in_array{#GET{rub_concerts}}|oui)#SET{d,oui}]
+	 <BOUCLE_test(CONDITION) {SI #TITRE|!={10 years}}>        
+	<div class="Item item_home">
+		<BOUCLE_date(EVENEMENTS){id_article}{0,1}>#SET{id_article,#ID_ARTICLE}#SET{id_evenement,#ID_EVENEMENT}
+		<span class="Date">[(#GET{d}|=={oui}|oui)
+			[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+			]
+			<BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}{0,1}>
+			#TITRE
+			</BOUCLE_lieu></span>
+		</BOUCLE_date>
+		<BOUCLE_art(ARTICLES){traduction}{origine_traduction}>
+			
+			#SET{id_article,#ID_ARTICLE}
+			<BOUCLE_date_alter(EVENEMENTS){id_article}{0,1}>#SET{id_evenement,#ID_EVENEMENT}
+			<span class="Date">[(#GET{d}|=={oui}|oui)
+				[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+				]
+				<BOUCLE_lieu_alter(MOTS){id_evenement}{id_groupe=11}{0,1}>
+				#TITRE
+				</BOUCLE_lieu_alter></span>
+			</BOUCLE_date_alter>
+		</BOUCLE_art>
+		<//B_date>
+			<h2><a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})]">#TITRE</a></h2>
+			[<span class="Soustitre">(#SURTITRE)</span>]
+			<div class="Chapeau">
+			<a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+				<p class="ChapeauTxt">[(#INTRODUCTION|couper{350})]</p>
+			</div>
+			<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})]">#GET{texte_lien}</a></span>
+		</div>
+		</BOUCLE_test> 
+			[(#REM) Affichage différent pour les vidéos 10 ans]	
+			<INCLURE{fond=inc/contenu/inc-home_article_video}{id_trad=165}/>
+		<//B_test> 			
+
+	</BOUCLE_art1>  
+
+</BOUCLE_rub>

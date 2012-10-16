@@ -1,0 +1,108 @@
+[(#REM)
+	Un cache plus court, pour la boucle syndic_articles
+]#CACHE{0}
+<BOUCLE_principale(RUBRIQUES) {id_rubrique}{tout} {tout_voir}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title>[(#TITRE|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+[<meta name="description" content="(#INTRODUCTION{150}|textebrut)" />]
+<INCLURE{fond=inc/inc-head}>
+[(#REM) Lien vers le flux RSS des articles la rubrique ]
+<link rel="alternate" type="application/rss+xml" title="<:syndiquer_rubrique:>" href="[(#URL_PAGE{backend}|parametre_url{id_rubrique,#ID_RUBRIQUE})]" />
+</head>
+
+<body class="page_rubrique">
+
+<div id="page">
+
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc/inc-entete}{id_rubrique}>
+
+	[(#REM) Contenu principal : contenu de la rubrique ]
+    <div id="conteneur">
+    <div id="contenu">
+    
+        [(#REM) Fil d'Ariane ]
+        <div id="hierarchie"><BOUCLE_ariane(HIERARCHIE){id_rubrique}><a href="#URL_RUBRIQUE">[(#TITRE|couper{80})]</a></BOUCLE_ariane>[ &gt; <strong class="on">(#TITRE|couper{80})</strong>]</div>
+
+
+
+        <div class="cartouche">
+[(#REM)SOUS menus des article pour la section production]
+
+	[(#LOGO_RUBRIQUE|!=={''}|?{
+	<a href="[(#URL_RUBRIQUE|parametre_url{lang,#ENV{lang}})]">[(#LOGO_RUBRIQUE_NORMAL||image_reduire_recadre_logo{250,250}|replace{IMG/})]</a>,<a href="[(#URL_RUBRIQUE|parametre_url{lang,#ENV{lang}})]">[(#INCLURE{fond=inc/contenu/inc-logo_rub}{id_rubrique})]</a>})]
+
+            <h1 class="#EDIT{titre}">#TITRE</h1>
+        </div>
+
+        [<div class="#EDIT{texte} chapo">(#TEXTE)</div>]
+
+
+
+
+
+[(#REM)Selection des différent contenus spécifiques]
+<BOUCLE_cours(MOTS) {id_rubrique}{id_mot IN 190} {tout}{tout_voir}>
+
+[(#REM)Rubrique CD]
+[(#ID_MOT|=={'190'}|?{' ',''})
+<INCLURE{fond=inc/contenu/inc-rubrique_articles_rubrique_cd}{id_rubrique}>]
+
+
+</BOUCLE_cours>
+
+
+
+
+
+        [<div class="notes"><h2><:info_notes:></h2>(#NOTES)</div>]
+
+	</div><!--#contenu-->
+	</div><!--#conteneur-->
+
+    [(#REM) Menu de navigation laterale ]
+    <div id="navigation">
+
+        [(#REM) Menu de navigation par rubriques ]
+        <INCLURE{fond=inc/inc-rubriques}{id_rubrique}{id_article=#ENV{id_article}}{voir=#ENV{voir}}{id_mot=#ENV{id_mot}}{id_groupe=#ENV{id_groupe}}>
+		
+		#FORMULAIRE_RECHERCHE
+
+    </div><!--#navigation-->
+    
+    [(#REM) Menu de navigation laterale ]
+    <div id="extra">
+<INCLURE{fond=inc/extra/inc-lien_newsletter}>
+<INCLURE{fond=inc/extra/inc-lien_radio}>
+
+[(#REM) Les derniers concerts ]
+<INCLURE{fond=inc/extra/inc-derniers_evenements} {id_rubrique}>
+
+    [(#REM) Les dernieres nouvelles ]
+<BOUCLE_rub_dern_nouvelles(RUBRIQUES){id_mot=194}{tout} {lang}>
+	<INCLURE{fond=inc/extra/inc-liste_articles} {id_rubrique}>
+</BOUCLE_rub_dern_nouvelles>
+
+
+    [(#REM) Les dernieres productions ]
+
+	<BOUCLE_rub_dern_productions(RUBRIQUES){id_mot=196}{tout} {lang}>
+	<INCLURE{fond=inc/extra/inc-liste_articles} {id_rubrique}>
+	</BOUCLE_rub_dern_productions>
+
+
+        
+    </div><!--#extra-->
+
+	[(#REM) Pied de page ]
+	<INCLURE{fond=inc/inc-pied}{skel=#SQUELETTE}>
+
+</div><!--#page-->
+</body>
+</html>
+</BOUCLE_principale>
+		[(#ID_RUBRIQUE|AccesRestreint_rubrique_restreinte|?{' ',''}) #LOGIN_PUBLIC]
+		[(#ID_RUBRIQUE|AccesRestreint_rubrique_restreinte|?{'',' '}) <:erreur_page:>]
+<//B_principale>

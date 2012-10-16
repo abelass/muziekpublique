@@ -1,0 +1,58 @@
+#CACHE{0}
+[(#REM) Produit le lien vers l'archive]
+
+	<div class="archive">
+	<h2><:archive:> - 	<a href="[(#SELF|parametre_url{periode,''}|parametre_url{annee,''}|parametre_url{mois,''})]"><:concerts_futurs:></a></h2>
+		<BOUCLE_article_annes1(EVENEMENTS){id_rubrique IN 8,26,39}{!par date}{age>0}>
+		[(#ENV{annee}|!=={[(#DATE_DEBUT|annee)]}|?{[<span> - <a href="[(#SELF|parametre_url{mois,[(#DATE_DEBUT|mois)]}|parametre_url{annee,[(#DATE_DEBUT|annee)]})]">(#DATE_DEBUT|annee|unique)</a></span>],[ - <span class="archive on">(#DATE_DEBUT|annee|unique)</span>]})]
+			<B_lesevenements_edit1>
+			#SET{annee,(#DATE_DEBUT|annee|unique)}
+			<BOUCLE_lesevenements_edit1(EVENEMENTS){id_rubrique}{annee=#ENV{annee}} {par date}{tout}{doublons}{age>0}></BOUCLE_lesevenements_edit1>
+		</BOUCLE_article_annes1></B_article_annes1>
+		<B_article_mois>
+		<div class="mois">
+		<BOUCLE_article_mois(EVENEMENTS){id_rubrique IN 8,26,39}{!par date}{age>0}{annee=#ENV{annee}}>
+		[(#ENV{mois}|!=={[(#DATE_DEBUT|mois)]}|?{[<span> - <a href="[(#SELF|parametre_url{periode,passe}|parametre_url{mois,[(#DATE_DEBUT|mois)]}|parametre_url{annee,[(#DATE_DEBUT|annee)]})]">(#DATE_DEBUT|nom_mois|unique)</a></span>],[ - <span class="archive on">(#DATE_DEBUT|nom_mois|unique)</span>]})]
+		</BOUCLE_article_mois>
+		  </div>
+		</B_article_mois>
+
+	</div>
+
+<B_prochains_concerts>
+
+
+<h3><:prochains_concerts:></h3>
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td colspan="4"><strong><:action:></strong></td>
+		<td><strong><:id_evenement:></strong></td>
+		<td><strong><:date_debut:></strong></td>
+		<td><strong><:nom:></strong></td>
+		<td><strong><:asso:activite_libelle_nombre_inscrit:></strong></td>
+		</tr>
+	</thead>
+	<tbody>	
+
+<BOUCLE_prochains_concerts(EVENEMENTS){age>0}{annee ?} {mois ?}{id_evenement_source=0}{id_rubrique IN 39,26,8}{par date_debut}>
+		<tr>
+<td class="cell"><a href="ecrire/?exec=articles&amp;id_article=#ID_ARTICLE" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/edit-12.gif}" title="<:asso:activite_bouton_modifier_article:>"/></a>
+</td>
+<td class="cell"><a href="ecrire/?exec=voir_activites&amp;id=#ID_EVENEMENT" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/voir-12.png}" title="<:asso:activite_bouton_voir_liste_inscriptions:>"/></a>
+</td>
+<td class="cell"><a href="#URL_ACTION_AUTEUR{export,#ID_EVENEMENT,#SELF}" title="<:imprimer_liste_inscriptions:>"><img src="#CHEMIN{images/print-24.png}" alt="<:imprimer_liste_inscriptions:>"/></a></td>
+<td class="cell"><a href="[(#SELF|parametre_url{envoi,email}|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:email_inscrits:>"><img src="#CHEMIN{images/mail-12.png}" alt="<:email_inscrits:>"/></a></td>
+		<td class="cell">#ID_EVENEMENT</td>
+		<td class="cell">[(#DATE_DEBUT|jour)]</td>
+		<td class="cell">#TITRE</td>
+<BOUCLE_activites_prochains_concerts(spip_asso_activites){id_evenement}>
+#SET{compteur#ID_EVENEMENT,(#INSCRITS|plus{#GET{compteur#ID_EVENEMENT}})}
+</BOUCLE_activites_prochains_concerts>
+		<td class="cell">#GET{compteur#ID_EVENEMENT}</td>
+
+		</tr>
+</BOUCLE_prochains_concerts>
+	</tbody>
+	</table>
+</B_prochains_concerts>

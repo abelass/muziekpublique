@@ -1,0 +1,31 @@
+#CACHE{24*3600}
+<BOUCLE_rub(RUBRIQUES){id_mot=#ENV{id_mot_rub}}{tout}>#SET{url,#URL_RUBRIQUE}
+<B_evt_affiche>
+<BOUCLE_evt_affiche(EVENEMENTS){id_rubrique}{id_groupe}{id_evenement_source=0}>
+
+<B_mots_ev>
+	<select id="menu#ID_GROUPE" class="forml"
+        onchange="go#ID_GROUPE()">
+<option selected="selected" value="">
+<BOUCLE_pays(MOTS){id_groupe} {id_mot=#ENV{id_mot}}>#TITRE</BOUCLE_pays></B_pays><BOUCLE_alter(GROUPES_MOTS){id_groupe}>
+#TITRE
+</BOUCLE_alter><//B_pays></option>
+
+<BOUCLE_mots_ev(MOTS){id_groupe}{unique}{par titre}{exclus}>
+[<option value="[(#GET{url}|parametre_url{id_mot,#ID_MOT}|parametre_url{lang,#ENV{lang}})]">(#TITRE|unique)</option>]
+</BOUCLE_mots_ev>
+</select>
+</B_mots_ev>
+</BOUCLE_evt_affiche>
+
+</B_evt_affiche>
+</BOUCLE_rub>
+
+
+
+
+
+
+
+
+

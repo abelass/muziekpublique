@@ -1,0 +1,11 @@
+#CACHE{48*3600}
+
+	<B_adresse>
+	<select name="adresse"  class="forml">
+	[<option value="#ENV{adresse}"  selected="selected">(#ENV{adresse})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_adresse(spip_auteurs_elargis){tout}{par adresse} {adresse!=#ENV{adresse}}>
+	[<option value="[(#ADRESSE)]" >(#ADRESSE|unique)</option>]
+	</BOUCLE_adresse>	
+	</select>
+	</B_adresse>

@@ -1,0 +1,23 @@
+<div id="entete">
+<a rel="start home" href="#URL_SITE_SPIP/" title="<:accueil_site:>" class="accueil">[(#LOGO_SITE_SPIP||image_reduire{300,100}) ]<strong id="nom_site_spip">#NOM_SITE_SPIP</strong></a>
+
+
+<BOUCLE_article(ARTICLES){id_article}>
+<div class="traductions">#MODELE{article_traductions}</div>
+</BOUCLE_article>
+        <B_mot>
+<div class="traductions">
+<ul>
+        <BOUCLE_mot(MOTS){id_rubrique}{id_groupe=1}{tout_voir}>
+                <BOUCLE_rubrique_trad(RUBRIQUES){id_mot}{tout}{tout_voir}>
+                        [(#EXPOSE{[<li class="on">(#LANG|traduire_nom_langue)</li>],<li><a href="#URL_SITE_SPIP/?action=cookie&amp;url=#URL_RUBRIQUE&amp;var_lang=#LANG" rel="alternate" hreflang="#LANG" [ title="(#TITRE|texte_backend)"]>[(#LANG|traduire_nom_langue)]</a></li>})]
+                </BOUCLE_rubrique_trad>
+        </BOUCLE_mot>
+</ul>
+</div>        
+</B_mot>
+<//B_article>
+[(#SESSION{id_auteur}|?{'',' '})			
+<INCLURE{fond=fonds/inc-entree_profil}>
+]
+</div>

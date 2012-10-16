@@ -1,0 +1,200 @@
+#CACHE{24*7*3600}
+
+
+#SET{delete,'delete[]'}
+
+
+
+[(#ENV{sel_id_auteur}|!=={''}|?{' ',''})[(#SET{sel_id_auteur,<input  type="hidden"  name="sel_id_auteur"  value="[(#ENV{sel_id_auteur})]" />})]]
+[(#ENV{sel_nom}|!=={''}|?{' ',''})[(#SET{sel_nom,<input  type="hidden"  name="sel_nom"  value="[(#ENV{sel_nom})]"/>})]]
+[(#ENV{sel_email}|!=={''}|?{' ',''})[(#SET{sel_email,<input  type="hidden" name="sel_email"  value="[(#ENV{sel_email})]"/>})]]
+[(#ENV{sel_nom_site}|!=={''}|?{' ',''})[(#SET{sel_nom_site,<input  type="hidden" name="sel_nom_site"  value="[(#ENV{sel_nom_site})]"/>})]]
+[(#ENV{sel_url_site}|!=={''}|?{' ',''})[(#SET{sel_url_site,<input  type="hidden" name="sel_url_site"  value="[(#ENV{sel_url_site})]"/>})]]
+[(#ENV{sel_statut}|!=={''}|?{' ',''})[(#SET{sel_statut,<input  type="hidden" name="sel_statut"  value="[(#ENV{sel_statut})]"/>})]]
+[(#ENV{sel_maj}|!=={''}|?{' ',''})[(#SET{sel_maj,<input  type="hidden" name="sel_maj"  value="[(#ENV{sel_maj})]"/>})]]
+[(#ENV{sel_en_ligne}|!=={''}|?{' ',''})[(#SET{sel_en_ligne,<input  type="hidden" name="sel_en_ligne"  value="[(#ENV{sel_en_ligne})]"/>})]]
+[(#ENV{sel_id_asso}|!=={''}|?{' ',''})[(#SET{sel_id_asso,<input  type="hidden" name="sel_id_asso"  value="[(#ENV{sel_id_asso})]"/>})]]
+[(#ENV{sel_nom_famille}|!=={''}|?{' ',''})[(#SET{sel_nom_famille,<input  type="hidden" name="sel_nom_famille"  value="[(#ENV{sel_nom_famille})]"/>})]]
+[(#ENV{sel_prenom}|!=={''}|?{' ',''})[(#SET{sel_prenom,<input  type="hidden" name="sel_prenom"  value="[(#ENV{sel_prenom})]"/>})]]
+[(#ENV{sel_adresse}|!=={''}|?{' ',''})[(#SET{sel_adresse,<input  type="hidden" name="sel_adresse"  value="[(#ENV{sel_adresse})]"/>})]]
+[(#ENV{sel_code_postal}|!=={''}|?{' ',''})[(#SET{sel_code_postal,<input  type="hidden" name="sel_code_postal"  value="[(#ENV{sel_code_postal})]"/>})]]
+[(#ENV{sel_ville}|!=={''}|?{' ',''})[(#SET{sel_ville,<input  type="hidden" name="sel_ville"  value="[(#ENV{sel_ville})]"/>})]]
+[(#ENV{sel_telephone}|!=={''}|?{' ',''})[(#SET{sel_telephone,<input  type="hidden" name="sel_telephone"  value="[(#ENV{sel_telephone})]"/>})]]
+[(#ENV{sel_fax}|!=={''}|?{' ',''})[(#SET{sel_fax,<input type="hidden" name="sel_fax"  value="[(#ENV{sel_fax})]"/>})]]
+[(#ENV{sel_mobile}|!=={''}|?{' ',''})[(#SET{sel_mobile,<input type="hidden" name="sel_mobile"  value="[(#ENV{sel_mobile})]"/>})]]
+[(#ENV{sel_commentaire}|!=={''}|?{' ',''})[(#SET{sel_commentaire,<input  type="hidden" name="sel_commentaire"  value="[(#ENV{sel_commentaire})]"/>})]]
+[(#ENV{sel_statut_interne}|!=={''}|?{' ',''})[(#SET{sel_statut_interne,<input  type="hidden" name="sel_statut_interne"  value="[(#ENV{sel_statut_interne})]"/>})]]
+[(#ENV{sel_creation}|!=={''}|?{' ',''})[(#SET{sel_creation,<input  type="hidden" name="sel_creation"  value="[(#ENV{sel_creation})]"/>})]]
+[(#ENV{sel_validite}|!=={''}|?{' ',''})[(#SET{sel_validite,<input  type="hidden" name="sel_validite"  value="[(#ENV{sel_validite})]"/>})]]
+[(#ENV{sel_categorie}|!=={''}|?{' ',''})[(#SET{sel_categorie,<input  type="hidden" name="sel_categorie"  value="[(#ENV{sel_categorie})]"/>})]]
+[(#ENV{sel_partage}|!=={''}|?{' ',''})[(#SET{sel_partage,<input  type="hidden" name="sel_partage"  value="[(#ENV{sel_partage})]"/>})]]
+[(#ENV{sel_partagedonne}|!=={''}|?{' ',''})[(#SET{sel_partagedonne,<input  type="hidden" name="sel_partagedonne"  value="[(#ENV{sel_partagedonne})]"/>})]]
+[(#ENV{sel_statut_provisoire}|!=={''}|?{' ',''})[(#SET{sel_statut_provisoire,<input  type="hidden" name="sel_statut_provisoire"  value="[(#ENV{sel_statut_provisoire})]"/>})]]
+[(#ENV{sel_montant}|!=={''}|?{' ',''})[(#SET{sel_montant,<input  type="hidden" name="sel_montant"  value="[(#ENV{sel_montant})]"/>})]]
+[(#ENV{sel_date_paiement}|!=={''}|?{' ',''})[(#SET{sel_date_paiement,<input  type="hidden" name="sel_date_paiement"  value="[(#ENV{sel_date_paiement})]"/>})]]
+[(#ENV{sel_benevole}|!=={''}|?{' ',''})[(#SET{sel_benevole,<input  type="hidden" name="sel_benevole"  value="[(#ENV{sel_benevole})]"/>})]]
+[(#ENV{nom}|!=={''}|?{' ',''})[(#SET{nom,<input  type="hidden"  name="nom"  value="[(#ENV{nom})]"/>})]]
+[(#ENV{email}|!=={''}|?{' ',''})[(#SET{email,<input  type="hidden" name="email"  value="[(#ENV{email})]"/>})]]
+[(#ENV{nom_site}|!=={''}|?{' ',''})[(#SET{nom_site,<input  type="hidden" name="nom_site"  value="[(#ENV{nom_site})]"/>})]]
+[(#ENV{url_site}|!=={''}|?{' ',''})[(#SET{url_site,<input  type="hidden" name="url_site"  value="[(#ENV{url_site})]"/>})]]
+[(#ENV{statut}|!=={''}|?{' ',''})[(#SET{statut,<input  type="hidden" name="statut"  value="[(#ENV{statut})]"/>})]]
+[(#ENV{maj}|!=={''}|?{' ',''})[(#SET{maj,<input  type="hidden" name="maj"  value="[(#ENV{maj})]"/>})]]
+[(#ENV{en_ligne}|!=={''}|?{' ',''})[(#SET{en_ligne,<input  type="hidden" name="en_ligne"  value="[(#ENV{en_ligne})]"/>})]]
+[(#ENV{id_asso}|!=={''}|?{' ',''})[(#SET{id_asso,<input  type="hidden" name="id_asso"  value="[(#ENV{id_asso})]"/>})]]
+[(#ENV{nom_famille}|!=={''}|?{' ',''})[(#SET{nom_famille,<input  type="hidden" name="nom_famille"  value="[(#ENV{nom_famille})]"/>})]]
+[(#ENV{prenom}|!=={''}|?{' ',''})[(#SET{prenom,<input  type="hidden" name="prenom"  value="[(#ENV{prenom})]"/>})]]
+[(#ENV{adresse}|!=={''}|?{' ',''})[(#SET{adresse,<input  type="hidden" name="adresse"  value="[(#ENV{adresse})]"/>})]]
+[(#ENV{code_postal}|!=={''}|?{' ',''})[(#SET{code_postal,<input  type="hidden" name="code_postal"  value="[(#ENV{code_postal})]"/>})]]
+[(#ENV{ville}|!=={''}|?{' ',''})[(#SET{ville,<input  type="hidden" name="ville"  value="[(#ENV{ville})]"/>})]]
+[(#ENV{telephone}|!=={''}|?{' ',''})[(#SET{telephone,<input  type="hidden" name="telephone"  value="[(#ENV{telephone})]"/>})]]
+[(#ENV{fax}|!=={''}|?{' ',''})[(#SET{fax,<input  type="hidden" name="fax"  value="[(#ENV{fax})]"/>})]]
+[(#ENV{mobile}|!=={''}|?{' ',''})[(#SET{mobile,<input  type="hidden" name="mobile"  value="[(#ENV{mobile})]"/>})]]
+[(#ENV{commentaire}|!=={''}|?{' ',''})[(#SET{commentaire,<input  type="hidden" name="commentaire"  value="[(#ENV{commentaire})]"/>})]]
+[(#ENV{statut_interne}|!=={''}|?{' ',''})[(#SET{statut_interne,<input  type="hidden" name="statut_interne"  value="[(#ENV{statut_interne})]"/>})]]
+[(#ENV{creation}|!=={''}|?{' ',''})[(#SET{creation,<input  type="hidden" name="creation"  value="[(#ENV{creation})]"/>})]]
+[(#ENV{validite}|!=={''}|?{' ',''})[(#SET{validite,<input  type="hidden" name="validite"  value="[(#ENV{validite})]"/>})]]
+[(#ENV{validite}|!=={''}|?{' ',''})[(#SET{validite,<input  type="hidden" name="validite"  value="[(#ENV{categorie})]"/>})]]
+[(#ENV{partage}|!=={''}|?{' ',''})[(#SET{partage,<input  type="hidden" name="partage"  value="[(#ENV{partage})]"/>})]]
+[(#ENV{partagedonne}|!=={''}|?{' ',''})[(#SET{partagedonne,<input  type="hidden" name="partagedonne"  value="[(#ENV{partagedonne})]"/>})]]
+[(#ENV{statut_provisoire}|!=={''}|?{' ',''})[(#SET{statut_provisoire,<input  type="hidden" name="statut_provisoire"  value="[(#ENV{statut_provisoire})]"/>})]]
+[(#ENV{montant}|!=={''}|?{' ',''})[(#SET{montant,<input  type="hidden" name="montant"  value="[(#ENV{montant})]"/>})]]
+[(#ENV{date_paiement}|!=={''}|?{' ',''})[(#SET{date_paiement,<input  type="hidden" name="date_paiement"  value="[(#ENV{date_paiement})]"/>})]]
+[(#ENV{benevole}|!=={''}|?{' ',''})[(#SET{benevole,<input  type="hidden" name="benevole"  value="[(#ENV{benevole})]"/>})]]
+[(#ENV{affichage}|!=={''}|?{' ',''})[(#SET{affichage2,<input  type="hidden" name="affichage"  value="[(#ENV{affichage})]" />})]]
+[(#ENV{critere}|!=={''}|?{' ',''})[(#SET{critere,<input  type="hidden" name="critere"  value="[(#ENV{critere})]" />})]]
+
+#SET{sel,(#GET{sel_id_auteur})(#GET{sel_nom})(#GET{sel_email})(#GET{sel_nom_site})(#GET{sel_url_site})(#GET{sel_statut})(#GET{sel_maj})(#GET{sel_en_ligne})(#GET{sel_id_asso})(#GET{sel_nom_famille})(#GET{sel_prenom})(#GET{sel_adresse})(#GET{sel_code_postal})(#GET{sel_ville})(#GET{sel_telephone})(#GET{sel_fax}{sel_commentaire})(#GET{sel_statut_interne})(#GET{sel_creation})(#GET{sel_validite})(#GET{sel_categorie})(#GET{sel_partage})(#GET{sel_partagedonne})(#GET{sel_statut_provisoire})(#GET{sel_montant})(#GET{sel_date_paiement})(#GET{sel_benevole})(#GET{nom})(#GET{email})(#GET{nom_site})(#GET{url_site})(#GET{statut})(#GET{maj})(#GET{en_ligne})(#GET{id_asso})(#GET{nom_famille})(#GET{prenom})(#GET{adresse})(#GET{code_postal})(#GET{ville})(#GET{telephone})(#GET{fax})(#GET{mobile})(#GET{commentaire})(#GET{statut_interne})(#GET{creation})(#GET{validite})(#GET{validite})(#GET{partage})(#GET{partagedonne})(#GET{statut_provisoire})(#GET{montant})(#GET{date_paiement})(#GET{benevole})(#GET{affichage2})(#GET{critere})}
+
+#SET{auteurs,(#GET{nom})(#GET{email})(#GET{nom_site})(#GET{url_site})(#GET{statut})(#GET{maj})(#GET{en_ligne})}
+
+<a name="tableau"></a>
+
+<br class="nettoyeur"> </br>
+<form method="post" action="[(#ENV{type}|=={''}|?{'/ecrire/?exec=action_adherents','spip_php?page=gestion'})]">
+<B_auteur_elargis_principale>
+<p class="pagination">#PAGINATION</p>
+<table id="table_results" width="100%" cellspacing="0" cellpadding="2" border="0" style="border: 1px solid rgb(170, 170, 170);">
+<thead><tr>
+<th colspan="6"><:asso:adherent_entete_action:></th>
+ [(#ENV{sel_id_auteur}|?{<th>
+<:id_auteur:>
+</th>,''})][(#ENV{sel_nom}|?{<th><:nom:>
+</th>,''})][(#ENV{sel_email}|?{<th>
+<:email:>
+</th>,''})][(#ENV{sel_nom_site}|?{<th><:nom_site:>
+</th>,''})][(#ENV{sel_url_site}|?{<th><:url_site:>
+</th>,''})][(#ENV{sel_statut}|?{<th>
+<:statut:>
+</th>,''})][(#ENV{sel_maj}|?{<th><:maj:>
+</th>,''})][(#ENV{sel_en_ligne}|?{<th>
+<:en_ligne:>
+</th>,''})][(#ENV{sel_id_asso}|?{<th>
+<:id_asso:>
+</th>,''})][(#ENV{sel_nom_famille}|?{<th>
+<:nom_famille:>
+</th>,''})][(#ENV{sel_prenom}|?{<th>
+<:prenom:>
+</th>,''})][(#ENV{sel_adresse}|?{<th>
+<:adresse:>
+</th>,''})][(#ENV{sel_code_postal}|?{<th>
+<:code_postale:>
+</th>,''})][(#ENV{sel_ville}|?{<th>
+<:ville:>
+</th>,''})][(#ENV{sel_telephone}|?{<th>
+<:telephone:>
+</th>,''})][(#ENV{sel_fax}|?{<th>
+<:telephone:>
+</th>,''})][(#ENV{sel_mobile}|?{<th>
+<:mobile:>
+</th>,''})][(#ENV{sel_commentaire}|?{<th>
+<:mobile:>
+</th>,''})][(#ENV{sel_statut_interne}|?{<th>
+<:statut_interne:>
+</th>,''})][(#ENV{sel_creation}|?{<th>
+<:creation:>
+</th>,''})][(#ENV{sel_validite}|?{<th>
+<:validite:>
+</th>,''})][(#ENV{sel_categorie}|?{<th>
+<:categorie:>
+</th>,''})][(#ENV{sel_partage}|?{<th>
+<:partage:>
+</th>,''})][(#ENV{sel_partagedonne}|?{<th>
+<:partagedonne:>
+</th>,''})][(#ENV{sel_statut_provisoire}|?{<th>
+<:statut_provisoire:>
+</th>,''})][(#ENV{sel_montant}|?{<th>
+<:montant:>
+</th>,''})][(#ENV{sel_date_paiement}|?{<th>
+<:date_paiement:>
+</th>,''})][(#ENV{sel_benevole}|?{<th>
+<:benevole:>
+</th>,''})]</tr>
+</thead>
+        <tbody>
+
+
+
+<BOUCLE_auteur_elargis_principale(AUTEURS auteurs_elargis){id_auteur ?}{nom_famille ?}{prenom ?} {adresse ?}{code_postal ?}{ville ?}{ville ?} {telephone ?}{id_asso ?}{statut_interne ?}{ville ?}{creation ?}{partage ?}{validite ?}{partagedonne ?}{statut_provisoire ?}{montant ?}{date_paiement ?}{commentaire ?}{benevole ?}{nom ?}{email ?} {statut ?}{maj ?} {statut ?}{nom_site ?}{nom_site ?}{url_site ?} {tout} {par #ENV{critere}}{#ENV{debut,0},#GET{affichage}}{pagination #ENV{affichage,30}}>
+
+    <tr class="odd">
+<td class="cell impair"><a href="ecrire/?exec=auteur_infos&amp;id_auteur=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/admin-12.gif}" title="Modifier le visiteur"></a></td>
+<td  class="cell" ><a href="ecrire/?exec=ajout_cotisation&amp;id=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/cotis-12.gif}" title="Ajouter une cotisation"></a></td>
+<td class="cell" ><a href="ecrire/?exec=edit_adherent&amp;id=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/edit-12.gif}" title="Modifier membre" onclick="window.open(this.href); return false;"></a></td>
+<td class="cell" ><a href="ecrire/?exec=voir_adherent&amp;id=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/voir-12.png}" title="Voir le membre"></a></td>
+<td class="cell" ><a href="[(#SELF|parametre_url{comparer,doublons}|parametre_url{id_auteur,#ID_AUTEUR}|parametre_url{url_retour,#SELF})]" ><img src="#CHEMIN{images/doublons.png}" title="Chercher des doublons"/></a></td>
+<td class="cell" >
+[(#ENV{type}|=={''}|?{' ',''})<input name='#GET{delete}' value="[(#ID_AUTEUR)]" type="checkbox"/>]
+[(#ENV{type}|!=={''}|?{' ',''})<input name="id_auteur_or" value="[(#ID_AUTEUR)]" type="checkbox"/>]
+    [(#ENV{sel_id_auteur}|?{<td class="cell" align="center">#ID_AUTEUR</td>,''})]
+    [(#ENV{sel_nom}|?{<td class="cell">#NOM</td>,''})]
+    [(#ENV{sel_email}|?{<td class="cell">#EMAIL</td>,''})]
+    [(#ENV{sel_nom_site}|?{<td class="cell">#NOM_SITE</td>,''})]
+    [(#ENV{sel_url_site}|?{<td class="cell">#URL_SITE</td>,''})]
+    [(#ENV{sel_statut}|?{<td class="cell">#STATUT</td>,''})]
+    [(#ENV{sel_maj}|?{<td class="cell">#MAJ</td>,''})]
+    [(#ENV{sel_en_ligne}|?{<td class="cell">#EN_LIGNE</td>,''})]
+    [(#ENV{sel_id_asso}|?{<td class="cell">#ID_ASSO</td>,''})]
+    [(#ENV{sel_nom_famille}|?{<td class="cell">#NOM_FAMILLE</td>,''})]
+    [(#ENV{sel_prenom}|?{<td class="cell">#PRENOM</td>,''})]
+    [(#ENV{sel_adresse}|?{<td class="cell">#ADRESSE</td>,''})]
+    [(#ENV{sel_code_postal}|?{<td class="cell">#CODE_POSTAL</td>,''})]
+    [(#ENV{sel_ville}|?{<td class="cell">#VILLE</td>,''})]
+    [(#ENV{sel_telephone}|?{<td class="cell">#TELEPHONE</td>,''})]
+    [(#ENV{sel_fax}|?{<td class="cell">#FAX</td>,''})]
+    [(#ENV{sel_mobile}|?{<td class="cell">#MOBILE</td>,''})]
+    [(#ENV{sel_commentaire}|?{<td class="cell">#COMMENTAIRE</td>,''})]
+    [(#ENV{sel_statut_interne}|?{<td class="cell">#STATUT_INTERNE</td>,''})]
+    [(#ENV{sel_creation}|?{<td class="cell">#CREATION</td>,''})]
+    [(#ENV{sel_validite}|?{<td class="cell">#VALIDITE</td>,''})]
+    [(#ENV{sel_categorie}|?{<td class="cell">#CATEGORIE</td>,''})]
+    [(#ENV{sel_partage}|?{<td class="cell">#PARTAGE</td>,''})]
+    [(#ENV{sel_partagedonne}|?{<td class="cell">#PARTAGEDONNE</td>,''})]
+    [(#ENV{sel_statut_provisoire}|?{<td class="cell">#STATUT_PROVISOIRE</td>,''})]
+    [(#ENV{sel_montant}|?{<td class="cell">#MONTANT</td>,''})]
+    [(#ENV{sel_date_paiement}|?{<td class="cell">#DATE_PAIEMENT</td>,''})]
+    [(#ENV{sel_benevole}|?{<td class="cell">#BENEVOLE</td>,''})]
+</tr>
+
+</BOUCLE_auteur_elargis_principale>
+
+</tbody>
+
+</table>
+<table width="100%">
+<tbody>
+<td style="text-align: left;">
+[(#ENV{type}|=={''}|?{' ',''})<input name="Submit" value="<:asso:bouton_supprimer:>" class="fondo" type="submit">]
+[(#ENV{type}|!=={''}|?{' ',''})
+<input name="id_auteur_prov" value="#ENV{id_auteur_prov}" type="hidden">
+<input name="comparer" value="ok" type="hidden">
+<input name="type" value="#ENV{type}" type="hidden">
+<input name="url_retour" value="#SELF" type="hidden">
+<input name="Submit" value="<:comparer:>" class="fondo" type="submit">]
+
+</td>
+</tr>
+</tbody>
+</table>
+</B_auteur_elargis_principale>
+</form>
+

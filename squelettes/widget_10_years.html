@@ -1,0 +1,4 @@
+#HTTP_HEADER{Content-Type: application/x-javascript; charset=#CHARSET} #CACHE{0} 
+document.write('<div class="widget_mp" [style="width:(#ENV{largeur})px"]>');
+document.write('<h3 style="font-weight: bold;"><a href="http://www.muziekpublique.be/nouvelles/extra-103/10-years-videos-166/">10 years Muziekpublique | A song a Day</a></h3>');#SET{id_rubrique,#ARRAY{}}<BOUCLE_rub_annees(RUBRIQUES){id_trad=165}{tout}>#SET{id_rubrique,#GET{id_rubrique}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_RUBRIQUE}}</BOUCLE_rub_annees><BOUCLE_art(ARTICLES){id_rubrique IN #GET{id_rubrique}}{0,1}{!par date}>[(#ENV{display}|=={video}|non)<INCLURE{fond=inc/contenu/inc-article_video_details_js}{id_article}{env}/>][(#ENV{display}|=={video}|oui)<INCLURE{fond=inc/contenu/inc-article_video_embed_js}{id_article}{env}/>]</BOUCLE_art>
+document.write('</div>');

@@ -1,0 +1,179 @@
+#CACHE{24*3600}
+
+<div style="float:right;"><a href="[(#SELF|parametre_url{editer_labels,''})]"><:retour:></a></div>
+		#BLOC_TITRE 
+		<:details_format_etiquette:>
+		#BLOC_DEBUT
+		<div class="form etiquettes_mod">
+			<form action="[(#SELF|parametre_url{id_requete,''}|parametre_url{valider,''}|parametre_url{id_auteur,''})]" method="post">
+			<input  name="url" type="hidden" value="#SELF" />
+			<input  type="hidden" name="type"  value="etiquettes"/>
+			<input  type="hidden" name="id_requete"  value="#ENV{id_requete}"/>
+			<input type="hidden" name="editer_labels" value="etiquettes"/>
+			<div>
+			<label for="nom_requete"><:nom:></label>
+			<input  type="text" name="nom_requete"  value="#ENV{nom_requete_etiquete,#ENV{nom_requete,nouveau}}"/>
+			</div>			
+			<div>
+			<label for="paper_size"><:paper_size:></label>
+			<input  type="text" name="paper_size"  value="#ENV{paper_size,A4}"/>
+			</div>
+			<div>
+			<label for="marginLeft"><:marginleft:></label>
+			<input  type="text" name="marginLeft"  value="#ENV{marginLeft,12}"/>
+			</div>
+			<div>
+			<label for="marginTop"><:margintop:></label>
+			<input  type="text" name="marginTop"  value="#ENV{marginTop,12}"/>
+			</div>
+			<div>
+			<label for="NX"><:nombre_colonne:></label>
+			<input  type="text" name="NX"  value="#ENV{NX,3}"/>
+			</div>
+			<div>
+			<label for="NY"><:nombre_rangee:></label>
+			<input  type="text" name="NY"  value="#ENV{NY,7}"/>
+			</div>
+			<div>
+			<label for="SpaceX"><:espace_horizontal:></label>
+			<input  type="text" name="SpaceX"  value="#ENV{SpaceX,0}"/>
+			</div>
+			<div>
+			<label for="SpaceY"><:espace_vertical:></label>
+			<input  type="text" name="SpaceY"  value="#ENV{SpaceY,0}"/>
+			</div>
+			<div>
+			<label for="width"><:width:></label>
+			<input  type="text" name="width"  value="#ENV{width,105}"/>
+			</div>
+			<div>
+			<label for="height"><:height:></label>
+			<input  type="text" name="height"  value="#ENV{height,39}"/>
+			</div>
+			<div>
+			<label for="metric"><:metric:></label>
+			<input  type="text" name="metric"  value="#ENV{metric,mm}"/>
+			</div>
+			<div>
+			<label for="font_size"><:font_size:></label>
+			<input  type="text" name="font_size"  value="#ENV{font_size,8}"/>
+			</div>
+			<div>
+			<label for="defaut">Requete par defaut</label>
+			<input id="defaut" type="checkbox" name="defaut"  value="defaut" class="checkbox" [(#ENV{defaut}|?{checked="checked",''})]/>
+			</div>
+			<div>
+			<BOUCLE_req_test(spip_requetes){id_requete}{type=etiquettes}>
+			<input type="submit" name="modify" class="spip_bouton" value="<:modify:>"/>
+			</BOUCLE_req_test>
+			<input type="submit" name="save" class="spip_bouton" value="<:save:>"/>
+			<input type="submit" name="delete" class="spip_bouton" value="<:delete:>"/>
+			</div>
+			</form>
+			</div>
+			#BLOC_FIN
+
+<div class="form etiquettes_req">
+<form method="post" action="">
+	<B_choix_requete>
+<label for="menu10"><:choix_format_etiquettes:></label>
+	<select id="menu10" class="forml"
+        onchange="go10()">
+	<BOUCLE_req_sel(spip_requetes){id_requete}{type=etiquettes}>
+	<option value="[(#SELF|parametre_url{id_requete,#ID_REQUETE}|parametre_url{valider,ok}|parametre_url{editer_labels,ok}|parametre_url{id_auteur,''})]" >#NOM_REQUETE</option>
+	</BOUCLE_req_sel>
+		<BOUCLE_req_def(spip_requetes){defaut=defaut}{type=etiquettes}>
+	<option value="[(#SELF|parametre_url{id_requete,#ID_REQUETE}|parametre_url{valider,ok}|parametre_url{editer_labels,ok}|parametre_url{id_auteur,''})]" >#NOM_REQUETE</option>
+		</BOUCLE_req_def>
+	<//B_req_sel>
+	<BOUCLE_choix_requete(spip_requetes){par nom_requete} {type==etiquettes}>
+	<option value="[(#SELF|parametre_url{id_requete,#ID_REQUETE}|parametre_url{valider,ok}|parametre_url{editer_labels,ok}|parametre_url{id_auteur,''})]" >#NOM_REQUETE</option>
+	</BOUCLE_choix_requete>	
+	</select>
+	</B_choix_requete>
+</form>
+
+<form method="post" action="">
+<BOUCLE_requete(spip_requetes){id_requete} {type=etiquettes}>
+#AFFICHAGE
+#SELECTION
+<input type="hidden" name="nom_requete" value="#NOM_REQUETE"/>
+</BOUCLE_requete>
+[(#ENV{valider}|!=={''}|?{' ',''})[(#ENV{requete}|!=={'OK'}|?{' ',''})<input type="submit" name="requete" class="spip_bouton" value="OK"/>]]
+</form>
+<form method="post" action="">
+	<B_choix_requete_membres>
+<label for="menupays"><:selection_donnees:></label>
+	<select id="menupays" class="forml"
+        onchange="gopays()">
+	<BOUCLE_req_sel_membres(spip_requetes){id_requete=#ENV{id_requete_membres}}{type=membres}>
+	<option value="[(#SELF|parametre_url{id_requete_membres,#ID_REQUETE}|parametre_url{valider,ok}|parametre_url{editer_labels,ok}|parametre_url{id_auteur,''})]" >#NOM_REQUETE</option>
+	</BOUCLE_req_sel_membres>
+		<BOUCLE_req_def_membres(spip_requetes){defaut=defaut}{type=membres}>
+	<option value="[(#SELF|parametre_url{id_requete_membres,#ID_REQUETE}|parametre_url{valider,ok}|parametre_url{editer_labels,ok}|parametre_url{id_auteur,''})]" >#NOM_REQUETE</option>
+		</BOUCLE_req_def_membres>
+	<//B_req_sel_membres>
+	<BOUCLE_choix_requete_membres(spip_requetes){par nom_requete} {type==membres}>
+	[<option value="[(#SELF|parametre_url{id_requete_membres,#ID_REQUETE}|parametre_url{valider,ok}|parametre_url{editer_labels,ok})]" >(#NOM_REQUETE|unique)</option>]
+	</BOUCLE_choix_requete_membres>	
+	</select>
+	</B_choix_requete_membres>
+</form>
+
+<form method="post" action="">
+<BOUCLE_requete_membres(spip_requetes){id_requete=#ENV{id_requete_membres}}{type=membres}>
+#AFFICHAGE
+#SELECTION
+<input type="hidden" name="nom_requete" value="#NOM_REQUETE"/>
+
+
+</BOUCLE_requete_membres>
+[(#ENV{valider}|!=={''}|?{' ',''})[(#ENV{requete}|!=={'OK'}|?{' ',''})<input type="submit" name="requete" class="spip_bouton" value="OK"/>]]
+</div>
+</form>
+		
+		<form method="post" action="ecrire/?exec=action_labels">
+		<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+		<tr bgcolor="#DBE1C5">
+		<td><strong><:id_auteur:></strong></td>
+		<td><strong><:nom:></strong></td>
+		<td><strong><:adresse:></strong></td>
+		<td><strong><:env:></strong></td>
+		</tr>	
+
+<BOUCLE_auteur_elargis_principale(spip_auteurs_elargis){id_auteur ?}{nom_famille ?}{prenom ?} {adresse ?}{code_postal ?}{ville ?}{ville ?} {telephone ?}{statut_interne ?}{ville ?}{creation ?}{partage ?}{validite ?}{partagedonne ?}{statut_provisoire ?}{montant ?}{date_paiement ?}{commentaire ?}{par #ENV{critere}}>		
+
+<BOUCLE_auteur_principale(AUTEURS){id_auteur}{nom ?}{email ?} {statut ?}{maj ?} {en_ligne ?}{nom_site ?}{nom_site ?}{url_site ?}  {tout}>
+
+
+			<tr> 
+			<td  class="cell" style="text-align:left">
+			#ID_AUTEUR
+			</td>
+			<td class="cell">
+			#PRENOM &nbsp; [(#NOM_FAMILLE|entites_html)]
+			</td>
+			<td class="cell">#ADRESSE<br />#CODE_POSTAL #VILLE</td>
+			<td class="cell" style="text-align:center;">
+			<input name="label[]" type="checkbox" value="#ID" checked="checked" />
+			</td>
+			</tr>
+</BOUCLE_auteur_principale>
+	
+</BOUCLE_auteur_elargis_principale>
+
+		<tr><td>
+ 			<BOUCLE_requete_sel(spip_requetes){id_requete} {type=etiquettes}>
+			#AFFICHAGE
+			#SELECTION
+			</BOUCLE_requete_sel>
+				<BOUCLE_requete_def(spip_requetes){defaut=defaut} {type=etiquettes}>
+				#AFFICHAGE
+				#SELECTION
+				</BOUCLE_requete_def>
+			<//B_requete_sel>
+		</td>
+		<td colspan="4" style="text-align:right;"><input type="submit" name="Submit" value="Etiquettes" class="fondo"/></td>
+		</tr>
+		</table>
+		</form>

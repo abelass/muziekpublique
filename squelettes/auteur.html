@@ -1,0 +1,118 @@
+<BOUCLE_principale(AUTEURS) {id_auteur}{tout}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title>[(#NOM|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+[<meta name="description" content="(#BIO|couper{150}|attribut_html)" />]
+<INCLURE{fond=inc/inc-head}{favicon=#LOGO_AUTEUR} />
+[(#REM) Lien vers le flux RSS des articles de l'auteur ]
+<link rel="alternate" type="application/rss+xml" title="[(#NOM|textebrut)]" href="[(#URL_PAGE{backend}|parametre_url{id_auteur,#ID_AUTEUR})]" />
+</head>
+
+<body class="page_auteur">
+<div id="page">
+
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc/inc-entete}>
+
+	[(#REM) Contenu principal : affichage de l'auteur ]
+    <div id="conteneur">
+    <div id="contenu">
+    
+        [(#REM) Fil d'Ariane ]
+        <div id="hierarchie"><a href="#URL_SITE_SPIP/"><:accueil_site:></a> &gt; <:info_auteurs:>[ &gt; <strong class="on">(#NOM|couper{80})</strong>]</div>
+
+		<div class="vcard">[(#REM) microformat vcard]
+        <div class="cartouche">
+            [(#LOGO_AUTEUR||image_reduire{200,200})]
+            <h1 class="#EDIT{qui} fn">#NOM</h1>
+        </div>
+
+        [<div class="#EDIT{bio} texte note">(#BIO)</div>]
+        [<p class="#EDIT{hyperlien} hyperlien"><:voir_en_ligne:> : <a href="(#URL_SITE)" class="url org spip_out">[(#NOM_SITE|sinon{[(#URL_SITE|couper{80})]})]</a></p>]
+		</div>[(#REM) / vcard]
+	<BOUCLE_rubrique(RUBRIQUES){id_mot=262}{lang=#ENV{lang}}{tout}>
+	#SET{url_membres,#URL_RUBRIQUE}
+	</BOUCLE_rubrique>
+
+	<BOUCLE_espace_benevole(spip_auteurs_elargis){id_auteur}{benevole=oui}>
+		<B_evenements_futurs>
+       		 <div class="menu articles">
+            	#ANCRE_PAGINATION
+            	<h2><:concerts_futurs:> (#GRAND_TOTAL)</h2>
+            	<ul>
+			<BOUCLE_evenements_futurs(EVENEMENTS){id_rubrique IN 8,26,39}{pagination}{date_debut>=#DATE}>
+                	<li>
+						<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{lang,#ENV{lang}})]">#TITRE - [(#DATE_DEBUT|affdate)]</a> - 
+						<a href="[(#GET{url_membres}|parametre_url{inscription,concert}|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:inscription_benevole:>"><:inscription_benevole:></a></li>
+			</BOUCLE_evenements_futurs>
+            	</ul>
+            	#ANCRE_PAGINATION
+		</B_evenements_futurs>
+
+	</BOUCLE_espace_benevole>
+
+        [(#REM) Articles de l'auteur ]
+        <B_articles>
+        <div class="menu articles">
+            #ANCRE_PAGINATION
+            <h2><:articles_auteur:> (#GRAND_TOTAL)</h2>
+            <ul>
+                <BOUCLE_articles(ARTICLES) {id_auteur} {par popularite}{inverse} {pagination 10}>
+                <li><a href="#URL_ARTICLE">#TITRE</a></li>
+                </BOUCLE_articles>
+            </ul>
+            [<p class="pagination">(#PAGINATION)</p>]
+        </div>
+        </B_articles>
+
+        <B_articles_ev>
+        [(#REM) Concerts de l'auteur ]
+        <div class="menu articles">
+            #ANCRE_PAGINATION
+            <h2><:cours_auteur:> </h2>
+            <ul>
+                <BOUCLE_articles_ev(ARTICLES) {id_auteur} {id_rubrique IN 1,27,40} {par date}{inverse} {pagination 10}>
+			<BOUCLE_evenements_auteur(EVENEMENTS){id_article}{id_evenement_source=0}>
+                	<li><a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{lang,#ENV{lang}})]">#TITRE - [(#DATE_DEBUT|affdate)]</a></li>
+			</BOUCLE_evenements_auteur>
+
+                </BOUCLE_articles_ev>
+            </ul>
+            [<p class="pagination">(#PAGINATION)</p>]
+        </div>
+        </B_articles_ev>
+
+        #FORMULAIRE_ECRIRE_AUTEUR
+
+        [<div class="notes"><h2><:info_notes:></h2>(#NOTES)</div>]
+
+	</div><!--#contenu-->
+	</div><!--#conteneur-->
+
+    [(#REM) Menu de navigation laterale ]
+    <div id="navigation">
+
+        [(#REM) Menu de navigation par rubriques ]
+        <INCLURE{fond=inc/inc-rubriques}{id_rubrique=#ENV{id_rubrique}}>
+		
+		#FORMULAIRE_RECHERCHE
+
+    </div><!--#navigation-->
+    
+    [(#REM) Menu de navigation laterale ]
+    <div id="extra">
+<INCLURE{fond=inc/extra/inc-lien_newsletter}>
+<INCLURE{fond=inc/extra/inc-lien_radio}>
+
+[(#REM) Les derniers concerts ]
+<INCLURE{fond=inc/extra/inc-derniers_evenements} >
+    </div><!--#extra-->
+
+	[(#REM) Pied de page ]
+	<INCLURE{fond=inc/inc-pied}{skel=#SQUELETTE}>
+
+</div><!--#page-->
+</body>
+</html>
+</BOUCLE_principale>

@@ -1,0 +1,45 @@
+#CACHE{0}
+
+[(#REM)Détermine les différents liens à afficher selon les commandes, hors inscription concerts]
+
+[(#REM)Les cours]
+
+<BOUCLE_evenement(EVENEMENTS){id_evenement}>
+
+	[(#SESSION{id_auteur}|non)
+		#LOGIN_PUBLIC{#SELF}
+		<p>			
+			<a href="[(#URL_PAGE{commander}|parametre_url{type,cours}|parametre_url{membre,oui}|parametre_url{id_evenement,#ID_EVENEMENT})]"><:membre:></a>
+		</p>
+		]
+		<p>			
+			<a href="[(#URL_PAGE{commander}|parametre_url{type,cours}|parametre_url{membre,non}|parametre_url{id_evenement,#ID_EVENEMENT})]">[(#SESSION{id_auteur}|?{ok,<:non_membre:>})]</a>
+		</p>
+</BOUCLE_evenement>
+
+[(#REM)Les membres]
+
+	[(#ENV{type}|=={'membres'}|oui)
+
+		[(#SESSION{id_auteur}|oui)
+			<p>			
+				<:membre_echu_reabo:> <a href="[(#URL_PAGE{commander}|parametre_url{inscription,reabo}|parametre_url{type,membres})]">ok</a>
+			</p>]
+		
+		[(#SESSION{id_auteur}|non)
+			#LOGIN_PUBLIC{#SELF}
+				
+			<p>			
+				<:membre_echu_reabo:> <a href="[(#URL_PAGE{commander}|parametre_url{inscription,reabo}|parametre_url{type,membres})]">ok</a>
+			</p>
+			
+			<p>			
+				<:pas_membre_inscrire:> <a href="[(#URL_PAGE{commander}|parametre_url{inscription,oui}|parametre_url{type,membres})]">ok</a>
+			</p>
+					
+			<p>			
+				<:membre_souviens_rien:> <a href="[(#URL_PAGE{commander}|parametre_url{inscription,provisoire}|parametre_url{type,membres})]">ok</a>
+			</p>			
+
+			]
+		]

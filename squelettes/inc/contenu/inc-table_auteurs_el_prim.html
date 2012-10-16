@@ -1,0 +1,323 @@
+#CACHE{0}
+[(#REM)Détermine à quelle boucle s'applique le critère de trie]
+[(#ENV{critere}|=={id_auteur}|?{#SET{critere,id_auteur},''})]
+[(#ENV{critere}|=={nom}|?{#SET{critere,nom},''})]
+[(#ENV{critere}|=={email}|?{#SET{critere,email},''})]
+[(#ENV{critere}|=={url_site}|?{#SET{critere,url_site},''})]
+[(#ENV{critere}|=={statut}|?{#SET{critere,statut},''})]
+[(#ENV{critere}|=={maj}|?{#SET{critere,maj},''})]
+[(#ENV{en_ligne}|=={en_ligne}|?{#SET{critere,en_ligne},''})]
+
+[(#ENV{critere}|=={id_asso}|?{#SET{critere_el,id_asso},''})]
+[(#ENV{critere}|=={nom_famille}|?{#SET{critere_el,nom_famille},''})]
+[(#ENV{critere}|=={prenom}|?{#SET{critere_el,prenom},''})]
+[(#ENV{critere}|=={adresse}|?{#SET{critere_el,adresse},''})]
+[(#ENV{critere}|=={code_postal}|?{#SET{critere_el,code_postal},''})]
+[(#ENV{critere}|=={ville}|?{#SET{critere_el,ville},''})]
+[(#ENV{critere}|=={telephone}|?{#SET{critere_el,telephone},''})]
+[(#ENV{critere}|=={fax}|?{#SET{critere_el,fax},''})]
+[(#ENV{critere}|=={mobile}|?{#SET{critere_el,mobile},''})]
+[(#ENV{critere}|=={commentaire}|?{#SET{critere_el,commentaire},''})]
+[(#ENV{critere}|=={statut_interne}|?{#SET{critere_el,statut_interne},''})]
+[(#ENV{critere}|=={creation}|?{#SET{critere_el,creation},''})]
+[(#ENV{critere}|=={validite}|?{#SET{critere_el,validite},''})]
+[(#ENV{critere}|=={categorie}|?{#SET{critere_el,categorie},''})]
+[(#ENV{critere}|=={partage}|?{#SET{critere_el,partage},''})]
+[(#ENV{critere}|=={partagedonne}|?{#SET{critere_el,partagedonne},''})]
+[(#ENV{critere}|=={statut_provisoire}|?{#SET{critere_el,statut_provisoire},''})]
+[(#ENV{critere}|=={montant}|?{#SET{critere_el,montant},''})]
+[(#ENV{critere}|=={date_paiement}|?{#SET{critere_el,date_paiement},''})]
+[(#ENV{critere}|=={benevole}|?{#SET{critere_el,benevole},''})]
+
+	[(#REM)Détermine le critère d'affichage]
+
+#SET{test_sel,(#ENV{id_auteur})(#ENV{nom})(#ENV{email})(#ENV{url_site})(#ENV{maj})(#ENV{en_ligne})}
+
+#SET{test_sel_el,(#ENV{commentaire})(#ENV{id_asso})(#ENV{nom_famille})(#ENV{prenom})(#ENV{adresse})(#ENV{code_postale})(#ENV{ville})(#ENV{telephone})(#ENV{fax})(#ENV{mobile})(#ENV{commentaire})(#ENV{statut_interne})(#ENV{creation})(#ENV{validite})(#ENV{categorie})(#ENV{partage})(#ENV{partagedonne})(#ENV{statut_provisoire})(#ENV{montant})(#ENV{date_paiement})(#ENV{benevole})}
+
+[(#GET{test_sel}|=={''}|?{' ',''})
+[(#GET{test_sel_el}|=={''}|?{' ',''})
+[(#SET{limiteur2,0})] [(#SET{limiteur,0})]
+]
+[(#GET{test_sel_el}|!=={''}|?{' ',''})
+[(#SET{limiteur2,#ENV{affichage}})] [(#SET{limiteur,10000})]
+]
+]
+
+[(#REM)Dans le cas ou uniquement des criteres de la table auteurs_elargis son présent, on filtre les résultats non pértinents de la table auteurs]
+<BOUCLE_auteur_elargis_test(spip_auteurs_elargis){id_auteur ?}{nom_famille ?}{prenom ?} {adresse ?}{code_postal ?}{ville ?}{ville ?} {telephone ?}{statut_interne ?}{ville ?}{creation ?}{partage ?}{validite ?}{partagedonne ?}{statut_provisoire ?}{montant ?}{date_paiement ?}{commentaire ?}{benevole ?}{#ENV{debut,0},#GET{limiteur2}} >
+<BOUCLE_auteur_test(AUTEURS){id_auteur}{nom ?}{email ?} {statut ?}{maj ?} {en_ligne ?}{nom_site ?}{nom_site ?}{url_site ?}{doublons afficher}{tout}>
+</BOUCLE_auteur_test>
+</BOUCLE_auteur_elargis_test>
+[(#REM)Dans le cas ou  des criteres de la table auteurs son présent, on affiche normalement]
+<BOUCLE_auteur_test2(AUTEURS){id_auteur ?}{nom ?}{email ?} {statut ?}{maj ?} {en_ligne ?}{nom_site ?}{nom_site ?}{url_site ?}{doublons afficher}{tout}>
+</BOUCLE_auteur_test2>
+<//B_auteur_elargis_test>
+
+<BOUCLE_auteur_test_exclu(AUTEURS){doublons afficher}{doublons exclus}{tout}>
+</BOUCLE_auteur_test_exclu>
+
+	[(#REM)Affiche et calcule les boutons précédents et prochains]
+
+#SET{affichage,#ENV{affichage}}
+
+<BOUCLE_auteur_tot(AUTEURS){id_auteur ?}{nom ?}{email ?} {nom_site ?}{nom_site ?}{url_site ?} {tout}{0,#GET{limiteur}}>
+[(#SET{total,#TOTAL_BOUCLE}|unique)] 
+</BOUCLE_auteur_tot>
+
+#SET{affichage,(#GET{affichage}|plus{#GET{total}})}
+#SET{debut_prochains,(#ENV{debut,0}|plus{#GET{affichage}})}
+#SET{debut_precedents,(#ENV{debut,0}|moins{#GET{affichage}})}
+
+<BOUCLE_auteur_precedents(AUTEURS){id_auteur ?}{nom ?}{email ?} {nom_site ?}{nom_site ?}{url_site ?} {par #GET{critere}} {#GET{debut_precedents},1}{tout}>
+<div class="form_sel">
+<form method="post" action="#SELF" >
+<input  type="hidden"  name="sel_id_auteur"  value="#ENV{sel_id_auteur}" />
+<input  type="hidden"  name="sel_nom"  value="#ENV{sel_nom}" />
+<input  type="hidden" name="sel_email"  value="#ENV{sel_email}" />
+<input  type="hidden" name="sel_nom_site"  value="#ENV{sel_nom_site}" />
+<input  type="hidden" name="sel_url_site"  value="#ENV{sel_url_site}" />
+<input  type="hidden" name="sel_statut"  value="#ENV{sel_statut}" />
+<input  type="hidden" name="sel_maj"  value="#ENV{sel_maj}" />
+<input  type="hidden" name="sel_en_ligne"  value="#ENV{sel_en_ligne}" />
+<input  type="hidden" name="sel_id_asso"  value="#ENV{sel_id_asso}" />
+<input  type="hidden" name="sel_nom_famille"  value="#ENV{sel_nom_famille}" />
+<input  type="hidden" name="sel_prenom"  value="#ENV{sel_prenom}" />
+<input  type="hidden" name="sel_adresse"  value="#ENV{sel_adresse}" />
+<input  type="hidden" name="sel_code_postal"  value="#ENV{sel_code_postal}" />
+<input  type="hidden" name="sel_ville"  value="#ENV{sel_ville}" />
+<input  type="hidden" name="sel_telephone"  value="#ENV{sel_telephone}" />
+<input type="hidden" name="sel_fax"  value="#ENV{sel_fax}" />
+<input type="hidden" name="sel_mobile"  value="#ENV{sel_mobile}" />
+<input  type="hidden" name="sel_commentaire"  value="#ENV{sel_commentaire}" />
+<input  type="hidden" name="sel_statut_interne"  value="#ENV{sel_statut_interne}" />
+<input  type="hidden" name="sel_creation"  value="#ENV{sel_creation}" />
+<input  type="hidden" name="sel_validite"  value="#ENV{sel_validite}" />
+<input  type="hidden" name="sel_categorie"  value="#ENV{sel_categorie}" />
+<input  type="hidden" name="sel_partage"  value="#ENV{sel_partage}" />
+<input  type="hidden" name="sel_partagedonne"  value="#ENV{sel_partagedonne}" />
+<input  type="hidden" name="sel_statut_provisoire"  value="#ENV{sel_statut_provisoire}" />
+<input  type="hidden" name="sel_montant"  value="#ENV{sel_montant}" />
+<input  type="hidden" name="sel_date_paiement"  value="#ENV{sel_date_paiement}" />
+<input  type="hidden" name="sel_benevole"  value="#ENV{sel_benevole}" />
+<input  type="hidden"  name="nom"  value="#ENV{nom}" />
+<input  type="hidden" name="email"  value="#ENV{email}" />
+<input  type="hidden" name="nom_site"  value="#ENV{nom_site}" />
+<input  type="hidden" name="url_site"  value="#ENV{url_site}" />
+<input  type="hidden" name="statut"  value="#ENV{statut}" />
+<input  type="hidden" name="maj"  value="#ENV{maj}" />
+<input  type="hidden" name="en_ligne"  value="#ENV{en_ligne}" />
+<input  type="hidden" name="id_asso"  value="#ENV{id_asso}" />
+<input  type="hidden" name="nom_famille"  value="#ENV{nom_famille}" />
+<input  type="hidden" name="prenom"  value="#ENV{prenom}" />
+<input  type="hidden" name="adresse"  value="#ENV{adresse}" />
+<input  type="hidden" name="code_postal"  value="#ENV{code_postal}" />
+<input  type="hidden" name="ville"  value="#ENV{ville}" />
+<input  type="hidden" name="telephone"  value="#ENV{telephone}" />
+<input  type="hidden" name="fax"  value="#ENV{fax}" />
+<input  type="hidden" name="mobile"  value="#ENV{mobile}" />
+<input  type="hidden" name="commentaire"  value="#ENV{commentaire}" />
+<input  type="hidden" name="statut_interne"  value="#ENV{statut_interne}" />
+<input  type="hidden" name="creation"  value="#ENV{creation}" />
+<input  type="hidden" name="validite"  value="#ENV{validite}" />
+<input  type="hidden" name="categorie"  value="#ENV{categorie}" />
+<input  type="hidden" name="partage"  value="#ENV{partage}" />
+<input  type="hidden" name="partagedonne"  value="#ENV{partagedonne}" />
+<input  type="hidden" name="statut_provisoire"  value="#ENV{statut_provisoire}" />
+<input  type="hidden" name="montant"  value="#ENV{montant}" />
+<input  type="hidden" name="date_paiement"  value="#ENV{date_paiement}" />
+<input  type="hidden" name="benevole"  value="#ENV{benevole}" />
+<input  type="hidden" name="affichage"  value="#ENV{affichage}" />
+<input  type="hidden" name="debut"  value="[(#ENV{debut}|moins{#ENV{affichage,10}})]" />
+ <input type="submit" name="button"  value="<<"/>
+</form>
+</div>
+</BOUCLE_auteur_precedents>
+
+<BOUCLE_auteur_prochains(AUTEURS){id_auteur ?}{nom ?}{email ?} {nom_site ?}{nom_site ?}{url_site ?} {par #GET{critere}} {#GET{debut_prochains},1}{tout}>
+<div class="form_sel">
+<form method="post" action="#SELF" >
+<input  type="hidden"  name="sel_id_auteur"  value="#ENV{sel_id_auteur}" />
+<input  type="hidden"  name="sel_nom"  value="#ENV{sel_nom}" />
+<input  type="hidden" name="sel_email"  value="#ENV{sel_email}" />
+<input  type="hidden" name="sel_nom_site"  value="#ENV{sel_nom_site}" />
+<input  type="hidden" name="sel_url_site"  value="#ENV{sel_url_site}" />
+<input  type="hidden" name="sel_statut"  value="#ENV{sel_statut}" />
+<input  type="hidden" name="sel_maj"  value="#ENV{sel_maj}" />
+<input  type="hidden" name="sel_en_ligne"  value="#ENV{sel_en_ligne}" />
+<input  type="hidden" name="sel_id_asso"  value="#ENV{sel_id_asso}" />
+<input  type="hidden" name="sel_nom_famille"  value="#ENV{sel_nom_famille}" />
+<input  type="hidden" name="sel_prenom"  value="#ENV{sel_prenom}" />
+<input  type="hidden" name="sel_adresse"  value="#ENV{sel_adresse}" />
+<input  type="hidden" name="sel_code_postal"  value="#ENV{sel_code_postal}" />
+<input  type="hidden" name="sel_ville"  value="#ENV{sel_ville}" />
+<input  type="hidden" name="sel_telephone"  value="#ENV{sel_telephone}" />
+<input type="hidden" name="sel_fax"  value="#ENV{sel_fax}" />
+<input type="hidden" name="sel_mobile"  value="#ENV{sel_mobile}" />
+<input  type="hidden" name="sel_commentaire"  value="#ENV{sel_commentaire}" />
+<input  type="hidden" name="sel_statut_interne"  value="#ENV{sel_statut_interne}" />
+<input  type="hidden" name="sel_creation"  value="#ENV{sel_creation}" />
+<input  type="hidden" name="sel_validite"  value="#ENV{sel_validite}" />
+<input  type="hidden" name="sel_categorie"  value="#ENV{sel_categorie}" />
+<input  type="hidden" name="sel_partage"  value="#ENV{sel_partage}" />
+<input  type="hidden" name="sel_partagedonne"  value="#ENV{sel_partagedonne}" />
+<input  type="hidden" name="sel_statut_provisoire"  value="#ENV{sel_statut_provisoire}" />
+<input  type="hidden" name="sel_montant"  value="#ENV{sel_montant}" />
+<input  type="hidden" name="sel_date_paiement"  value="#ENV{sel_date_paiement}" />
+<input  type="hidden" name="sel_benevole"  value="#ENV{sel_benevole}" />
+<input  type="hidden"  name="nom"  value="#ENV{nom}" />
+<input  type="hidden" name="email"  value="#ENV{email}" />
+<input  type="hidden" name="nom_site"  value="#ENV{nom_site}" />
+<input  type="hidden" name="url_site"  value="#ENV{url_site}" />
+<input  type="hidden" name="statut"  value="#ENV{statut}" />
+<input  type="hidden" name="maj"  value="#ENV{maj}" />
+<input  type="hidden" name="en_ligne"  value="#ENV{en_ligne}" />
+<input  type="hidden" name="id_asso"  value="#ENV{id_asso}" />
+<input  type="hidden" name="nom_famille"  value="#ENV{nom_famille}" />
+<input  type="hidden" name="prenom"  value="#ENV{prenom}" />
+<input  type="hidden" name="adresse"  value="#ENV{adresse}" />
+<input  type="hidden" name="code_postal"  value="#ENV{code_postal}" />
+<input  type="hidden" name="ville"  value="#ENV{ville}" />
+<input  type="hidden" name="telephone"  value="#ENV{telephone}" />
+<input  type="hidden" name="fax"  value="#ENV{fax}" />
+<input  type="hidden" name="mobile"  value="#ENV{mobile}" />
+<input  type="hidden" name="commentaire"  value="#ENV{commentaire}" />
+<input  type="hidden" name="statut_interne"  value="#ENV{statut_interne}" />
+<input  type="hidden" name="creation"  value="#ENV{creation}" />
+<input  type="hidden" name="validite"  value="#ENV{validite}" />
+<input  type="hidden" name="categorie"  value="#ENV{categorie}" />
+<input  type="hidden" name="partage"  value="#ENV{partage}" />
+<input  type="hidden" name="partagedonne"  value="#ENV{partagedonne}" />
+<input  type="hidden" name="statut_provisoire"  value="#ENV{statut_provisoire}" />
+<input  type="hidden" name="montant"  value="#ENV{montant}" />
+<input  type="hidden" name="date_paiement"  value="#ENV{date_paiement}" />
+<input  type="hidden" name="benevole"  value="#ENV{benevole}" />
+<input  type="hidden" name="affichage"  value="#ENV{affichage}" />
+<input  type="hidden" name="debut"  value="[(#ENV{debut}|plus{#ENV{affichage,10}})]" />
+<input  type="submit" name="button"  value=">>"/>
+</form>
+</div>
+</BOUCLE_auteur_prochains>
+
+<br class="nettoyeur"> </br>
+<form method="post" action="/ecrire/?exec=action_adherents">
+<B_auteur_principale>
+
+<table id="table_results" width="100%" cellspacing="0" cellpadding="2" border="0" style="border: 1px solid rgb(170, 170, 170);">
+<thead><tr>
+<th colspan="5"><:asso:adherent_entete_action:></th>
+ [(#ENV{sel_id_auteur}|?{<th>
+<:id_auteur:>
+</th>,''})][(#ENV{sel_nom}|?{<th><:nom:>
+</th>,''})][(#ENV{sel_email}|?{<th>
+<:email:>
+</th>,''})][(#ENV{sel_nom_site}|?{<th><:nom_site:>
+</th>,''})][(#ENV{sel_url_site}|?{<th><:url_site:>
+</th>,''})][(#ENV{sel_statut}|?{<th>
+<:statut:>
+</th>,''})][(#ENV{sel_maj}|?{<th><:maj:>
+</th>,''})][(#ENV{sel_en_ligne}|?{<th>
+<:maj:>
+</th>,''})][(#ENV{sel_id_asso}|?{<th>
+<:id_asso:>
+</th>,''})][(#ENV{sel_nom_famille}|?{<th>
+<:nom_famille:>
+</th>,''})][(#ENV{sel_prenom}|?{<th>
+<:prenom:>
+</th>,''})][(#ENV{sel_adresse}|?{<th>
+<:adresse:>
+</th>,''})][(#ENV{sel_code_postal}|?{<th>
+<:code_postale:>
+</th>,''})][(#ENV{sel_ville}|?{<th>
+<:ville:>
+</th>,''})][(#ENV{sel_telephone}|?{<th>
+<:telephone:>
+</th>,''})][(#ENV{sel_fax}|?{<th>
+<:telephone:>
+</th>,''})][(#ENV{sel_mobile}|?{<th>
+<:mobile:>
+</th>,''})][(#ENV{sel_commentaire}|?{<th>
+<:mobile:>
+</th>,''})][(#ENV{sel_statut_interne}|?{<th>
+<:statut_interne:>
+</th>,''})][(#ENV{sel_creation}|?{<th>
+<:creation:>
+</th>,''})][(#ENV{sel_validite}|?{<th>
+<:validite:>
+</th>,''})][(#ENV{sel_categorie}|?{<th>
+<:categorie:>
+</th>,''})][(#ENV{sel_partage}|?{<th>
+<:partage:>
+</th>,''})][(#ENV{sel_partagedonne}|?{<th>
+<:partagedonne:>
+</th>,''})][(#ENV{sel_statut_provisoire}|?{<th>
+<:statut_provisoire:>
+</th>,''})][(#ENV{sel_montant}|?{<th>
+<:montant:>
+</th>,''})][(#ENV{sel_date_paiement}|?{<th>
+<:date_paiement:>
+</th>,''})][(#ENV{sel_benevole}|?{<th>
+<:benevole:>
+</th>,''})]</tr>
+</thead>
+        <tbody>
+
+#SET{fin,(#ENV{affichage,30}|plus{#ENV{debut}})}
+
+
+
+<BOUCLE_auteur_principale(AUTEURS){id_auteur ?}{nom ?}{email ?} {statut ?}{maj ?} {en_ligne ?}{nom_site ?}{nom_site ?}{url_site ?} {par #GET{critere}} {#ENV{debut,0},#GET{affichage}} {doublons exclus} {tout}>
+
+<BOUCLE_auteur_elargis_principale(spip_auteurs_elargis){id_auteur}{nom_famille ?}{prenom ?} {adresse ?}{code_postal ?}{ville ?}{ville ?} {telephone ?}{statut_interne ?}{ville ?}{creation ?}{partage ?}{validite ?}{partagedonne ?}{statut_provisoire ?}{montant ?}{date_paiement ?}{commentaire ?}{benevole ?}{id_asso ?}{par #GET{critere_el}} >
+
+    <tr class="odd">
+<td class="cell impair"><a href="/ecrire/?exec=auteur_infos&amp;id_auteur=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="../plugins/Association_1_9_2//img_pack/admin-12.gif" title="Modifier le visiteur"></a></td>
+<td  class="cell" ><a href="http://muziekpublique1/ecrire/?exec=ajout_cotisation&amp;id=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="../plugins/Association_1_9_2//img_pack/cotis-12.gif" title="Ajouter une cotisation"></a></td>
+<td class="cell" ><a href="http://muziekpublique1/ecrire/?exec=edit_adherent&amp;id=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="../plugins/Association_1_9_2//img_pack/edit-12.gif" title="Modifier membre" onclick="window.open(this.href); return false;"></a></td>
+<td class="cell" ><a href="http://muziekpublique1/ecrire/?exec=voir_adherent&amp;id=#ID_AUTEUR" onclick="window.open(this.href); return false;"><img src="../plugins/Association_1_9_2//img_pack/voir-12.png" title="Voir le membre"></a></td>
+<td class="cell" ><input name="delete[]" value="#ID_AUTEUR" type="checkbox">
+    [(#ENV{sel_id_auteur}|?{<td class="cell" align="center">#ID_AUTEUR</td>,''})]
+    [(#ENV{sel_nom}|?{<td class="cell">#NOM</td>,''})]
+    [(#ENV{sel_email}|?{<td class="cell">#EMAIL</td>,''})]
+    [(#ENV{sel_nom_site}|?{<td class="cell">#NOM_SITE</td>,''})]
+    [(#ENV{sel_url_site}|?{<td class="cell">#URL_SITE</td>,''})]
+    [(#ENV{sel_statut}|?{<td class="cell">#STATUT</td>,''})]
+    [(#ENV{sel_maj}|?{<td class="cell">#MAJ</td>,''})]
+    [(#ENV{sel_en_ligne}|?{<td class="cell">#EN_LIGNE</td>,''})]
+    [(#ENV{sel_id_asso}|?{<td class="cell">#ID_ASSO</td>,''})]
+    [(#ENV{sel_nom_famille}|?{<td class="cell">#NOM_FAMILLE</td>,''})]
+    [(#ENV{sel_prenom}|?{<td class="cell">#PRENOM</td>,''})]
+    [(#ENV{sel_adresse}|?{<td class="cell">#ADRESSE</td>,''})]
+    [(#ENV{sel_code_postal}|?{<td class="cell">#CODE_POSTAL</td>,''})]
+    [(#ENV{sel_ville}|?{<td class="cell">#VILLE</td>,''})]
+    [(#ENV{sel_telephone}|?{<td class="cell">#TELEPHONE</td>,''})]
+    [(#ENV{sel_fax}|?{<td class="cell">#FAX</td>,''})]
+    [(#ENV{sel_mobile}|?{<td class="cell">#MOBILE</td>,''})]
+    [(#ENV{sel_commentaire}|?{<td class="cell">#COMMENTAIRE</td>,''})]
+    [(#ENV{sel_statut_interne}|?{<td class="cell">#STATUT_INTERNE</td>,''})]
+    [(#ENV{sel_creation}|?{<td class="cell">#CREATION</td>,''})]
+    [(#ENV{sel_validite}|?{<td class="cell">#VALIDITE</td>,''})]
+    [(#ENV{sel_categorie}|?{<td class="cell">#CATEGORIE</td>,''})]
+    [(#ENV{sel_partage}|?{<td class="cell">#PARTAGE</td>,''})]
+    [(#ENV{sel_partagedonne}|?{<td class="cell">#PARTAGEDONNE</td>,''})]
+    [(#ENV{sel_statut_provisoire}|?{<td class="cell">#STATUT_PROVISOIRE</td>,''})]
+    [(#ENV{sel_montant}|?{<td class="cell">#MONTANT</td>,''})]
+    [(#ENV{sel_date_paiement}|?{<td class="cell">#DATE_PAIEMENT</td>,''})]
+    [(#ENV{sel_benevole}|?{<td class="cell">#BENEVOLE</td>,''})]
+</tr>
+
+</BOUCLE_auteur_elargis_principale>
+</BOUCLE_auteur_principale>
+</tbody>
+
+</table>
+<table width="100%">
+<tbody>
+<td style="text-align: left;"><input name="Submit" value="<:asso:bouton_supprimer:>" class="fondo" type="submit">
+</td>
+</tr>
+</tbody>
+</table>
+</B_auteur_principale>
+
+</form>

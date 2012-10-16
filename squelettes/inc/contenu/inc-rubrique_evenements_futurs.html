@@ -1,0 +1,107 @@
+#CACHE{24*3600}
+
+
+[(#REM) Produit le lien vers l'archive]
+
+	<BOUCLE_article_annes1(EVENEMENTS){id_rubrique IN 8,26,39}{!par date}{age>0}{0,1}>
+		<B_lesevenements_edit1>
+		#SET{annee,(#DATE_DEBUT|annee)}  
+		#SET{mois,(#DATE_DEBUT|mois)}
+		<BOUCLE_lesevenements_edit1(EVENEMENTS){id_rubrique}{agendafull date_debut,date_fin, mois,  (#DATE_DEBUT|annee), (#DATE_DEBUT|mois)}{par date}{tout}{doublons}{age>0}{0,1}> </BOUCLE_lesevenements_edit1></B_lesevenements_edit1>
+	</BOUCLE_article_annes1>
+
+	<BOUCLE_rub(RUBRIQUES){id_rubrique}{tout}>
+	[(#ENV{passe}|!=={'non'}|?{[(#LANG|=={#ENV{lang}}|?{' ',''})<div class="archive"><a href="[(#URL_RUBRIQUE|parametre_url{periode,passe}|parametre_url{mois,#GET{mois}}|parametre_url{annee,#GET{annee}})]"><:archive:></a></div>],''})]
+	</BOUCLE_rub>
+
+[(#REM) menu légende pour affichage de tous les concerts]
+[(#ENV{voir}|=={tout}|?{' ',''})<INCLURE{fond=inc/contenu/inc-menu_selection_type_concerts} >]
+
+
+<div id="event">
+
+	<BOUCLE_rub_trad(RUBRIQUES){id_mot==#ENV{id_mot_rub,189|191|199|252|253}}{tout}>
+		[(#REM) Si id_article présent dans l'url on selectionne les evenements de l'article notamment pour la rubrique evenements]
+
+
+
+
+	[(#REM) Crée la liste des cours]
+	[(#REM) Affiche tous les evenements des articles des rubriques cours]
+		<BOUCLE_article_annes(EVENEMENTS){par date}{id_rubrique}{id_evenement_source=0}{par date}{age<=0}{age_fin<=0}>
+
+			[(#REM) On detecte d'abord les evenements de l'article d'origine]
+			<BOUCLE_art_base(ARTICLES){id_article}{lang=#ENV{lang}}{id_mot ?}>
+				<BOUCLE_lang_ev(EVENEMENTS){id_article}{age<=0}>
+		 	#SET{id_art_ev,#ID_ARTICLE} #SET{id_ev,#ID_EVENEMENT}
+				</BOUCLE_lang_ev>
+
+				<//B_lang_ev>
+
+			[(#REM) On detecte les articles qui ont un evenement attaché pour fournir l'id_evenement]
+ 			#SET{logo#GET{id_ev}, #LOGO_ARTICLE}  #SET{auteur#GET{id_ev}, #LESAUTEURS}  #SET{texte#GET{id_ev}, #INTRODUCTION} #SET{titre#GET{id_ev},#TITRE} #SET{url#GET{id_ev},(#URL_ARTICLE|parametre_url{lang,#LANG})}
+			</BOUCLE_art_base>
+
+				[(#REM) Si les articles dans cette langue n'ont pas d'évènements attachés, ont cherche les evenements des traductions de l'article]
+				<BOUCLE_art_alter(ARTICLES){id_article}{id_mot ?}>
+					[(#REM) Tous les traductions de l'article du contexte]
+					<BOUCLE_trad(ARTICLES){traduction}>
+
+						[(#REM) Fournit l'id article traduit et l'id de ses evenements]
+						<BOUCLE_lang_ev_alter(EVENEMENTS){id_article}>
+			 			#SET{id_art_ev,#ID_ARTICLE} #SET{id_ev,#ID_EVENEMENT}
+							[(#REM) On detecte le titre et le texte de l'article d'origine à defaut de traduction disponible dans la langue du contexte]
+							<BOUCLE_art_lang_alter(ARTICLES){id_article}>
+ 							#SET{logo#GET{id_ev}, #LOGO_ARTICLE}  #SET{auteur#GET{id_ev}, #LESAUTEURS}  #SET{texte#GET{id_ev}, #INTRODUCTION} #SET{titre#GET{id_ev},#TITRE [#LANG]} #SET{url#GET{id_ev},#URL_ARTICLE}
+							[(#REM) Affiche les titres et textes des articles du contexte mais qui n'ont pas d'evenements attachés]
+								<BOUCLE_lang1(ARTICLES){traduction}{lang=#ENV{lang}}>
+								[(#REM) On detecte le titre et le texte de l'article traduit dans la langue du contexte]
+ 								#SET{logo#GET{id_ev},#LOGO_ARTICLE}	#SET{texte#GET{id_ev},#INTRODUCTION} #SET{titre#GET{id_ev},#TITRE} 	#SET{url#GET{id_ev},(#URL_ARTICLE|parametre_url{lang,#LANG})}
+								</BOUCLE_lang1>
+							</BOUCLE_art_lang_alter>
+						</BOUCLE_lang_ev_alter>
+					</BOUCLE_trad>
+				</BOUCLE_art_alter>
+			<//B_art_base>
+
+			<B_lesevenements_edit>
+
+			[<h2>(#DATE_DEBUT|nom_mois|unique) [(#DATE_DEBUT|annee|unique)]</h2>]
+				<div class="ev_cont [(#ENV{class})]">
+
+			<BOUCLE_lesevenements_edit(EVENEMENTS){par date_debut}{agendafull date_debut,date_fin, mois,  (#DATE_DEBUT|annee), (#DATE_DEBUT|mois)}{par date}{id_article=#GET{id_art_ev}} {id_rubrique}{id_evenement_source=0} {par date}>#SET{titre2,#GET{titre}}			#SET{id_ev2,#ID_EVENEMENT} #SET{lieu#ID_EVENEMENT,#LIEU} #SET{titreII#ID_EVENEMENT,#TITRE}
+					<div class="ev_corp">
+			
+				<span class="date">[(#DATE_DEBUT|jour|=={[(#DATE_FIN|jour)]}|?{[(#DATE_DEBUT|nom_jour|couper{2})] [(#DATE_DEBUT|jour)] ,
+ [(#DATE_DEBUT|nom_jour|couper{2})] [(#DATE_DEBUT|jour)]/[(#DATE_FIN|nom_jour|couper{2})] [(#DATE_FIN|jour)] })]</span>
+						<span class="heure">[(#DATE_DEBUT|heures)]h[(#DATE_DEBUT|minutes)]</span>
+				<BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}>
+						[<span class="lieu">(#TITRE)</span>]
+				</BOUCLE_lieu>
+
+				<BOUCLE_rub_def(RUBRIQUES){id_rubrique}{id_mot !IN 189,252,253}>
+				<span class="titre  rub[(#ID_RUBRIQUE)]"><a href="#GET{url#GET{id_ev}}">#GET{titre#GET{id_ev},#GET{titre_art_ev#GET{id_ev}}}</a></span>
+				</BOUCLE_rub_def>
+
+				<BOUCLE_rub_evenements(RUBRIQUES){id_rubrique}{id_mot=189}>
+				<span class="lieu">#GET{titre#GET{id_ev},#GET{titre_art_ev#GET{id_ev}}}</span>
+				<span class="titre  rub[(#ID_RUBRIQUE)]"><a href="#GET{url#GET{id_ev}}##ID_EVENEMENT">#GET{titreII#ID_EVENEMENT}</a>
+				</BOUCLE_rub_evenements>
+
+				<BOUCLE_rub_prod(RUBRIQUES){id_rubrique}{id_groupe=23}{tout}{0,1}>
+				<span class="lieu">#GET{lieu#ID_EVENEMENT}</span>
+				<span class="titre  mot<BOUCLE_mots(MOTS){id_rubrique}{id_groupe=23}>#ID_MOT</BOUCLE_mots>"><a href="#GET{url#GET{id_ev}}##ID_EVENEMENT">#TITRE</a></span>
+				</BOUCLE_rub_prod>
+
+
+
+					</div>
+
+			</BOUCLE_lesevenements_edit>
+				</div>
+	  		</B_lesevenements_edit>
+		</BOUCLE_article_annes>
+	</BOUCLE_rub_trad>
+</div>
+
+

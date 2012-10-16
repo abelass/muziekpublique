@@ -1,0 +1,15 @@
+#CACHE{7*3600*24}
+<B_art_ev>
+	<ul class="menu_production">
+<BOUCLE_art(ARTICLES){id_article}>
+<li><a href="[(#URL_RUBRIQUE|parametre_url{lang,#ENV{lang}}|parametre_url{id_mot,#ENV{id_mot}})]">Intro</a></li>
+</BOUCLE_art>
+<li class="on">Intro</li>
+<//B_art>
+		<BOUCLE_art_ev(ARTICLES){id_rubrique} {par num titre}>
+			<li [(#ID_ARTICLE|=={#ENV{id_article}}|?{'class="on"',''})]>
+<a href="[(#URL_ARTICLE|parametre_url{id_mot,#ENV{id_mot}})]"> [(#TITRE|couper{80})]</a></li>
+			</BOUCLE_art_ev>
+		</ul>
+</B_art_ev>
+

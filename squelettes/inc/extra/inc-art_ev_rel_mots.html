@@ -1,0 +1,61 @@
+#CACHE{24*3600}
+<BOUCLE_art_or(ARTICLES){id_article}>
+<BOUCLE_art(ARTICLES){traduction}{origine_traduction}>#SET{id_art,#ID_ARTICLE}
+	<BOUCLE_mots_art(MOTS){id_article}{id_groupe !IN 12,14}{doublons articles}>
+	</BOUCLE_mots_art>
+	[(#REM)pour le moment pas utilisé]
+		<BOUCLE_evenements(EVENEMENTS){id_article}{0,0}>
+		<BOUCLE_mots_ev(MOTS){id_evenement}{id_groupe !IN 12,14}{doublons evenements}>	
+		</BOUCLE_mots_ev>
+	</BOUCLE_evenements>
+
+</BOUCLE_art>1
+	<BOUCLE_art_act(ARTICLES){id_article}>
+		<BOUCLE_art_orig(ARTICLES){traduction}{doublons origine_traduction2}>[#TITRE]
+			<BOUCLE_mots_art_trad(MOTS){id_article}{id_groupe !IN 12,14}{doublons articles}>
+			</BOUCLE_mots_art_trad>
+			
+			[(#REM)pour le moment pas utilisé]
+			<BOUCLE_evenements_trad(EVENEMENTS){id_article}{0,0}>
+				<BOUCLE_mots_ev_trad(MOTS){id_evenement}{id_groupe !IN 12,14}{doublons evenements}>
+				</BOUCLE_mots_ev_trad>
+			</BOUCLE_evenements_trad>
+		</BOUCLE_art_orig>
+	</BOUCLE_art_act>
+<//B_art>
+</BOUCLE_art_or>
+
+<BOUCLE_filtre(MOTS){id_groupe !IN 12,14}{doublons articles}{doublons afficher}></BOUCLE_filtre>
+
+<B_afficher>
+	</BOUCLE_art_test>	
+<BOUCLE_afficher(MOTS){id_groupe !IN 12,14} {doublons afficher}>
+	<BOUCLE_mot_rel(MOTS){id_mot}>	
+		<B_art_rel>
+			<BOUCLE_mots_art_groupe_pays(MOTS){id_mot}{id_groupe !IN 2,3,4,5,6,7}>
+			[<h2> <:meme:> <span class="minuscule">(#TITRE_PARENT|unique)</span></h2>]
+			</BOUCLE_mots_art_groupe_pays>
+			<h2><:meme:> <:origine:></h2> 
+			<//B_mots_art_groupe_pays>
+			<ul>
+			<li><h3>#TITRE</h3></li>
+			<BOUCLE_art_rel(ARTICLES){origine_traduction}{id_mot}{id_rubrique !IN 17,24,37}{0,3}{par date}{exclus} {id_article!=#GET{id_art}}>
+	
+			<BOUCLE_det_langue(ARTICLES){id_article}{lang}{doublons}>
+				<li><a href="#URL_ARTICLE">#TITRE</a> [#TITRE_PARENT]</li>
+			</BOUCLE_det_langue>
+			<BOUCLE_art_act2(ARTICLES){id_article}>
+				<BOUCLE_det_langue_trad(ARTICLES){traduction}{lang=#ENV{lang}}>
+					<li><a href="#URL_ARTICLE">#TITRE</a> [#TITRE_PARENT]</li>
+				</BOUCLE_det_langue_trad>
+				<li><a href="#URL_ARTICLE">#TITRE</a> [#TITRE_PARENT] [#LANG]</li>
+				<//B_det_langue_trad>
+			</BOUCLE_art_act2>
+			<//B_det_langue>
+		</BOUCLE_art_rel>
+		</ul>		
+		</B_art_rel>
+	</BOUCLE_mot_rel>
+</BOUCLE_afficher>
+
+</B_afficher>

@@ -1,0 +1,45 @@
+#CACHE{0}
+<?php
+	include_spip('inc/envoyer_mail');
+	include_spip('inc/mail');
+	include_spip ('inc/charsets');
+	
+		$url_etat_relances = $_POST['url_form'];
+		$url_retour= "[(#ENV{url_retour}|replace{&amp;,&}|replace{&envoi=email,''})]";
+		
+		//On récupère les données globales
+		$sujet="#ENV{sujet}";
+		$message="#ENV{message}";
+		$statut="#ENV{statut}";
+		$email="#ENV{email}";
+		$id_activite="#ENV{id_activite}";
+		$date= "#ENV{date}";
+
+
+			//On prpare le mail et on envoi! On peut modifier le $headers �� sa guise
+			$nomasso=lire_config('association/nom');
+			$adresse=lire_config('association/email');
+			$expediteur=$nomasso.'<'.$adresse.'>';      					//exp�diteur Association
+			$entetes .= "X-Mailer: PHP/" . phpversion();         			// mailer
+			$entetes .= "X-Sender: < ".$adresse.">\n";
+			$entetes .= "X-Priority: 1\n";                					// Message urgent ! 
+			$entetes .= "X-MSMail-Priority: High\n";        				// d�finition de la priorit�
+			$entetes .= "Return-Path: <".$adresse.">\n"; 
+			$cabeceras .= '"From: ".$expediteur' . "\r\n";									// En cas d' erreurs 
+			//$entetes .= "Errors-To: < ".$adresse.">\n";    									// En cas d' erreurs 
+			//$entetes .= "cc:  \n"; 													// envoi en copie �
+			//$entetes .= "bcc: \n";          												// envoi en copie cach�e �
+			
+			//On envoit le mail aux destinataires s�lectionn�s et on change le statut de relance
+			
+			envoyer_mail($email,$sujet,$message,$from=$expediteur,$entetes);
+
+
+			if($statut=="rappel3"){
+			$statut = "sorti";
+			}
+
+				spip_query("UPDATE spip_asso_activites SET statut="._q($statut).",rappel="._q($date)."   WHERE id_activite=".$id_activite) ;				
+
+	
+?>

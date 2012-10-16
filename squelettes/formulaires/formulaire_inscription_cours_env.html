@@ -1,0 +1,119 @@
+#CACHE{0}
+#ENV
+[(#ENV{evenement}|?{#SET{id_evenement,#ENV{evenement}},#SET{id_evenement,#ENV{id_evenement}}})]
+
+<BOUCLE_cotisation(spip_asso_categories){id_categorie=1}>
+#SET{cotisation,#COTISATION}
+</BOUCLE_cotisation>
+
+<BOUCLE_auteur_session(AUTEURS){id_auteur=#SESSION{id_auteur}}{tout}> 
+#SET{id_auteur,#ID_AUTEUR}
+</BOUCLE_auteur_session>
+
+<BOUCLE_auteur_email(AUTEURS){email==#ENV*{email}}{tout}>1
+#SET{id_auteur,#ID_AUTEUR}
+</BOUCLE_auteur_email>
+
+<//B_auteur_session>
+
+
+
+<BOUCLE_lesevenements_edit(EVENEMENTS){id_evenement}>
+#SET{prix_non_membres,(#PRIX_MEMBRES|plus{#GET{cotisation}})}
+#SET{prix_membres,#PRIX_MEMBRES}
+[(#ENV{membre}|=={'oui'}|?{#SET{prix,#PRIX_MEMBRES},#SET{prix,#GET{prix_non_membres}}})]
+#SET{titre,#TITRE}
+
+
+
+
+<div class="spip_forms">
+
+
+
+<div style="float:right;">
+<INCLURE{fond=formulaires/inscription_2_retour}{id_auteur=#GET{id_auteur}}{email=#ENV{email}}>
+</div>
+<fieldset>
+<legend>Formulaire d'inscription</legend>
+	<form action="#SELF" method="post">
+	[(#ENV**|form_hidden_env)]
+	<input name="inscrits" type="hidden" value="1" />
+	<input name="url_retour" type="hidden" value="#SELF" />
+	<input name="id_evenement" type="hidden" value="[(#ENV{id_evenement})]" />
+	<input name="membre" type="hidden" value="[(#ENV{membre,non})]" />
+	<input name="type" type="hidden" value="[(#ENV{type})]" />
+	<input name="id_auteur" type="hidden" value="[(#GET{id_auteur})]" />
+	<input name="statut" type="hidden" value="[(#ENV{membre}|!=={non}|?{'confirmer','soumettre'})]" />
+	<input name="etat" type="hidden" value="paiement" />	
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="nom"><:asso:activite_libelle_nomcomplet:> :</label>
+		</span>
+		<input name="nom" type="hidden" id="nom" value="[(#ENV{nom})]" />[(#ENV{nom})]
+	</div>
+
+	[(#GET{nr}|!=={''}|?{' ','')<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="id_adherent"><:asso:activite_libelle_adherent:> :</label>
+		</span>
+		<input name="id_adherent" type="hidden" id="id_adherent" size="40" value="#GET{nr}"/>#GET{nr}
+	</div>]
+	
+
+
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="email"><:asso:activite_libelle_email:> :</label>
+		</span>
+	<input name="email" type="hidden" id="email" size="40" value="#ENV{email}" /> #ENV{email}
+	</div>
+
+	
+[(#ENV{adresse}|=={''}|?{' ',''})<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="adresse"><:asso:activite_libelle_adresse_complete:> :</label>
+		</span>
+		<textarea name="adresse" type="text" id="adresse"></textarea>
+	</div>]
+	[(#ENV{adresse}!=={''}|?{' ',''})<input name="adresse" type="hidden" value="[(#ENV{adresse})] [,(#ENV{code_postal})] [(#ENV{ville})][ - (#ENV{pays})]" /><div><:asso:activite_libelle_adresse_complete:> : [(#ENV{adresse})] [,(#ENV{code_postal})] [(#ENV{ville})][ - (#ENV{pays})]</div>]
+
+	[(#ENV{telephone}|=={''}|?{' ',''})<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="telephone"><:asso:activite_libelle_telephone:> :</label>
+		</span>
+		<input name="telephone" type="text" id="telephone" value="[(#ENV{telephone})]" size="40" />
+	</div>]
+	[(#ENV{telephone}!=={''}|?{' ',''})<input name="telephone" type="hidden" value="[(#ENV{telephone})]" /><div><:asso:activite_libelle_telephone:>: #ENV{telephone}</div>]
+	<div>
+		<span class='spip_form_label'>
+			<label for="montant"><:type_cours:> :</label>
+		</span>
+
+		<input name="titre" type="hidden" id="montant" size="40" value="#GET{titre}"/> #GET{titre}
+	</div>
+	<div class='spip_form_champs'>
+		<span class='spip_form_label'>
+			<label for="montant"><:asso:activite_libelle_montant_inscription:> :</label>
+		</span>
+	<input name="montant" type="hidden" id="montant" size="40" value="#GET{prix}"/>
+
+
+		<input name="montant" type="hidden" id="montant" size="40" value="#GET{prix}"/>
+		[(#ENV{membre}=={echu}|?{' ',''})
+		<:prix_cours:>: 
+		#GET{prix_membres} €<br/>
+		<:prix_carte_de_membres:>: 
+		#GET{cotisation} €<br/>
+		<b><:total:> :</b>]
+		#GET{prix} €
+	</div>	
+
+	<div>
+	
+			<input type="submit" name="validation" class="spip_bouton" value="Valider" />
+	</div>
+</form>
+</fieldset>
+  </BOUCLE_lesevenements_edit>
+</div>

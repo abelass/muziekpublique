@@ -1,0 +1,30 @@
+[(#REM)Affiche les autre mots clés liés à l'article à l'exception des groupes 14 (Inscription) et 12 (Priorité Home)]
+
+
+#SET{jours,#ENV{id_article}|nombres_jours}
+
+
+<BOUCLE_lister(POUR){tableau #GET{jours}} {par cle}>
+
+	<B_ev>
+
+	<BOUCLE_ev(EVENEMENTS){id_evenement IN #VALEUR}{date_fin>=#DATE}>
+	<B_mots_art_groupe>
+		<div>
+		<b>
+		[(#EVAL{date('Y-m-d', strtotime("2011W02#CLE"))}|nom_jour|unique)]
+		</b>
+		<BOUCLE_mots_art_groupe(MOTS){id_evenement}{id_groupe}>
+			<B_mots_art_titre>
+				<BOUCLE_mots_art_titre(MOTS){id_groupe}{id_evenement}{doublons}{', '}>
+					<p>#TITRE [, (#DESCRIPTIF*|extraire_multi)]</p>
+				</BOUCLE_mots_art_titre>
+			</B_mots_art_titre>
+		</BOUCLE_mots_art_groupe>
+		</div>
+	</B_mots_art_groupe>	
+	</BOUCLE_ev>
+
+	</B_ev>
+</BOUCLE_lister>
+

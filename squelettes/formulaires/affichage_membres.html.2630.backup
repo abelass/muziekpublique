@@ -1,0 +1,309 @@
+#CACHE{12*3600}
+<div class="form_sel_tout">
+			<form action="#SELF" method="post">
+			<input  name="url" type="hidden" value="#SELF" />
+			<input  type="hidden" name="debut"  value="#ENV{debut}"/>
+<table id="table_selection" class="data">
+<thead><tr>
+    <th colspan="1"></th>
+            <th>
+id_auteur
+</th><th>
+Nom</a>
+</th><th>
+Email
+</th><th>
+Nom Site
+</th><th>
+Url Sitee
+</th><th>
+Statut
+</th><th>
+Mose à jour
+</th><th>
+Apparence en ligne
+</th><th>
+Nº Carte de membre (id_asso)
+</th><th>
+Nom Famille
+</th><th>
+Prénom
+</th><th>
+Adresse
+</th><th>
+Code_postale
+</th><th>
+Ville
+</th><th>
+Téléphone
+</th><th>
+Fax
+</th><th>
+Mobile
+</th><th>
+Commentaire>
+</th><th>
+Statut membre
+</th><th>
+Crátion fiche
+</th><th>
+Validité Carte de membre
+</th><th>
+Carte de membres
+</th><th>
+Envoy partagé
+</th><th>
+Partage avec 
+</th><th>
+Statut provisoire
+</th><th>
+Montant
+</th><th>
+Date de paiement</a>
+</th></tr>
+</thead>
+        <tr>
+
+    <tr class="odd">
+    <td align="center">
+Display
+    </td>
+ 	<td  class="checkbox">
+	<input id="id_auteur" type="checkbox" name="sel_id_auteur"  value="ok" class="checkbox" [(#ENV{sel_id_auteur}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_nom" type="checkbox"  name="sel_nom"  value="ok" class="checkbox"     [(#ENV{sel_nom}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_email" type="checkbox" name="sel_email"  value="ok" class="checkbox" [(#ENV{sel_email}|?{checked="checked",''})]/>
+	</td><td class="checkbox">	
+	<input id="sel_nom_site" type="checkbox" name="sel_nom_site"  value="ok" class="checkbox" [(#ENV{sel_nom_site}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_url_site" type="checkbox" name="sel_url_site"  value="ok" class="checkbox" [(#ENV{sel_url_site}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_statut" type="checkbox" name="sel_statut"  value="ok" class="checkbox" [(#ENV{sel_statut}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_maj" type="checkbox" name="sel_maj"  value="ok" class="checkbox"  [(#ENV{sel_maj}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_en_ligne" type="checkbox" name="sel_en_ligne"  value="ok" class="checkbox" [(#ENV{sel_en_ligne}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_id_asso" type="checkbox" name="sel_id_asso"  value="ok" class="checkbox" [(#ENV{sel_id_asso}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_nom_famille" type="checkbox" name="sel_nom_famille"  value="ok" class="checkbox" [(#ENV{sel_nom_famille}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_prenom" type="checkbox" name="sel_prenom"  value="ok" class="checkbox" [(#ENV{sel_prenom}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_adresse" type="checkbox" name="sel_adresse"  value="ok" class="checkbox" [(#ENV{sel_adresse}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_code_postal" type="checkbox" name="sel_code_postal"  value="ok" class="checkbox" [(#ENV{sel_code_postal}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_ville" type="checkbox" name="sel_ville"  value="ok" class="checkbox" [(#ENV{sel_ville}|?{checked="checked",''})]/>
+	</td><td class="checkbox"><input id="sel_telephone" type="checkbox" name="sel_telephone"  value="ok" class="checkbox" [(#ENV{sel_telephone}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_fax" type="checkbox" name="sel_fax"  value="ok" class="checkbox" [(#ENV{sel_fax}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_mobile" type="checkbox" name="sel_mobile"  value="ok" class="checkbox" [(#ENV{sel_mobile}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_commentaire" type="checkbox" name="sel_commentaire"  value="ok" class="checkbox" [(#ENV{sel_commentaire}|?{checked="checked",''})]/></td>
+	<td class="checkbox">
+	<input id="sel_statut_interne" type="checkbox" name="sel_statut_interne"  value="ok" class="checkbox" [(#ENV{sel_statut_interne}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_creation" type="checkbox" name="sel_creation"  value="ok" class="checkbox" [(#ENV{sel_creation}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_validite" type="checkbox" name="sel_validite"  value="ok" class="checkbox" [(#ENV{sel_validite}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_categorie" type="checkbox" name="sel_categorie"  value="ok" class="checkbox" [(#ENV{sel_categorie}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_partage" type="checkbox" name="sel_partage"  value="ok" class="checkbox" [(#ENV{sel_partage}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_partagedonne" type="checkbox" name="sel_partagedonne"  value="ok" class="checkbox" [(#ENV{sel_partagedonne}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_statut_provisoire" type="checkbox" name="sel_statut_provisoire"  value="ok" class="checkbox" [(#ENV{sel_statut_provisoire}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_montant" type="checkbox" name="sel_montant"  value="ok" class="checkbox" [(#ENV{sel_montant}|?{checked="checked",''})]/>
+	</td><td class="checkbox">
+	<input id="sel_date" type="checkbox" name="sel_date"  value="ok" class="checkbox" [(#ENV{sel_date}|?{checked="checked",''})]/>
+	</td>
+</tr>
+    <tr>
+    <td align="center">
+Select
+    </td>
+ 	<td  class="text">
+	<input id="id_auteur" type="text" name="id_auteur"  value="#ENV{id_auteur}" class="text" />
+	</td><td class="text">	
+	<select name="nom" id="nom" class="forml">
+	<B_aut_recherche>
+	[<option value="#ENV{nom}"  selected="selected">(#ENV{nom})</option>]
+	<option value="" >Nothing</option
+	<BOUCLE_aut_recherche(AUTEURS){tout}{par nom}>
+	<option value="[(#NOM|texte_backend)]" >#NOM</option> 
+	</BOUCLE_aut_recherche>	
+	</select>
+	</td><td class="text">
+	<input id="email" type="text" name="email"  value="#ENV{email}" class="text" />
+	</td><td class="text">
+	<input id="nom_site" type="text" name="nom_site"  value="#ENV{nom_site}" class="text" />
+	</td><td class="text">
+	<input id="url_site" type="text" name="url_site"  value="#ENV{url_site}" class="text" />
+	</td><td class="text">
+	<select name="statut" id="statut" class="forml">
+	[<option value="#ENV{statut}"  selected="selected">[(#ENV{statut}|=={0minirezo}|?{<:ecrire:info_statut_administrateur:>,[(#ENV{statut}|=={1comite}|?{<:ecrire:info_redacteur_1:>,[(#ENV{statut}|=={6forum}|?{<:ecrire:info_visiteur_1:>,[(#ENV{statut}|=={aconfirmer}|?{A confirmer,[(#ENV{statut}|=={5poubelle}|?{<:ecrire:info_poubelle_1:>,''})]})]})]})]})]</option>
+	<option value="" >Nothing</option>
+	<option value="0minirezo"><:ecrire:info_statut_administrateur:></option>
+	<option value="1comite" ><:ecrire:info_redacteur_1:></option>
+	<option value="6forum" ><:ecrire:info_visiteur_1:></option> 
+	<option value="aconfirmer" >A confirmer</option>
+	<option value="5poubelle" ><:ecrire:info_statut_site_4:></option> 
+	</select>
+	</td><td class="text">
+	<B_maj>
+	<select name="maj" id="maj" class="forml">
+	[<option value="#ENV{nom}"  selected="selected">(#ENV{maj}|affdate{j-m-Y})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_maj(AUTEURS){tout}{!par maj} {maj!=#ENV{maj}}>
+	[<option value="[(#MAJ)]" >(#MAJ|affdate{j-m-Y}|unique)</option>]
+	</BOUCLE_maj>	
+	</select>
+	</B_maj>
+	</td><td class="text">
+	<B_en_ligne>
+	<select name="en_ligne" id="en_ligne" class="forml">
+	[<option value="#ENV{en_ligne}"  selected="selected">(#ENV{en_ligne}|affdate{j-m-Y})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_en_ligne(AUTEURS){tout}{!par en_ligne} {en_ligne!=#ENV{en_ligne}}>
+	[<option value="[(#EN_LIGNE)]" >(#EN_LIGNE|affdate|unique)</option>]
+	</BOUCLE_en_ligne>	
+	</select>
+	</B_en_ligne>
+	</td><td class="text">
+	<input id="id_asso" type="text" name="id_asso"  value="#ENV{id_asso}" class="text" />
+	</td><td class="text">
+	<B_nom_famille>
+	<select name="nom_famille" id="nom_famille" class="forml">
+	[<option value="#ENV{nom_famille}"  selected="selected">(#ENV{nom_famille})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_nom_famille(spip_auteurs_elargis){tout}{par nom_famille} {nom_famille!=#ENV{nom_famille}}>
+	[<option value="[(#NOM_FAMILLE)]" >(#NOM_FAMILLE|unique)</option>]
+	</BOUCLE_nom_famille>	
+	</select>
+	</B_nom_famille>
+	</td><td class="text">
+	<B_prenom>
+	<select name="prenom" id="prenom" class="forml">
+	[<option value="#ENV{prenom}"  selected="selected">(#ENV{prenom})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_prenom(spip_auteurs_elargis){tout}{par prenom} {prenom!=#ENV{prenom}}>
+	[<option value="[(#PRENOM)]" >(#PRENOM|unique)</option>]
+	</BOUCLE_prenom>	
+	</select>
+	</B_prenom>
+	</td><td class="text">
+	<B_adresse>
+	<select name="adresse" id="adresse" class="forml">
+	[<option value="#ENV{adresse}"  selected="selected">(#ENV{adresse})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_adresse(spip_auteurs_elargis){tout}{par adresse} {adresse!=#ENV{adresse}}>
+	[<option value="[(#ADRESSE)]" >(#ADRESSE|unique)</option>]
+	</BOUCLE_adresse>	
+	</select>
+	</B_adresse>
+	</td><td class="text">
+	<B_code_postal>
+	<select name="code_postal" id="code_postal" class="forml">
+	[<option value="#ENV{code_postal}"  selected="selected">(#ENV{code_postal})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_code_postal(spip_auteurs_elargis){tout}{par code_postal} {code_postal!=#ENV{code_postal}}>
+	[<option value="[(#CODE_POSTAL)]" >(#CODE_POSTAL|unique)</option>]
+	</BOUCLE_code_postal>	
+	</select>
+	</B_code_postal>
+	</td><td class="text">
+	<B_ville>
+	<select name="ville" id="ville" class="forml">
+	[<option value="#ENV{ville}"  selected="selected">(#ENV{ville})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_ville(spip_auteurs_elargis){tout}{par ville} {ville!=#ENV{ville}}>
+	[<option value="[(#VILLE)]" >(#VILLE|unique)</option>]
+	</BOUCLE_ville>	
+	</select>
+	</B_ville>
+
+	</td><td class="text">
+	<input id="telephone" type="text" name="telephone"  value="#ENV{telephone}" class="text" />
+	</td><td class="text">
+	<input id="fax" type="text" name="fax"  value="#ENV{fax}" class="text" />
+	</td><td class="text">
+	<input id="mobile" type="text" name="mobile"  value="#ENV{mobile}" class="text" />
+	</td><td class="text">
+	<input id="commentaire" type="text" name="commentaire"  value="#ENV{commentaire}" class="text" /></td>
+	<td class="text">
+	<select name="statut_interne" id="statut_interne" class="forml">
+	[<option value="#ENV{statut}"  selected="selected">[(#ENV{statut_interne}|=={ok}|?{À jour,[(#ENV{statut_interne}|=={echu}|?{À relancer (échu),[(#ENV{statut_interne}|=={relance}|?{Relancé,[(#ENV{statut_interne}|=={sorti}|?{Désactivé,[(#ENV{statut_interne}|=={prospect}|?{Prospect (nouveau),''})]})]})]})]})]</option>
+	<option value="" >Nothing</option>
+	<option value="ok">À jour</option>
+	<option value="echu" >À relancer (échu)</option>
+	<option value="relance" >Relancé</option> 
+	<option value="sorti" >Désactivé</option>
+	<option value="prospect" >Prospect (nouveau)</option> 
+	</select>
+	</td><td class="text">
+	<B_creation>
+	<select name="creation" id="creation" class="forml">
+	[<option value="#ENV{creation}"  selected="selected">(#ENV{creation})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_creation(spip_auteurs_elargis){tout}{!par creation} {creation!=#ENV{creation}}>
+	[<option value="[(#CREATION)]" >(#CREATION|unique)</option>]
+	</BOUCLE_creation>	
+	</select>
+	</B_creation>
+	</td><td class="text">
+	<B_validite>
+	<select name="validite" id="validite" class="forml">
+	[<option value="#ENV{validite}"  selected="selected">(#ENV{validite})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_validite(spip_auteurs_elargis){tout}{!par validite} {creation!=#ENV{validite}}>
+	[<option value="[(#VALIDITE)]" >(#VALIDITE|unique)</option>]
+	</BOUCLE_validite>	
+	</select>
+	</B_validite>
+	</td><td class="text">
+	<input id="categorie" type="text" name="categorie"  value="#ENV{categorie}" class="text" />
+	</td><td class="text">
+	<select name="partage" id="partage" class="forml">
+	[<option value="#ENV{partage}"  selected="selected">(#ENV{partage})</option>]
+	<option value="" >Nothing</option>
+	<option value="partage" >Traité</option>
+	<option value="attente" >Soumis</option>
+	</select>
+	</td><td class="text">
+	<input id="partagedonne" type="text" name="partagedonne"  value="#ENV{partagedonne}" class="text" />
+	</td><td class="text">
+	<select name="statut_provisoire" id="statut_provisoire" class="forml">
+	[<option value="#ENV{statut_provisoire}"  selected="selected">(#ENV{statut_provisoire})</option>]
+	<option value="" >Nothing</option>
+	<option value="partage">Oui</option>
+	</select>
+	</td><td class="text">
+	<input id="montant" type="text" name="montant"  value="#ENV{montant}" class="text" />
+	</td><td class="text">
+	<B_date>
+	<select name="date" id="date" class="forml">
+	[<option value="#ENV{date}"  selected="selected">(#ENV{date})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_date(spip_auteurs_elargis){tout}{!par date} {date!=#ENV{date}}>
+	<option value="[(#DATE)]" >#DATE</option>
+	</BOUCLE_date>	
+	</select>
+	</B_date>
+	</td>
+    <tr>
+<td>affichage par page</td>
+<td><input id="affichage" type="text" name="affichage"  value="#ENV{affichage,30}" size="5" /></td>
+<td><input type="submit" name="bouton" class="spip_bouton" value="Ok"/></td>
+<td><input type="submit" name="bouton" class="spip_bouton" value="Save as"/></td>
+</tr>        
+
+          
+</tbody>
+</table>
+</form>
+</div>

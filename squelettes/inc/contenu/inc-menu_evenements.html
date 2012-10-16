@@ -1,0 +1,56 @@
+#CACHE{12*3600}
+#SET{date_act,#DATE}
+
+[(#REM)Détermine la date de l'évenement de l'article ou de la traduction de l'article]
+<div class="menu_ev Nav">
+		<BOUCLE_ev_act(EVENEMENTS){id_evenement ?} {id_article ?}{!par date_debut}{0,1}>#SET{exclus,#ID_EVENEMENT}
+#SET{date,#DATE_DEBUT} #SET{limiteur,0}
+		</BOUCLE_ev_act>
+		<//B_ev_act>
+
+
+[(#REM)Affiche flèche concert précedent pour les articles qui ont un évenement attaché]
+		<BOUCLE_ev_prec(EVENEMENTS){spip_articles.statut=publie}{id_rubrique IN 8,26,39} {date_debut<=#GET{date}}{!par date,titre}{id_evenement!=#GET{exclus}}{date_debut>=#GET{date_act}}{doublons}{0,1}>
+[(#GET{date_act}|>{#DATE_DEBUT}|?{#SET{span,'<span class="fleche_archive">'},#SET{span,<span class="fleche_futurs">}})]
+			<BOUCLE_art(ARTICLES){id_article} {lang}>
+					#GET{span}<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_precedent:>: #TITRE"><:precedents:></a></span>
+			</BOUCLE_art>
+
+				<BOUCLE_art_ref(ARTICLES){id_article}>
+					<BOUCLE_art_trad2(ARTICLES){traduction}{lang}>
+					#GET{span}<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_precedent:>: #TITRE"><:precedents:></a></span>
+					</BOUCLE_art_trad2>
+						<BOUCLE_art_trad3(ARTICLES){traduction}{origine_traduction}{0,1}>
+							#GET{span}<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_precedent:>: #TITRE"><:precedents:> [#LANG]</a> </span>
+						</BOUCLE_art_trad3>
+					<//B_art_trad2>
+				</BOUCLE_art_ref>
+			<//B_art>
+		</span>
+		</BOUCLE_ev_prec>
+
+|
+[(#REM)Affiche flèche concert futurs pour les articles qui ont un évenement attaché]
+
+	<BOUCLE_ev_futur(EVENEMENTS){spip_articles.statut=publie}{id_rubrique IN 8,26,39}{par date_fin}{date_debut>=#GET{date}}{id_evenement!=#GET{exclus}}{doublons}{0,1}>
+[(#GET{date_act}|>{#DATE_DEBUT}|?{#SET{span2,<span class="fleche_archive">},#SET{span2,<span class="fleche_futurs">}})]
+			<BOUCLE_futur(ARTICLES){id_article}{lang}>
+					#GET{span2}[<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_futur:>: (#TITRE)"><:prochains:></a>]</span>
+			</BOUCLE_futur>
+			<BOUCLE_art_futur(ARTICLES){id_article} {lang}>
+					#GET{span2}[<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_futur:>: (#TITRE)"><:prochains:></a>]</span>
+			</BOUCLE_art_futur>
+
+				<BOUCLE_art_ref_futur(ARTICLES){id_article}>
+					<BOUCLE_art_trad2_futur(ARTICLES){traduction}{lang}>
+					#GET{span2}[<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_futur:>: (#TITRE)"><:prochains:></a>]</span>
+					</BOUCLE_art_trad2_futur>
+						<BOUCLE_art_trad3_futur(ARTICLES){traduction}{origine_traduction}>
+							#GET{span2}<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:concert_futur:>: #TITRE"><:prochains:> [#LANG]</a></span>
+						</BOUCLE_art_trad3_futur>
+					<//B_art_trad2_futur>
+				</BOUCLE_art_ref_futur>
+			<//B_futur>
+
+	</BOUCLE_ev_futur>
+</div>

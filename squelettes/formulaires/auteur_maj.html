@@ -1,0 +1,11 @@
+#CACHE{48*3600}
+
+	<B_maj>
+	<select name="maj"  class="forml">
+	[<option value="#ENV{nom}"  selected="selected">(#ENV{maj}|affdate{j-m-Y})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_maj(AUTEURS){tout}{!par maj} {maj!=#ENV{maj}}>
+	[<option value="[(#MAJ)]" >(#MAJ|affdate{j-m-Y}|unique{maj})</option>]
+	</BOUCLE_maj>	
+	</select>
+	</B_maj>

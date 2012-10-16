@@ -1,0 +1,63 @@
+	<BOUCLE_article(ARTICLES){id_article}>
+			#SET{logo_fini,''}	
+			#SET{donnees_logo,''}
+			#SET{donnees_logo,#INCLURE{fond=inc/contenu/inc-logo_art}{id_article}{width=141}{class=ChapeauImg}}				
+			#SET{auteur,''}
+			#SET{auteur,#GET{donnees_logo}|table_valeur{auteur}}		
+			#SET{icone,''}
+			
+			[(#SET{icone,[(#CHEMIN{styles/img/icone_play.png}|image_reduire{15}|inserer_attribut{class,icone})]})]
+							
+			#SET{url_photo,''}
+			#SET{url_photo,#GET{donnees_logo}|table_valeur{url_photo}}			
+			#SET{logo,''}
+			#SET{logo,#GET{donnees_logo}|table_valeur{logo}}	
+
+			#SET{class,class=#ENV{class,spip_logos}}
+			
+			#SET{style,style=width:#GET{width}px;}			
+			
+			#SET{attribut_div,(#GET{class})}
+					
+			[(#GET{logo}|oui)
+				[(#SET{logo_fini,
+					<div #GET{attribut_div}>
+					#GET{icone}
+					#GET{logo}
+					</div>
+				})]
+			]				
+	<BOUCLE_art_lang(ARTICLES){traduction}{lang}>
+			<div class="Item Video">
+		 		<div class="Chapeau">
+		 		<a href="[(#URL_ARTICLE)]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+					<span class="Date">
+						<:video_du:> [(#DATE|affdate{'d/m/Y'})]
+					</span>
+					<div class="ItemContent">
+						<h2><a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]">#TITRE</a></h2>
+						[<span class="Soustitre">(#SURTITRE)</span>]
+						[<p class="ChapeauTxt">(#INTRODUCTION|couper{125})</p>]	
+					</div>
+				</div>
+			<span class="More"> >> <a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]"><:voir_video:></a></span>
+			</div>	
+	</BOUCLE_art_lang>
+	<BOUCLE_art_or(ARTICLES){traduction}{origine_traduction}>
+			<div class="Item Video">
+		 		<div class="Chapeau">
+		 		<a href="[(#URL_ARTICLE)]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+					<span class="Date">
+						<:video_du:> [(#DATE|affdate{'d/m/Y'})]
+					</span>
+					<div class="ItemContent">
+						<h2><a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]">#TITRE</a></h2>
+						[<span class="Soustitre">(#SURTITRE)</span>]
+						[<p class="ChapeauTxt">(#INTRODUCTION|couper{125})</p>]	
+					</div>
+				</div>
+			<span class="More"> >> <a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]"><:voir_video:></a></span>
+			</div>	
+	</BOUCLE_art_or>	
+	<//B_art_lang>
+	</BOUCLE_article>

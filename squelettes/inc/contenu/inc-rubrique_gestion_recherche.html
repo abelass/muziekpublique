@@ -1,0 +1,20 @@
+
+<BOUCLE_rech_nom_famille(spip_auteurs_elargis){nom_famille==#ENV{nom_famille}}>
+#NOM_FAMILLE
+</BOUCLE_rech_nom_famille>
+
+<BOUCLE_statut_provisoire_auteurs(AUTEURS){email==#ENV{email}}{tout}>
+#EMAIL
+</BOUCLE_statut_provisoire_auteurs>
+
+		<td class="cell">#NOM_FAMILLE</td>
+		<td class="cell">#ADRESSE</td>
+		<td class="cell">#CODE_POSTAL</td>
+		<td class="cell">#VILLE</td>
+<input type="hidden" name="prenom" value="#PRENOM" />
+<input type="hidden" name="nom_famille" value="#NOM_FAMILLE" />
+<input type="hidden" name="adresse" value="#ADRESSE" />
+<input type="hidden" name="code_postal" value="#CODE_POSTAL" />
+<input type="hidden" name="ville" value="#VILLE" />
+
+1

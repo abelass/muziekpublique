@@ -1,0 +1,112 @@
+#CACHE{0}
+	#SET{id_rubrique,#ARRAY{}}
+	#SET{id_auteur,#ARRAY{}}
+	#SET{id_article,#ARRAY{}}	
+	
+	[(#REM) On cherche les auteurs photograpes]
+	<BOUCLE_photographes(AUTEURS){photographe!=''}{tout}>
+	#SET{id_auteur,#GET{id_auteur}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_AUTEUR}}}
+	</BOUCLE_photographes>
+	
+	[(#REM) On cherche les images auteurs photograpes et les articles auxquelles ils sont attachés]	
+	<BOUCLE_doc_test(DOCUMENTS documents_liens){auteur IN #GET{id_auteur}}{documents_liens.objet=article}{extension IN jpg,png,gif}{par num titre, titre,date}{logo_article<1}>
+		[(#GET{#ID_OBJET}|non)#SET{#ID_OBJET,#ARRAY}]
+		[(#AUTEUR|in_array{#GET{#ID_OBJET}}|non)
+			#SET{#ID_OBJET,#GET{#ID_OBJET}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#AUTEUR}}}
+			]
+		#SET{id_article,#GET{id_article}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_OBJET}}}
+	</BOUCLE_doc_test>
+	</BOUCLE_article_auteur>
+	#SET{id_article_docs,#GET{id_article}}
+
+<div class="archive">
+	[(#REM) On cherche les traduction des articles]			
+		<BOUCLE_art_trads1(ARTICLES){id_article IN #GET{id_article}}>
+			<BOUCLE_trads(ARTICLES){traduction}>
+				#SET_MERGE{id_article,#GET{id_article},#ARRAY{#COMPTEUR_BOUCLE,#ID_ARTICLE}}
+			</BOUCLE_trads>	
+		</BOUCLE_art_trads1>
+
+		[(#REM) On affiche le menu de séléction par année]	
+		<BOUCLE_article_annes1(EVENEMENTS){id_article IN #GET{id_article}}{!par date_debut}>
+
+		[(#ENV{annee}|!=={[(#DATE_DEBUT|annee)]}|?{[<span>  -  <a class="ajax" href="[(#SELF|parametre_url{periode,passe}parametre_url{annee,[(#DATE_DEBUT|annee)]})]">(#DATE_DEBUT|annee|unique)</a></span>],[<span class="archive on">   -  (#DATE_DEBUT|annee|unique)</span>]})]
+
+			<B_lesevenements_edit1>
+			#SET{annee,(#DATE_DEBUT|annee|unique)}
+			<BOUCLE_lesevenements_edit1(EVENEMENTS){id_article IN #GET{id_article}}{annee=#ENV{annee}} {par date}{tout}{doublons}{age>0}></BOUCLE_lesevenements_edit1>
+		</BOUCLE_article_annes1>	
+</div>
+
+[(#REM) On affiche les albums des événements correspondants à l'année sélectionnée]	
+<BOUCLE_art(EVENEMENTS){id_article IN #GET{id_article}}{annee=#ENV{annee}}{!par date_debut}>
+	#SET{id_auteur,''}
+	[(#REM) On d&eacute;termine quels articles parmis les traductions ont des photos attaches]
+	<BOUCLE_article_ev(ARTICLES){id_article}{doublons}>
+		<BOUCLE_art_lang(ARTICLES){traduction}>
+		<BOUCLE_cond(CONDITION){si	#ID_ARTICLE|in_array{#GET{id_article_docs}}}>
+			<BOUCLE_auteurs_article(POUR){tableau #GET{#ID_ARTICLE}}>
+				[(#REM) On affiche des infos liées à l'album]			
+				<B_docs>		
+				<div class="Item photos">
+					<div class="Chapeau">
+					<BOUCLE_docs(DOCUMENTS){documents_liens.id_objet IN #GET{id_article}} {auteur=#VALEUR}{id_article} {doublons}{tout}{mode=document}{extension IN jpg,png,gif}{par hasard}{0,1}>
+							#SET{id_auteur,#AUTEUR}
+							[<a  href="[(#URL_ARTICLE|parametre_url{voir,photos}|parametre_url{auteur,#AUTEUR})]" [title="(#TITRE)"]>(#FICHIER|image_reduire_recadre{141,94}|inserer_attribut{class,ChapeauImg})</a>]
+				
+					</BOUCLE_docs>		
+						
+					<BOUCLE_ev(EVENEMENTS){id_evenement}>
+						<span class="Date">
+							[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})]/[(#DATE_DEBUT|affdate{'m'})]
+						</span>
+					</BOUCLE_ev>
+						<div class="ItemContent">
+							[(#REM)On d&eacute;termine l'article dans sa bonne langue]
+							#SET{id_trad,#ARRAY{}}
+							<BOUCLE_trad(ARTICLES){traduction}>	
+							#SET{id_trad,#GET{id_trad}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_ARTICLE}}}
+							</BOUCLE_trad>	
+							[(#REM)Si l'article du document est celui du contexte de langue, on le prend]							
+							<BOUCLE_art_env(ARTICLES){id_article}{lang=#ENV{lang}}>
+							<h2>
+								<a href="[(#URL_ARTICLE|parametre_url{voir,photos}|parametre_url{auteur,#GET{id_auteur}})]">#TITRE</a>
+							</h2>
+							[<span class="Soustitre">(#SURTITRE)</span>]
+							</BOUCLE_art_env>
+									[(#REM)Sinon on cherche la traduction de la langue demand&eacute;]
+									<BOUCLE_art_trad_env(ARTICLES){id_article IN #GET{id_trad}}{lang=#ENV{lang}}>
+									<h2>
+										<a href="[(#URL_ARTICLE|parametre_url{voir,photos}|parametre_url{auteur,#GET{id_auteur}})]">#TITRE</a>
+									</h2>
+									[<span class="Soustitre">(#SURTITRE)</span>]
+								</BOUCLE_art_trad_env>
+									[(#REM)Sinon on affiche l'article d'origine]
+									<BOUCLE_art_or(ARTICLES){id_article}{origine_traduction}>
+									<h2>
+										<a href="[(#URL_ARTICLE|parametre_url{voir,photos}|parametre_url{auteur,#GET{id_auteur}})]">#TITRE</a>
+									</h2>
+									[<span class="Soustitre">(#SURTITRE)</span>]
+									</BOUCLE_art_or>
+									<//B_art_trad_env>
+		
+							<//B_art_env>
+
+							<BOUCLE_photographe(AUTEURS){id_auteur=#GET{id_auteur}}{tout}>
+							<p class="ChapeauTxt">[(#NOM)]</p>			
+							</BOUCLE_photographe>
+						</div>
+					</div>
+					<br class="nettoyeur"/>
+				</div>	
+					</B_docs>		
+				</BOUCLE_auteurs_article>
+			</BOUCLE_cond>
+		</BOUCLE_art_lang>
+		
+	</BOUCLE_article_ev>
+	
+</BOUCLE_art>
+
+
+

@@ -1,0 +1,11 @@
+#CACHE{25*3600}
+<B_mots>
+	<ul>
+<li><a href="[(#URL_RUBRIQUE|parametre_url{id_groupe,20})]" [(#ENV{id_groupe}|=={'20'}|?{'class="on"',''})] ><:photos:></a></li>
+<BOUCLE_mots(MOTS) {par num titre,titre} {id_groupe=19}{id_mot IN 264,260}>
+	<li>
+		<a href="[(#URL_RUBRIQUE|parametre_url{id_mot,#ID_MOT}|parametre_url{id_groupe,#ID_GROUPE})]" [(#ID_MOT|=={#ENV{id_mot}}|?{'class="on"',''})] >#TITRE</a>
+	</li>
+</BOUCLE_mots>
+	</ul>
+</B_mots>

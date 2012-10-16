@@ -1,0 +1,172 @@
+#SET{date,(#DATE|annee)}
+
+[<p>(#ENV*{message_ok})</p>]
+<BOUCLE_lesevenements_edit(EVENEMENTS) {id_evenement}>
+#SET{prix_membres,#PRIX_MEMBRES} #SET{prix_non_membres,#PRIX_NON_MEMBRES}
+
+ [(#ENV{editable})
+<p><:explication_reservation_concert:></p>
+ <form action="[(#SELF)]#inscription_activite" method="POST"  class="formbox" id="inscription_activite" >
+#ACTION_FORMULAIRE{#ENV{action}}
+<input name="statut" type="hidden" value="#ENV{statut,Confirmer}" />
+<input name="url_retour" type="hidden" value="#SELF" />
+<input name="id_evenement" type="hidden" value="[(#ENV{id_evenement})]" />
+<input name="voir" type="hidden" value="[(#ENV{voir})]" />
+<input name="type" type="hidden" value="[(#ENV{type})]" />
+<input name="lang" type="hidden" value="[(#ENV{lang})]" />
+<input name="prix_membres" type="hidden" value="#PRIX_MEMBRES" />
+<input name="prix_non_membres" type="hidden" value="#PRIX_NON_MEMBRES" />
+<input name="prix_prevente_non_membre" type="hidden" value="#PRIX_PREVENTE_NON_MEMBRES" />
+<input name="prix_ext_1" type="hidden" value="#PRIX_EXT_1_VALEUR" />
+<input name="prix_ext_2" type="hidden" value="#PRIX_EXT_2_VALEUR" />
+<input name="prix_ext_3" type="hidden" value="#PRIX_EXT_3_VALEUR" />
+
+  <div class="col1">
+    <p><:nom:> :</p>
+    <label>
+    [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{nom_famille})</span>]
+    <input class="input1" name="nom_famille" type="text" class="choix" size="40" value="[(#ENV{nom_famille})]" />
+    </label>
+  </div>
+  <div class="col2">
+    <p>
+      <:prenom:> :
+    </p>
+    <label>
+    [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{prenom})</span>]
+    <input class="input1" name="prenom" type="text" id="prenom" value="#ENV{prenom}" />
+    </label>
+  </div>  
+    
+  
+<!--  <div class='spip_form_champs'>
+    <span class='spip_form_label'>
+      <label for="id_adherent"><:asso:activite_libelle_adherent:> :</label>
+    </span>
+    <input name="id_adherent" type="text" class="choix" size="40" value="[(#ENV{id_adherent})]"  />
+  </div>-->
+  <div class="col1">
+    <p><:email:> :</p>
+      <label>
+      [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{email})</span>]
+      <input  class="input1" name="email" type="text" class="choix" value="[(#ENV{email})]" />
+      </label>
+  </div>  
+  <div class="col2">
+    <p><:telephone:> :</p>
+    <label>
+    <input class="input1"  name="telephone" type="text" value="[(#ENV{telephone})]" />
+    </label>
+  </div>  
+    
+    
+  <div class="col3">
+    <p><:rue:></p>
+        <label>
+
+    [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{adresse})</span>]
+           <input class="input3" type="text" name="adresse" value="#ENV{adresse}"/>
+        </label>
+    </div>  
+  <div class="col4">
+    <p><:numero:></p>
+        <label>
+        
+    [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{numero})</span>]
+           <input class="input2" type="text" name="numero" value="#ENV{numero}"/>
+        </label>
+    </div>        
+  <div class="col6">
+      <p><:code_postal:></p>
+        <label>
+        
+
+           <input class="input4" type="text" name="code_postal"  value="#ENV{code_postal}"/>
+        </label>
+    </div>
+  <div class="col7">
+      <p><:ville:></p>
+        <label>
+            [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{ville})</span>]
+           <input class="input5" type="text" name="ville" id="ville" value="#ENV{ville}"/>
+        </label>
+    </div>            
+          
+  <div class="col7">
+    <ul>
+    <INCLURE{fond=prive/inscription2_champs_pays}{env}/>
+    </ul>
+    </div>
+    <br />  
+
+  
+  <p><b><:nombre_tickets:> :</b></p>
+     [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{inscrits})</span>]
+  <div class="col9">
+    <p><:tickets_membre:> :</p>
+    <label>
+      [(#INCLURE{fond=formulaires/inc-inscription_concert_tickets} {name=membres}{valeur=#ENV{membres}})]
+      </label>
+      </div> 
+
+ 
+  [(#PRIX_NON_MEMBRES|oui)
+  <div class="col9">
+    <p><:tickets_non_membre:> :</p>
+    <label>
+         [(#INCLURE{fond=formulaires/inc-inscription_concert_tickets} {name=non_membres}{valeur=#ENV{non_membres}})]
+    </label>
+  </div>]
+  [(#REM) desactive
+  [(#PRIX_PREVENTE_NON_MEMBRES|oui)
+  <div class="col9">
+    <p><:prix_prevente_non_membres:> :</p>
+    <label>
+      [(#INCLURE{fond=formulaires/inc-inscription_concert_tickets} {name=prevente_non_membre}{valeur=#ENV{prevente_non_membre}})]
+    </label>
+  </div>]]
+  [(#PRIX_EXT_1_VALEUR|oui)
+  <div class="col9">
+      <label for="non_membres">#PRIX_EXT_1_TITRE :</label>
+    <input name="prix_ext_1_titre" type="hidden"    value="#PRIX_EXT_1_TITRE"/>
+    <label>
+      [(#INCLURE{fond=formulaires/inc-inscription_concert_tickets} {name=prix_ext_1_valeur}{valeur=#ENV{prix_ext_1_valeur}})]    </label>
+  </div>]
+  [(#PRIX_EXT_2_VALEUR|oui)  
+  <div class="col9">
+    <p>#PRIX_EXT_2_TITRE :</p>
+    <input name="prix_ext_2_titre" type="hidden"   value="#PRIX_EXT_2_TITRE" />
+    <label>
+          [(#INCLURE{fond=formulaires/inc-inscription_concert_tickets} {name=prix_ext_2_valeur}{valeur=#ENV{prix_ext_2_valeur}})]
+    </label>
+  </div>]    
+  [(#PRIX_EXT_3_VALEUR|oui)
+  <div class="col9">>
+    <p>#PRIX_EXT_3_TITRE :</p>
+    <input name="prix_ext_3_titre" type="hidden"    value="#PRIX_EXT_3_TITRE"/>
+    <label>
+            [(#INCLURE{fond=formulaires/inc-inscription_concert_tickets} {name=prix_ext_3_valeur}{valeur=#ENV{prix_ext_3_valeur}})]
+    </label>
+  </div>]
+      [<span class="spip_form_erreur">(#ENV{erreurs}|table_valeur{code_postal})</span>]    
+    <br/>  
+  <div class="legal">
+    <span class='spip_form_label'>
+      <label for="opt_out"><:opt_out:> :</label>
+    </span>
+    <label>
+    <input  class="checkbox" name="opt_out" type="checkbox" [ (#ENV{opt_out}|oui) checked="checked"] value="1"/>
+    </label>
+  </div>      
+
+    <input name="inscrits" type="hidden" id="inscrits" size="40" value="#GET{inscrits}" />
+    <input name="montant_membres" type="hidden" value="#GET{montant_membres}" />
+    <input name="montant_non_membres" type="hidden"  value="#GET{montant_non_membres}" />
+  
+  <div>
+    <label>
+    <input type="submit"  class="btn" name="[(#ENV{erreurs}|table_valeur{bouton})]" value="ok"/>  
+    </label>
+  </div>
+</form>]
+  </BOUCLE_lesevenements_edit>

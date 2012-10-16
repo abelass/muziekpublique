@@ -1,0 +1,62 @@
+<div class='formulaire_spip formulaire_editer formulaire_editer_document formulaire_editer_document-#ENV{id_document,nouveau}'>
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+	[(#ENV{editable})
+	<form method='post' action='[(#ENV{action}|parametre_url{afficher,''})]#ed_doc_#ENV{id_document}' enctype='multipart/form-data'><div>
+		[(#REM) declarer les hidden qui declencheront le service du formulaire 
+		parametre : url d'action ]
+		#ACTION_FORMULAIRE{#ENV{action}}
+	  <input type='hidden' name='id_document' value='#ENV{id_document}' />
+		[(#REM) un bouton submit pour enregistrer qui sera declenche par le return
+		il ne doit pas etre hidden pour marcher dans safari
+		]	  <ul>
+	    <li class="editer_titre[ (#ENV**{erreurs}|table_valeur{titre}|oui)erreur]">
+		    <label for="titre">[(#ENV{mode}|=={document}|?{<:entree_titre_document:>,<:entree_titre_image:>})]</label>[
+				<span class='erreur_message'>(#ENV**{erreurs}|table_valeur{titre})</span>
+				]<input type='text' class='text' name='titre' id='titre' value="[(#ENV**{titre,''})]" />
+	    </li>
+	[(#REM)
+
+
+			<li class="editer_descriptif[ (#ENV**{erreurs}|table_valeur{descriptif}|oui)erreur]">
+				<label for="descriptif"><:info_description:></label>[
+				<span class='erreur_message'>(#ENV**{erreurs}|table_valeur{descriptif})</span>
+				]<textarea name='descriptif' id='descriptif'[ lang='(#LANGUE)'] rows='2' cols='40'>[(#ENV**{descriptif})]</textarea>
+	    </li>
+	    <li class="editer_date[ (#ENV**{erreurs}|table_valeur{saisie_date}|oui)erreur][ (#ENV**{erreurs}|table_valeur{saisie_heure}|oui)erreur]">
+				<label for="saisie_date" class='date'><:date:></label>[
+				<span class='erreur_message'>(#ENV**{erreurs}|table_valeur{saisie_date})</span>
+				]<input type='text' class='text date' name='saisie_date' id='saisie_date' size="10" maxlength="10" value="[(#ENV{saisie_date})]" />
+				<span class='choix heure'>
+					<label for='saisie_heure' class='heure'><:medias:info_heure:></label>[
+					<span class='erreur_message'>(#ENV**{erreurs}|table_valeur{saisie_heure})</span>]
+					<input type='text' class='text heure' name='saisie_heure' id='heure' size="5" maxlength="5" value="[(#ENV{saisie_heure})]" />
+				</span>
+	    </li>
+	    <li class="editer_credits[ (#ENV**{erreurs}|table_valeur{credits}|oui)erreur]">
+		    <label for="credits"><:medias:label_credits:></label>[
+				<span class='erreur_message'>(#ENV**{erreurs}|table_valeur{credits})</span>
+				]<input type='text' class='text' name='credits' id='credits' value="#ENV**{credits,''}" />
+	    </li>
+	    [(#ENV{_editer_dimension})
+	    <li class="editer_dimensions[ (#ENV**{erreurs}|table_valeur{dimensions}|oui)erreur]">
+				<label><:entree_dimensions:></label>[
+				<span class='erreur_message'>(#ENV**{erreurs}|table_valeur{dimensions})</span>
+				]
+				<span class='choix largeur'>
+					<label for='largeur' class='largeur'><:medias:info_largeur:></label>
+				  <input type='text' class='text' name='largeur' id='largeur' value="[(#ENV{largeur})]" />
+				</span>
+				<span class='choix hauteur'>
+					<label for='hauteur' class='hauteur'><:medias:info_hauteur:></label>
+					<input type='text' class='text' name='hauteur' id='hauteur' value="[(#ENV{hauteur})]" />
+				</span>
+	    </li>]
+	    ]
+	  </ul>
+	  [(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+	  <!--extra-->
+	  <p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	</div></form>
+	]
+</div>

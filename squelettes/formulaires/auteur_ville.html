@@ -1,0 +1,13 @@
+#CACHE{48*3600}
+
+	<B_ville>
+	<select name="ville" class="forml">
+	[<option value="#ENV{ville}"  selected="selected">(#ENV{ville})</option>]
+	<option value="" >Nothing</option>
+	<BOUCLE_ville(spip_auteurs_elargis){tout}{par ville} {ville!=#ENV{ville}}>
+	[<option value="[(#VILLE)]" >(#VILLE|unique)</option>]
+	</BOUCLE_ville>	
+	</select>
+	</B_ville>
+
+

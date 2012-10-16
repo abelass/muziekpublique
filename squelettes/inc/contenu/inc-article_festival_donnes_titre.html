@@ -1,0 +1,7 @@
+<BOUCLE_date(EVENEMENTS){id_article}{0,1}>
+  <span class="Date">
+    [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})][(#HORAIRE|!={non}|oui), 
+    [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})]
+    ]
+  </span>
+</BOUCLE_date>

@@ -1,0 +1,134 @@
+#CACHE{24*3600}
+
+
+
+[(#REM) calcule les tranches prochaines ou antérieurs]
+#SET{p,#ENV{debut,0}|moins{6}}
+#SET{n,#ENV{debut,0}|plus{6}}	
+
+[(#REM) Sélectionne les évenements actives et stocke les id_article dans un array]	
+	
+
+<B_evs>
+[<div class="Nav pagination">(#PAGINATION{page})</div>]  
+<BOUCLE_evs(EVENEMENTS){par date}{spip_articles.statut=publie}{id_rubrique IN 8,26,39}{jour ?}{mois ?} {annee ?}{id_article ?}{par date_debut}{age<=0}{pagination}>
+			#SET{logo_fini,''}	
+			#SET{donnees_logo,''}
+			#SET{donnees_logo,#INCLURE{fond=inc/contenu/inc-logo_art,id_article,width=141,class=ChapeauImg}}				
+			#SET{auteur,''}
+			#SET{auteur,#GET{donnees_logo}|table_valeur{auteur}}		
+			#SET{icone,''}
+			#SET{icone,#GET{donnees_logo}|table_valeur{icone}}			
+			#SET{url_photo,''}
+			#SET{url_photo,#GET{donnees_logo}|table_valeur{url_photo}}			
+			#SET{logo,''}
+			#SET{logo,#GET{donnees_logo}|table_valeur{logo}}	
+			
+			[(#SET{texte_lien,<:lire_article:>})]#ICONE
+			[(#GET{icone}|=={ecouter}|oui)[(#SET{texte_lien,<:ecouter_playliste:>})]]
+			[(#GET{icone}|=={play}|oui)[(#SET{texte_lien,<:voir_video:>})]]		
+
+			[(#GET{icone}|oui)
+				[(#SET{icone,[(#CHEMIN{styles/img/icone_play.png}|image_reduire{15}|inserer_attribut{class,icone})]})]
+				]						
+			[(#GET{auteur}|oui)#SET{auteur,<div class="legende">© #GET{auteur}</div>}]
+					
+			#SET{class,class=#ENV{class,spip_logos}}
+			
+			#SET{style,style=width:#GET{width}px;}			
+			
+			#SET{attribut_div,(#GET{class})}
+					
+			[(#GET{logo}|oui)
+				[(#SET{logo_fini,
+					<div #GET{attribut_div}>
+					#GET{icone}	
+					#GET{logo}#GET{auteur}
+					</div>
+				})]
+			]
+
+
+
+	[(#REM) Si l'article originale (celui de l'évenement) est dans la langue de l'environnement on le prend]
+		<BOUCLE_art_lang(ARTICLES){id_article}{lang}>
+		[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+		<div class="Item">
+		 	<div class="Chapeau">
+		 	<a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">
+		 		[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]
+		 	</a>
+			<BOUCLE_ev(EVENEMENTS){id_evenement}{jour ?}>
+				<span class="Date">[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})]/[(#DATE_DEBUT|affdate{'m'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+				<BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}{0,1}>
+				#TITRE
+				</BOUCLE_lieu>
+				</span>
+			</BOUCLE_ev>
+			<div class="ItemContent">
+				<h2><a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">#TITRE</a></h2>
+				[<span class="Soustitre">(#SURTITRE)</span>]
+				<p class="ChapeauTxt">[(#INTRODUCTION|couper{125})]</p>	
+			</div>
+			</div>
+			<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]"><:lire_article:></a></span>
+		</div>
+		</BOUCLE_art_lang>
+	
+		[(#REM) Sinon on regarde si une traduction de l'article existe dans la langue du contexte]
+			<BOUCLE_art_alter(ARTICLES){id_trad=#ID_ARTICLE}{lang}>
+			[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]	
+			<div class="Item">
+		 		<div class="Chapeau">
+		 		<a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+				<BOUCLE_ev_alter(EVENEMENTS){id_evenement}{jour ?}>
+					<span class="Date">[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})]/[(#DATE_DEBUT|affdate{'m'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+					<BOUCLE_lieu_alter(MOTS){id_evenement}{id_groupe=11}{0,1}>
+					#TITRE
+					</BOUCLE_lieu_alter>
+					</span>
+				</BOUCLE_ev_alter>
+					<div class="ItemContent">
+						<h2><a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">#TITRE</a></h2>
+						[<span class="Soustitre">(#SURTITRE)</span>]
+						<p class="ChapeauTxt">[(#INTRODUCTION|couper{125})]</p>	
+					</div>
+				</div>
+			<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]"><:lire_article:></a></span>
+			</div>
+			</BOUCLE_art_alter>
+			
+				[(#REM) Sinon on affiche l'article d'origine en mentionant la langue]
+				<BOUCLE_art_alter_or(ARTICLES){id_trad=#ID_ARTICLE}{origine_traduction}>
+				[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]	
+				<div class="Item">
+		 			<div class="Chapeau">
+		 			[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]
+					<BOUCLE_ev_alter_or(EVENEMENTS){id_evenement}{jour ?}>
+						<span class="Date">[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})]/[(#DATE_DEBUT|affdate{'m'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+						<BOUCLE_lieu_alter_or(MOTS){id_evenement}{id_groupe=11}{0,1}>
+						#TITRE
+						</BOUCLE_lieu_alter_or>
+						</span>
+					</BOUCLE_ev_alter_or>
+						<div class="ItemContent">
+							<h2>#TITRE [#LANG]</h2>
+							[<span class="Soustitre">(#SURTITRE)</span>]
+							<p class="ChapeauTxt">[(#INTRODUCTION|couper{125})]</p>	
+						</div>
+					</div>
+				<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]"><:lire_article:></a></span>
+				</div>
+				</BOUCLE_art_alter_or>
+			<//B_art_alter>
+		<//B_art_lang>	
+	
+</BOUCLE_evs>
+
+	
+
+
+	
+
+
+		

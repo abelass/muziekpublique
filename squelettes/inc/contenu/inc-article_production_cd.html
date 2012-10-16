@@ -1,0 +1,14 @@
+#CACHE{24*4000}
+<BOUCLE_rub(ARTICLES){id_rubrique IN 11,25,38}{lang} {id_auteur}{!par date}>
+	<a href="#URL_ARTICLE"> [(#LOGO_ARTICLE|!=={''}|?{[(#LOGO_ARTICLE||image_reduire{100,100})],[(#INCLURE{fond=inc/contenu/inc-logo_art}{id_article}{width=100}{height=100})]})]</a>
+	<h2><a href="#URL_ARTICLE">#TITRE</a></h2>
+	[<div>(#INTRODUCTION)</div>]
+</BOUCLE_rub>
+
+<BOUCLE_rub_trad(ARTICLES){id_rubrique IN 11,25,38} {id_auteur}{!par date}{origine_traduction}>
+	<a href="#URL_ARTICLE"> [(#LOGO_ARTICLE|!=={''}|?{[(#LOGO_ARTICLE||image_reduire{100,100})],[(#INCLURE{fond=inc/contenu/inc-logo_art}{id_article}{width=100}{height=100})]})]</a>
+	<h2><a href="#URL_ARTICLE">#TITRE</a> [#LANG]</h2>
+	[<div>(#INTRODUCTION)</div>]
+</BOUCLE_rub_trad>
+
+<//B_rub>

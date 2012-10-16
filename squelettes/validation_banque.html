@@ -1,0 +1,117 @@
+#CACHE{0}
+<BOUCLE_auteurs_el(spip_auteurs_elargis){id_auteur=#ENV{id_auteur}}>
+[(#VALIDITE|>{#DATE}|?{#SET{statut,ok},#SET{statut,echu} })]
+</BOUCLE_auteurs_el>
+
+
+<?php
+$statut_membre="#GET{statut}";
+$type=_request('type');
+$id_transaction = "#ENV{reference}"; 
+$texte_libre = "#ENV{texteLibre}";
+$reponse_banque = "#ENV{reponse_banque}";
+$validation_paiement = "#ENV{reponse_banque}";
+$payment_status=_request('payment_status');
+$receiver_email=_request('receiver_email');
+$compte_paypal=lire_config('gopaypal_paypal/compte_paypal');
+$id_activite=_request('id_activite');
+$date_paiement="#DATE";
+$membre="#ENV{membre}";
+$id_auteur="#ENV{id_auteur}";
+$annee="[(#DATE|annee))]";
+$mc_gross="#ENV{mc_gross}";
+$source_paiement="#ENV{source_paiement}";
+
+// test si paiement ok
+
+if ($payment_status=='Completed'){
+
+	// test si compte ok
+	if ($receiver_email==$compte_paypal){
+	$payment_status=('ok');
+	$statut=('ok_cm_maj');
+		}
+	else{
+	// test si compte pas le définit on definit le statut et met un message ans commentaire
+	$payment_status="erreur_transaction";
+	$statut="erreur_transaction";
+	$message ="Paiement :".$date_paiement." - faux compte paypal :" .$receiver_email."! ---";
+		};
+	
+	// modifie statut auteur si celui ci est encore à confirmer
+
+	$sql2 = spip_query( "SELECT * FROM spip_auteurs WHERE id_auteur='$id_auteur'");
+		while ($data = mysql_fetch_array ($sql2)){
+		$statut_auteur = $data['statut'];
+		$montant_prevu = $data['montant'];
+
+			if ($statut_auteur == 'aconfirmer'){
+			$statut_auteur='6forum';
+			spip_query("UPDATE `spip_auteurs` SET statut='$statut_auteur' WHERE id_auteur='$id_auteur'");
+			}
+		}
+
+	};
+		// mise à jour de la table spip auteurs
+
+		$query = spip_query( "SELECT * FROM spip_auteurs_elargis  WHERE id_auteur='$id_auteur' " );
+		while($data = spip_fetch_array($query)) {
+		$prenom = $data['prenom'];
+		$nom_famille = $data['nom_famille'];
+		$commentaire = $data['commentaire'];
+		$mois = ('12'); 
+		$jour = ('31');
+
+		$annee2="[(#DATE|annee))]";
+		$sql = spip_query( "SELECT * FROM spip_asso_categories WHERE id_categorie='1' ");
+			$validite=date("Y-m-d", mktime(0, 0, 0, $mois, $jour, $annee2));
+		while ($resultat = mysql_fetch_array ($sql)){
+		$cotisation = $resultat['cotisation'];
+
+			if ($statut_auteur == 'aconfirmer'){
+			$statut_auteur='6forum';
+			spip_query("UPDATE `spip_auteurs` SET statut='$statut_auteur' WHERE id_auteur='$id_auteur'");
+			}
+		}						
+		}
+			
+		// Si inscription membre - mise à jour de la table spip_asso_comptes
+
+		if ($type=='membres') {
+		$montant_recu = $mc_gross;
+		$imputation=lire_config('association/pc_cotisations');
+		$justification = "Cotisation";
+		$justification = "$justification $prenom $nom_famille";	
+			spip_query( "INSERT INTO spip_asso_comptes (date, journal, recette, justification, imputation, id_journal) VALUES ("._q($date_paiement).", "._q($journal).", "._q($montant_recu).", "._q($justification).", "._q($imputation).", "._q($id_auteur)." )" );			
+		}
+		// Si inscription cours d'un non_membre ou membre echu, on divise le montant recu
+		elseif ($type=='cours' AND $statut_membre!='ok') {
+		$montant = $mc_gross - $cotisation;
+		$montant_recu = $mc_gross - $montant;
+		}
+		// Sinon on prend le montant tel quel
+		else  {
+		$montant = $mc_gross;
+		};
+
+		// pour tout paiement qui n'est pas seulement pour la carte de membre
+		$commentaire = $message.$commentaire;
+
+		if ($type!='membres'){
+		$query = spip_query( "SELECT * FROM spip_asso_activites  WHERE id_activite='$id_activite' " );
+		while ($resultat = mysql_fetch_array ($query)){
+		$commentaire = $resultat['commentaire'];
+		$commentaire = $message.$commentaire;};
+		};
+
+		// mise à joute de la table spip_asso_activites
+		
+		spip_query("UPDATE `spip_asso_activites` SET statut='$payment_status', date_paiement='$date_paiement', montant='$montant',source_paiement='$source_paiement',commentaire='$commentaire'  WHERE id_activite='$id_activite'");
+
+		// mise à joute de la table spip_auteurs_elargis	
+
+		spip_query("UPDATE `spip_auteurs_elargis` SET statut_interne='$statut', validite='$validite',date_paiement='$date_paiement', montant='$montant_recu', commentaire='$commentaire', source_paiement='$source_paiement'  WHERE id_auteur='$id_auteur'");
+
+
+
+?>

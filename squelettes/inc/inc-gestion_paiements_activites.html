@@ -1,0 +1,28 @@
+<?php 
+$etat = "#ENV{etat}";
+$id_activite = "#ENV{id_activite}";
+$montant = "#ENV{montant}";
+$date_paiement = "#ENV{date_paiement}";
+$source_paiement = "#ENV{source_paiement}";
+$gestion_paiements = "#ENV{gestion_paiements}";
+$validite = "#ENV{validite}";
+$type_paiement = "#ENV{type_paiement}";
+
+// Actions inscription  provisoire
+
+if ($etat=="intermediaire") {
+$statut = "ok_prov";
+if ($gestion_paiements=="-"){
+	$statut = '';
+	}
+
+	// actualise la fiche et met le statut provisoire
+	
+	$exp=array('montant'=>$montant,'date_paiement'=>$date_paiement,'statut'=>$statut,'type_paiement'=>$type_paiement);
+	
+	sql_updateq ('spip_asso_activites', $exp, 'id_activite='.$id_activite);
+
+
+};
+	
+?>

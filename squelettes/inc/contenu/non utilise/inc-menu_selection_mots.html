@@ -1,0 +1,50 @@
+#CACHE{24*3600}
+#SET{id_groupe1,#ENV{id_groupe1}} 
+#SET{id_groupe2,#ENV{id_groupe2}}
+#SET{id_groupe3,#ENV{id_groupe2}}
+#SET{id_groupe4,#ENV{id_groupe4}}
+#SET{id_groupe5,#ENV{id_groupe5}} 
+<BOUCLE_rubrique(RUBRIQUES){id_rubrique IN #ENV{id_rubrique1},#ENV{id_rubrique2},#ENV{id_rubrique3}}{tout}>
+<BOUCLE_groupe_mot(GROUPES_MOTS){id_groupe IN #GET{id_groupe1},#GET{id_groupe2,0},#GET{id_groupe3,0},#GET{id_groupe4,0},#GET{id_groupe5,0}}>
+
+<B_evt_affiche>
+#TITRE
+<BOUCLE_evt_affiche(EVENEMENTS){id_rubrique}{id_groupe}{id_evenement_source=0}>
+
+<BOUCLE_mots_ev(MOTS){id_groupe}>
+[(#TITRE|unique)<br />]
+</BOUCLE_mots_ev>
+#ID_EVENEMENT
+<BOUCLE_art(ARTICLES){id_evenement}>
+<B_mots_art>
+#TYPE_MOT
+<BOUCLE_mots_art(MOTS){id_groupe}>
+[(#TITRE|unique)<br />]
+</BOUCLE_mots_art>
+</BOUCLE_art>
+
+</BOUCLE_evt_affiche>
+</BOUCLE_groupe_mot>
+</BOUCLE_rubrique>
+<form method="post">
+
+
+
+
+
+	<select id="menu" class="forml"
+        onchange="go2()">
+	<option selected="selected" value=""><BOUCLE_pays(MOTS) {id_mot=#ENV{id_mot}}>#TITRE</BOUCLE_pays></B_pays>#TITRE_GROUPE<//B_pays></option>
+
+
+	[<option value="[(#GET{url_rubrique}|parametre_url{id_mot,#ID_MOT}|parametre_url{lang,#ENV{lang}})]">(#TITRE|unique)</option>]
+
+</select>
+</B_mots_evt_>
+
+
+
+</form>
+
+<B_evt_affiche>
+

@@ -1,0 +1,120 @@
+#CACHE{24*3600}
+
+<div class="List">
+		 #FORMULAIRE_INSCRIVEZ_VOUS
+		 
+<BOUCLE_art1(pb_selection){par ordre}{id_rubrique=#ENV{id_rubrique}}{#ENV{debut,0},#ENV{limit,3}}>
+
+	<BOUCLE_art_tout(ARTICLES){id_article} {titre!=10 years}>
+			#SET{logo_fini,''}	
+			#SET{donnees_logo,''}
+			#SET{donnees_logo,#INCLURE{fond=inc/contenu/inc-logo_art,id_article,width=248,survol=ok}}				
+			#SET{auteur,''}
+			#SET{auteur,#GET{donnees_logo}|table_valeur{auteur}}		
+			#SET{icone,''}
+			#SET{icone,#GET{donnees_logo}|table_valeur{icone}}			
+			#SET{url_photo,''}
+			#SET{url_photo,#GET{donnees_logo}|table_valeur{url_photo}}			
+			#SET{logo,''}
+			#SET{logo,#GET{donnees_logo}|table_valeur{logo}}	
+			
+			[(#SET{texte_lien,<:lire_article:>})]#ICONE
+			[(#GET{icone}|=={ecouter}|oui)[(#SET{texte_lien,<:ecouter_playliste:>})]]
+			[(#GET{icone}|=={play}|oui)[(#SET{texte_lien,<:voir_video:>})]]		
+
+			[(#GET{icone}|oui)
+				[(#SET{icone,[(#CHEMIN{styles/img/icone_play.png}|image_reduire{40}|inserer_attribut{class,icone})]})]
+				]						
+					
+			#SET{class,class=#ENV{class,spip_logos}}
+			
+			#SET{style,style=width:#GET{width}px;}			
+			
+			#SET{attribut_div,(#GET{style}) (#GET{class})}
+					
+			[(#GET{logo}|oui)
+				[(#SET{logo_fini,
+					<div #GET{attribut_div}>
+					#GET{icone}	
+					#GET{logo}
+					</div>
+				})]
+			]
+	
+
+	
+	<BOUCLE_art0(ARTICLES){id_article} {lang}>
+
+
+	<div class="Item">
+		#SET{id_art,#ID_ARTICLE}
+		[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+		[(#ID_RUBRIQUE|=={134}|oui)#SET{radio,oui}]
+		<h3>
+			<a href="#GET{url}">#TITRE</a>
+		</h3>	
+		[<span class="Soustitre">(#SURTITRE)</span>]
+		<a href="#GET{url}">
+			[(#LOGO_ARTICLE_SURVOL|!=={''}|?{[(#LOGO_ARTICLE_SURVOL|image_reduire{248})],#GET{logo_fini}})]
+		</a>
+		<p class="ChapeauTxt">[(#INTRODUCTION|couper{200})]</p>
+		
+		<BOUCLE_art(ARTICLES){traduction}{origine_traduction}>
+		#SET{id_article,#ID_ARTICLE}
+		</BOUCLE_art>
+
+		<B_rub>
+		<BOUCLE_rub(EVENEMENTS){id_article=#GET{id_article}}{0,1}>
+		<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">#GET{texte_lien}</a></span>
+		</BOUCLE_rub>
+		<span class="More"> >>
+			<a href="[(#GET{url})]">#GET{texte_lien}</a>
+		</span>
+		<//B_rub>
+	</div>
+	</BOUCLE_art0>
+	<BOUCLE_art2(ARTICLES){traduction}{lang}>
+
+	<div class="Item">
+			#SET{id_art,#ID_ARTICLE}
+			[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+		<h3><a href="#GET{url}">#TITRE</a></h3>	
+		[<span class="Soustitre">(#SURTITRE)</span>]
+		<a href="#GET{url}">[(#LOGO_ARTICLE_SURVOL|!=={''}|?{[(#LOGO_ARTICLE_SURVOL|image_reduire{248})],#GET{logo_fini}})]</a>
+		<p class="ChapeauTxt">[(#INTRODUCTION|couper{200})]</p>
+
+		<B_rub2>
+		<BOUCLE_rub2(EVENEMENTS){id_article=#GET{id_article}}{0,1}>
+		<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">#GET{texte_lien}</a></span>
+		</BOUCLE_rub2>
+		<span class="More"> >> <a href="#GET{url}">#GET{texte_lien}</a></span>
+		<//B_rub2>
+	</div>
+	</BOUCLE_art2>	
+	<BOUCLE_art3(ARTICLES){traduction}{lang}>
+
+	<div class="Item">
+		#SET{id_art,#ID_ARTICLE}
+		[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+		<h3><a href="#URL_ARTICLE">#TITRE</a></h3>	
+		[<span class="Soustitre">(#SURTITRE)</span>]
+		<a href="#URL_ARTICLE">[(#LOGO_ARTICLE_SURVOL|!=={''}|?{[(#LOGO_ARTICLE_SURVOL|image_reduire{248})],#GET{logo_fini}})]</a>
+		<p class="ChapeauTxt">[(#INTRODUCTION|couper{200})]</p>
+
+		<BOUCLE_rub3(EVENEMENTS){id_article=#GET{id_article}}{0,1}>
+		<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">#GET{texte_lien}</a></span>
+		</BOUCLE_rub3>
+		<span class="More"> >> <a href="#GET{url}">#GET{texte_lien}</a></span>
+
+	</BOUCLE_art3>		
+		<//B_art2>		
+	<//B_art0>	
+</BOUCLE_art_tout>
+		[(#REM) Affichage différent pour les vidéos 10 ans]	
+		[(#TITRE|!={10 years}|oui)
+			<INCLURE{fond=inc/contenu/inc-list_article_video}{id_trad=165}/>
+			]	
+<//B_art_tout>
+</BOUCLE_art1>  
+</div>
+

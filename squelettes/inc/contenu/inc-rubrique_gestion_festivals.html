@@ -1,0 +1,97 @@
+#CACHE{0}
+#SET{id_rubrique,#ARRAY{}}
+#SET{id_evenement,#ARRAY}
+#SET{places,#ARRAY}
+<BOUCLE_rubs(RUBRIQUES){id_trad=168}{tout}>
+#SET{id_rubrique,#GET{id_rubrique}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_RUBRIQUE}}}
+</BOUCLE_rubs>
+
+<B_articles>
+	<select id="menupays" class="forml"
+        onchange="gopays()">
+<BOUCLE_articles(ARTICLES){id_rubrique IN #GET{id_rubrique}} {origine_traduction}{!par date}>
+	[(#COMPTEUR_BOUCLE|=={1}|oui)#SET{id_article,#ID_ARTICLE}]
+		<option value="[(#SELF|parametre_url{id_article,#ID_ARTICLE})]">#TITRE</option>
+	</BOUCLE_articles>
+	</select>
+</B_articles>
+
+
+<div class="action">
+	<a href="#URL_ACTION_AUTEUR{export_festival,#ENV{id_article,#GET{id_article}},#SELF}">Télécharger les Réservations</a>
+</div>
+
+<B_article>
+	<table class="festivals">
+<BOUCLE_article(ARTICLES){id_article=#ENV{id_article,#GET{id_article}}}>
+	
+	
+	<B_evenements>
+		<thead>
+			<tr>
+				<td><:concerts:></td>
+		<BOUCLE_evenements(EVENEMENTS){id_article}>
+			#SET{id_evenement,#GET{id_evenement}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_EVENEMENT}}}
+			#SET{places,#GET{places}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#PLACES}}}
+			<td  colspan=3>#TITRE</td>
+		</BOUCLE_evenements>
+			</tr>
+		<tr>	
+		<td><:horaires:></td>		
+		<BOUCLE_hor(POUR){tableau #GET{id_evenement}}>
+			<BOUCLE_horaires(MOTS){id_evenement=#VALEUR}{id_groupe=27}>
+				<td>#TITRE</td>
+			</BOUCLE_horaires>
+			</B_horaires>	
+		</BOUCLE_hor>
+		</tr>	
+		<tr>
+			<td><:total:>/<:vendu:></td>
+		<BOUCLE_ev0(POUR){tableau #GET{id_evenement}}>
+			<BOUCLE_horaires02(MOTS){id_evenement=#VALEUR}{id_groupe=27}>
+			<BOUCLE_reservations02(spip_asso_activites){id_article}{heure=#TITRE}{id_evenement=#VALEUR}>
+			
+			</BOUCLE_reservations02>	
+			<td[(#GET{places}|table_valeur{#CLE}|=={#COMPTEUR_BOUCLE}|oui) class="full" title="<:complet:>"]>[(#GET{places}|table_valeur{#CLE})]/#COMPTEUR_BOUCLE</td>
+			</B_reservations02>
+			<td>[(#GET{places}|table_valeur{#CLE})]/0</td>
+			<//B_reservations02>	
+			</BOUCLE_horaires02>
+		</BOUCLE_ev0>				
+		</tr>	
+		</thead>
+	#SET{total_evenement,#TOTAL_BOUCLE}
+	</B_evenements>		
+	<B_reservations>
+		<tbody>
+	<B_reservations>
+		[<td colspan=[(#GET{total_evenement}|mult{3}|plus{1}) ] class="pagination"><a class="ajax" href="[(#SELF|parametre_url{voir,1000})]"><:voir_tout:></a>(#PAGINATION)</td>]
+	<BOUCLE_reservations(spip_asso_activites){id_article}{id_activite_source=0} {par statut,date}{pagination #ENV{voir,20}}>
+		<tr[(#STATUT|=={traite}|oui) class="traite"]>
+			<td><div>
+					<strong>#PRENOM #NOM</strong> 
+					[(#STATUT|=={traite}|non) <a class="ajax" href="[(#URL_ACTION_AUTEUR{gestion_festival,traiter|#ID_ACTIVITE,#SELF})]">[(#CHEMIN{images/tick_32.png}|image_reduire{10})]</a>]					
+					<a class="ajax" href="[(#URL_ACTION_AUTEUR{gestion_festival,eliminer|#ID_ACTIVITE,#SELF})]">[(#CHEMIN{images/delete_32.png}|image_reduire{10})]</a>
+				</div>
+				<div>[(#DATE|affdate{d-m-y})]</div>
+				<div><a href="mailto:#EMAIL">#EMAIL</a></div>
+			</td> 
+		<BOUCLE_ev(POUR){tableau #GET{id_evenement}}>
+			<BOUCLE_horaires2(MOTS){id_evenement=#VALEUR}{id_groupe=27}>
+			<BOUCLE_reservations2(spip_asso_activites){id_article}{heure=#TITRE}{id_evenement=#VALEUR}{id_activite_source=#ID_ACTIVITE}>
+			
+			</BOUCLE_reservations2>	
+			<td>#COMPTEUR_BOUCLE</td>
+			</B_reservations2>
+			<td></td>
+			<//B_reservations2>	
+			</BOUCLE_horaires2>
+		</BOUCLE_ev>	
+		</tr>	
+	</BOUCLE_reservations>
+		</tbody>	
+	</B_reservations>
+</BOUCLE_article>
+	</table>
+</B_article>
+

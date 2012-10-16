@@ -1,0 +1,192 @@
+#CACHE{24*3600}
+
+
+<h2>[(#ENV{type}|=={'provisoire'}|oui)<:inscriptions_provisoires:>][(#ENV{type}|=={'partage'}|oui)<:inscriptions_partages:>][(#ENV{type}|=={'doublons'}|oui)<:inscriptions_doublons:>]</h2>
+
+<BOUCLE_auteur_elargis_original(spip_auteurs_elargis) {id_auteur=#ENV{id_auteur_or}}>
+ #SET{nom_famille,#NOM_FAMILLE} #SET{prenom,#PRENOM} #SET{naissance,#NAISSANCE} #SET{adresse,#ADRESSE} #SET{code_postal,#CODE_POSTAL} #SET{ville,#VILLE} #SET{telephone,#TELEPHONE} #SET{commentaire,#COMMENTAIRE} #SET{partage,#PARTAGE} #SET{partagedonne,#PARTAGEDONNE} #SET{benevole,#BENEVOLE} #SET{montant,#MONTANT} #SET{date_paiement,#DATE_PAIEMENT} #SET{statut_interne,#STATUT_INTERNE} 
+	<BOUCLE_auteur_principale_original(AUTEURS){id_auteur=#ENV{id_auteur_or}}{tout}>
+	#SET{nom,#NOM} 
+	#SET{email,#EMAIL*}
+	</BOUCLE_auteur_principale_original>
+</BOUCLE_auteur_elargis_original>
+
+<BOUCLE_auteur_elargis_provisoire(spip_auteurs_elargis) {id_auteur=#ENV{id_auteur_prov}}>
+ #SET{nom_famille_prov,#NOM_FAMILLE} #SET{prenom_prov,#PRENOM} #SET{naissance_prov,#NAISSANCE} #SET{adresse_prov,#ADRESSE} #SET{code_postal_prov,#CODE_POSTAL} #SET{ville_prov,#VILLE} #SET{telephone_prov,#TELEPHONE} #SET{commentaire_prov,#COMMENTAIRE} #SET{partage_prov,#PARTAGE} #SET{partagedonne_prov,#PARTAGEDONNE} #SET{benevole_prov,#BENEVOLE} #SET{montant_prov,#MONTANT} #SET{date_paiement_prov,#DATE_PAIEMENT} #SET{statut_interne_prov,#STATUT_INTERNE} 
+	<BOUCLE_auteur_principale_provisoire(AUTEURS){id_auteur=#ENV{id_auteur_prov}}{tout}>
+#SET{nom_prov,#NOM}
+	#SET{email_prov,#EMAIL*}
+	</BOUCLE_auteur_principale_provisoire>
+</BOUCLE_auteur_elargis_provisoire>
+
+	<form id="adherent" name="adherent" method="post" action="#URL_PAGE{gestion}">
+	<input type="hidden" name="id_auteur_prov" value="#ENV{id_auteur_prov}" >
+	<input type="hidden" name="id_auteur_or" value="#ENV{id_auteur_or}" >
+	<input type="hidden" name="actions" value="update" >
+	<input type="hidden" name="url_retour" value="#ENV{url_retour}" >
+	<table>
+	<thead>
+	<tr>
+	<td></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><strong><:deja_inscrit:></strong></td>
+	<td><strong><:inscription_proviosire:></strong><br/><:copier_infos_necessaires:></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td><strong><:recepteur_unique:></strong></td>
+	<td><strong><:inscription_partage:></strong><br/><:copier_infos_necessaires:></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><strong><:original:></strong></td>
+	[(#ENV{id_auteur_prov}|?{' ',''})<td><strong><:probable_doublon:></strong></td>]]
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+	<td><strong><:nom:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="nom" value="#GET{nom}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="nom" value="#GET{nom}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{nom}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="nom_prov" value="#GET{nom_prov}" type="text"/><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{nom_prov}</td>]
+	</tr><tr>
+	<td><strong><:email:></strong>	</td>
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{email}</td>
+	<td>#GET{email_prov}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="email" value="#GET{email}" type="text"/><br></td>
+	<td><input name="email_prov" value="#GET{email_prov}" type="text"><br></td>
+	]]
+	</tr><tr>
+	<td><strong><:nom_famille:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="nom_famille" value="#GET{nom_famille}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="nom_famille" value="#GET{nom_famille}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{nom_famille}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="nom_famille_prov" value="#GET{nom_famille_prov}" type="text"/><br></td>]]	
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{nom_famille_prov}</td>]
+	</tr><tr>
+	<td><strong><:prenom:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="prenom" value="#GET{prenom}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="prenom" value="#GET{prenom}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{prenom}<br></td>]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{prenom_prov}</td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="prenom_prov" value="#GET{prenom_prov}" type="text"/><br></td>]]
+	</tr>
+	<tr>
+	<td><strong><:naissance:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="naissance" value="#GET{naissance}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="naissance" value="#GET{naissance}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{naissance}<br></td>]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{naissance_prov}</td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="naissance_prov" value="#GET{naissance_prov}" type="text"/><br></td>]]
+	</tr>
+	<tr>
+	<td><strong><:adresse:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><textarea name="adresse">#GET{adresse}</textarea><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><textarea name="adresse">#GET{adresse}</textarea><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{adresse}<br></td>]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{adresse_prov}</td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><textarea name="adresse_prov">#GET{adresse_prov}</textarea><br></td>]]
+	</tr>
+	<tr>
+	<td><strong><:code_postal:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="code_postal" value="#GET{code_postal}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="code_postal" value="#GET{code_postal}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{code_postal}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="code_postal_prov" value="#GET{code_postal_prov}" type="text"/><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{code_postal_prov}</td>]
+	</tr>
+	<tr>
+	<td><strong><:ville:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="ville" value="#GET{ville}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="ville" value="#GET{ville}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{ville}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="ville_prov" value="#GET{ville_prov}" type="text"/><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{ville_prov}</td>]
+	</tr>
+	<tr>
+	<td><strong><:telephone:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="telephone" value="#GET{telephone}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="telephone" value="#GET{telephone}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{telephone}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="telephone_prov" value="#GET{telephone_prov}" type="text"/><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{telephone_prov}</td>]
+	</tr>
+	<tr>
+	<td><strong><:commentaire:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><textarea name="commentaire">***
+<:update:> : [(#DATE|affdate)] :
+actualisation depuis fiche provisoire: 
+id_auteur: [(#ENV{id_auteur_prov})]
+email:  [(#GET{email_prov})]
+***
+#GET{commentaire}</textarea><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{commentaire}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><textarea name="commentaire">#GET{commentaire}</textarea><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><textarea name="commentaire_prov">#GET{commentaire_prov}</textarea><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{commentaire_prov}<br></td>]
+	</tr>
+	<tr>
+	<td><strong><:partage:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="partage" value="#GET{partage}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="partage" value="#GET{partage}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{partage}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="partage_prov" value="#GET{partage_prov}" type="text"/><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{partage_prov}<br></td>]
+	</tr>
+	<tr>
+	<td><strong><:partagedonne:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="partagedonne" value="#GET{partagedonne}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="partagedonne" value="#GET{partagedonne}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{partagedonne}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="partagedonne_prov" value="#GET{partagedonne_prov}" type="text"/><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{partagedonne_prov}<br></td>]
+	</tr>
+	<tr>
+	<td><strong><:benevole:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="benevole" value="#GET{benevole}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="benevole" value="#GET{benevole}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{benevole}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="benevole_prov" value="#GET{benevole_prov}" type="text"><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{benevole_prov}<br></td>]
+	</tr>
+	<tr>
+	<td><strong><:statut_interne:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="statut_interne" value="#GET{statut_interne}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="statut_interne" value="#GET{statut_interne}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{statut_interne}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="statut_interne_prov" value="#GET{statut_interne_prov}" type="text"/><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{statut_interne_prov}<br></td>]
+	</tr>
+	<tr>
+	<td><strong><:montant:></strong></td><td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<input name="montant" value="#GET{montant}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<input name="montant" value="#GET{montant}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{montant}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="montant_prov" value="#GET{montant_prov}" type="text"/><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{montant_prov}<br></td>]
+	</tr>
+	<tr>
+	<td><strong><:date_paiement:></strong></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><input name="date_paiement" value="#GET{date_paiement}" type="text"/><br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><input name="date_paiement" value="#GET{date_paiement}" type="text"/><br></td>]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td>#GET{date_paiement}<br></td>]
+	[(#ENV{type}|=={'doublons'}|?{' ',''})[(#ENV{id_auteur_prov}|?{' ',''})<td><input name="date_paiement_prov" value="#GET{date_paiement_prov}" type="text"/><br></td>]]
+	[(#ENV{type}|!=={'doublons'}|?{' ',''})<td>#GET{date_paiement_prov}<br></td>]
+	</tr>
+	<tr>
+	<td><a href="#ENV{url_retour}#membres_provisoires"><:retour:></a></td>
+	[(#ENV{type}|=={'provisoire'}|?{' ',''})<td><:actualiser_fiche_original:><br/><input class="fondl" name="actualiser" value="OK" type="submit"/><br>
+	</td>
+	<td><:enregistrer_definitivement_fiche_prov:><br/><input class="fondl" name="enregistrer" value="OK" type="submit"/></td>
+	<input type="hidden" name="type" value="provisoire" />
+	]
+	[(#ENV{type}|=={'partage'}|?{' ',''})<td><:recepteur_unique:><br/><input class="fondl" name="recepteur" value="OK" type="submit"/><br></td>
+	<td><:pas_trouve_traiter_normal:><br/><input class="fondl" name="adapter" value="OK" type="submit"/></td>
+	<input type="hidden" name="type" value="partage" />
+	<input type="hidden" name="partagedonne_prov" value="#GET{partagedonne_prov}" />]
+
+	[(#ENV{type}|=={'doublons'}|?{' ',''})<td><:garder_ce_contact:><br/><input class="fondl" name="garder_original" value="OK" type="submit"/><br></td>
+	[(#ENV{id_auteur_prov}|?{' ',''})<td><:garder_ce_contact:><br/><input class="fondl" name="garder_provisoire" value="OK" type="submit"/></td>]
+	<input type="hidden" name="type" value="partage" />
+	<input type="hidden" name="partagedonne_prov" value="#GET{partagedonne_prov}" />]	</tr>
+	</tbody>
+	</table>
+
+</form>	
+
+

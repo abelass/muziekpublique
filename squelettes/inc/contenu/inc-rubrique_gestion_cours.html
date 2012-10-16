@@ -1,0 +1,52 @@
+#CACHE{24*3600}
+<:archive:> - <:periode_cours:> :
+<BOUCLE_prochains_cours_derniere_semaine(EVENEMENTS){id_evenement_source=0}{!par date}{id_rubrique IN 1,27,40}{0,1}>#SET{annee,(#DATE_DEBUT|annee)}
+<BOUCLE_cours_precedents(EVENEMENTS){id_evenement_source=0}{id_rubrique IN 1,27,40}{mois_relatif_debut>0}{doublons}{0,1}{!par date}>
+<a href="[(#SELF|parametre_url{periode,passe}|parametre_url{mois,[(#DATE_DEBUT|mois)]}|parametre_url{annee,[(#DATE_DEBUT|annee)]})]"> [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|annee)]</a> | 
+<BOUCLE_recursive(BOUCLE_cours_precedents)>
+</BOUCLE_recursive>
+</BOUCLE_cours_precedents>
+
+#SET{mois,(#DATE_DEBUT|mois)}
+<h3><:periode_cours:> : [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|annee)]</h3>
+
+<B_prochains_cours>
+   [<p class="pagination">(#PAGINATION)</p>]
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td colspan="6"><strong><:action:></strong></td>
+		<td><strong><:id_evenement:></strong></td>
+		<td><strong><:jour:></strong></td>
+		<td><strong><:nom:></strong></td>
+		<td><strong><:asso:activite_libelle_nombre_inscrit:></strong></td>
+		</tr>
+	</thead>
+	<tbody>	
+
+<BOUCLE_prochains_cours(EVENEMENTS){id_evenement_source=0}{agendafull date_debut,date_fin, mois, #GET{annee}, #GET{mois}}{id_rubrique IN 1,27,40}{pagination 30}{par date}>
+		<tr>
+<td class="cell"><a href="ecrire/?exec=articles&amp;id_article=#ID_ARTICLE" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/edit-12.gif}" title="<:asso:activite_bouton_modifier_article:>"/></a>
+</td>
+<td class="cell"><a href="ecrire/?exec=edit_activite&amp;id_evenement=#ID_EVENEMENT&amp;prix_membres=#PRIX_MEMBRES&amp;type=cours" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/creer-12.gif}" title="<:asso:activite_bouton_ajouter_inscription:>"/></a></td>
+<td class="cell"><a href="ecrire/?exec=voir_activites&amp;id=#ID_EVENEMENT" onclick="window.open(this.href); return false;"><img src="#CHEMIN{images/voir-12.png}" title="<:asso:activite_bouton_voir_liste_inscriptions:>"/></a>
+</td>
+<td class="cell"><a href="ecrire/?exec=pdf_activite&amp;id=#ID_EVENEMENT" title="<:imprimer_liste_inscriptions:>"><img src="#CHEMIN{images/print-24.png}" alt="<:imprimer_liste_inscriptions:>"/></a></td>
+<td class="cell"><a href="#URL_ACTION_AUTEUR{export,#ID_EVENEMENT,#SELF}" title="Liste Participants pour professeur"><img src="#CHEMIN{images/liste.png}" alt="Liste Participants pour professeur"/></a></td>
+<td class="cell"><a href="[(#GET{url_cours}|parametre_url{envoi,email}|parametre_url{id_evenement,#ID_EVENEMENT})]" title="<:email_inscrits:>"><img src="#CHEMIN{images/mail-12.png}" alt="<:email_inscrits:>"/></a></td>
+		<td class="cell">#ID_EVENEMENT</td>
+		<td class="cell">[(#DATE_DEBUT|nom_jour)]</td>
+		<td class="cell">#TITRE</td>
+		<td class="cell">
+<BOUCLE_activites_prochains_cours(spip_asso_activites){id_evenement}>
+</BOUCLE_activites_prochains_cours>
+		#COMPTEUR_BOUCLE
+</B_activites_prochains_cours>
+		</td>
+		</tr>
+</BOUCLE_prochains_cours>
+	</tbody>
+	</table>
+   [<p class="pagination">(#PAGINATION)</p>]
+</B_prochains_cours>
+</BOUCLE_prochains_cours_derniere_semaine>

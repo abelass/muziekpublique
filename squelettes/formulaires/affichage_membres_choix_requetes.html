@@ -1,0 +1,27 @@
+#CACHE{0}
+<a name="choix_requete"></a>
+<form method="get" action="">
+	<B_choix_requete>
+	<label for="menupays"><:selection_donnees:></label>
+	<select id="menupays" class="forml"
+        onchange="gopays()">
+	<option value="[(#SELF|parametre_url{id_requete,''}|parametre_url{valider,rien})]" >Nothing</option>
+	<BOUCLE_choix_requete(spip_requetes){par nom_requete} {type==membres}>
+	[<option value="[(#URL_RUBRIQUE|parametre_url{id_requete,#ID_REQUETE}|parametre_url{valider,ok}|parametre_url{requete,''}|parametre_url{modify,''})]#choix_requete" [ (#ENV{id_requete}|=={#ID_REQUETE}|oui)selected="selected")]>(#NOM_REQUETE|unique)</option>]
+	</BOUCLE_choix_requete>	
+	</select>
+	</B_choix_requete>
+</form>
+<B_requete>
+<form method="get" action="#SELF#choix_requete">
+	<BOUCLE_requete(spip_requetes){id_requete}{type=membres}>
+	#AFFICHAGE
+	#SELECTION
+	<input type="hidden" name="id_requete" value="#ID_REQUETE"/>
+	<input type="hidden" name="nom_requete" value="#NOM_REQUETE"/>
+	<input type="submit" name="delete" class="spip_bouton" value="<:delete:>"/>
+	</BOUCLE_requete>
+	[(#ENV{valider}|oui)
+		[(#ENV{requete}|!={'OK'}|?{' ',''})<input type="submit" name="requete" class="spip_bouton" value="<:valider:>"/>]]
+</form>
+</B_requete>

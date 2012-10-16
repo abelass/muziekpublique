@@ -1,0 +1,15 @@
+#CACHE{24*3600}
+
+<select id="menupays" class="forml" onchange="gopays()">
+	<BOUCLE_titre(MOTS){id_groupe IN 2,3,4,5,6,7}{id_mot=#ENV{id_mot}}>[<option selected="selected" value="">(#TITRE|unique)</option>]</BOUCLE_titre><option selected="selected" value=""><:origine:></option><//B_titre>
+<BOUCLE_rub(RUBRIQUES){id_mot=#ENV{id_mot_rub}}{tout}>#SET{url,#URL_RUBRIQUE}
+[(#REM) Menu selection pour les pays et regions tout dans un seul menu]
+	<BOUCLE_art_pays(ARTICLES){id_rubrique}{origine_traduction}>
+		<BOUCLE_ev_pays(EVENEMENTS){id_article}{id_evenement_source=0} {id_article}>
+			<BOUCLE_mots_art_pays(MOTS){id_groupe IN 2,3,4,5,6,7}{id_article}{par titre}{id_mot!=#ENV{id_mot}}>
+				[<option value="[(#SELF|parametre_url{id_mot,#ID_MOT}|parametre_url{lang,#ENV{lang}})]">(#TITRE|unique)</option>]
+			</BOUCLE_mots_art_pays>
+		</BOUCLE_ev_pays>
+	</BOUCLE_art_pays>
+</BOUCLE_rub>
+</select>

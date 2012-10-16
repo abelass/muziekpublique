@@ -1,0 +1,31 @@
+#CACHE{24*3600}
+
+[(#ENV{inscription}|=={'benevole'}|?{' ',''})#FORMULAIRE_INSCRIPTION2{forum,benevole}]
+
+[(#SESSION{id_auteur}|?{'',' '})<INCLURE{fond=inc/contenu/inc-login_public}{session}>]
+
+[(#ENV{inscription}|!=={'benevole'}|?{' ',''})
+			[(#SESSION{id_auteur}|?{'',' '})
+		<div>			
+			<form action="[(#SELF|parametre_url{lang,#ENV{lang}})]" method="post">
+			<legend>
+				<:pas_membre_inscrire:>
+			</legend>
+			<div>
+			<input name="url" type="hidden" value="[(#SELF|parametre_url{lang,#ENV{lang}})]" />
+			<input name="inscription" type="hidden" value="benevole" />	
+			<input type="submit" name="bouton" class="spip_bouton" value="<:inscrire:>" />
+			</div>
+			</form>
+		</div>
+]
+
+]
+
+[(#SESSION{id_auteur}|?{' ',''})
+	[(#ENV{inscription}|=={'concert'}|?{' ',''})<INCLURE{fond=formulaires/inscription_benevolat}{session}{id_evenement}{id_auteur}>]
+]
+
+[(#ENV{inscription}|=={'benevole'}|?{' ',''})#FORMULAIRE_INSCRIPTION2{forum,benevole}]
+
+

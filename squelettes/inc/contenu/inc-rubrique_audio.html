@@ -1,0 +1,44 @@
+#CACHE{0}
+	#SET{id_rubrique,#ARRAY{}}
+	<B_rub_annees>
+	<div class="archive">
+	<BOUCLE_rub_annees(RUBRIQUES){id_trad}{tout}>
+	#SET{id_rubrique,#GET{id_rubrique}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_RUBRIQUE}}}
+		<BOUCLE_article_annes1(EVENEMENTS){id_rubrique}{!par date_debut}>
+		<B_doc_test>
+		[(#ENV{annee}|!=={[(#DATE_DEBUT|annee)]}|?{[<span>  -  <a class="ajax" href="[(#SELF|parametre_url{periode,passe}parametre_url{annee,[(#DATE_DEBUT|annee)]})]">(#DATE_DEBUT|annee|unique)</a></span>],[<span class="archive on">   -  (#DATE_DEBUT|annee|unique)</span>]})]
+		<BOUCLE_doc_test(DOCUMENTS){documents_liens.id_objet=#ID_ARTICLE}{documents_liens.objet=article}{tout} {extension=mp3}{par num titre, titre,date}>
+		</BOUCLE_doc_test>
+			<B_lesevenements_edit1>
+			#SET{annee,(#DATE_DEBUT|annee|unique)}
+			<BOUCLE_lesevenements_edit1(EVENEMENTS){id_rubrique}{annee=#ENV{annee}} {par date}{tout}{doublons}{age>0}></BOUCLE_lesevenements_edit1>
+		</BOUCLE_article_annes1>
+		
+	</BOUCLE_rub_annees>
+
+	</div>
+		</B_rub_annees>
+	<BOUCLE_art(EVENEMENTS){id_rubrique IN #GET{id_rubrique}} {annee=#ENV{annee}} >
+		#SET{id_article,#ARRAY}
+		<BOUCLE_art_trads(ARTICLES){id_trad=#ID_ARTICLE}>
+			#SET_MERGE{id_article,#GET{id_article},#ARRAY{#COMPTEUR_BOUCLE,#ID_ARTICLE}}
+		</BOUCLE_art_trads>
+		<BOUCLE_art_trads_2(ARTICLES){id_article=#ID_ARTICLE}>
+			#SET_MERGE{id_article,#GET{id_article},#ARRAY{#COMPTEUR_BOUCLE,#ID_ARTICLE}}
+		</BOUCLE_art_trads_2>		
+		<//B_art_trads>			
+	<B_docs>
+	<div class="Item">
+	<div class="Chapeau">
+		<div class="ItemContent">
+			<h2><a href="[(#URL_ARTICLE)]">#TITRE</a></h2>
+		<BOUCLE_docs(DOCUMENTS){documents_liens.id_objet IN #GET{id_article}} {extension=mp3}{doublons}{par num titre, titre,date}>
+			[<div>(#MODELE{doc_player}{align=left}{width=200})</div>]
+		</BOUCLE_docs>
+		</div>
+	</div>
+	<br class="nettoyeur"/>
+</div>	
+	</B_docs>	
+</BOUCLE_art>
+

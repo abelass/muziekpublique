@@ -1,0 +1,27 @@
+<BOUCLE_date(EVENEMENTS){id_evenement}>
+  <span class="Date">
+    [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})][(#HORAIRE|!={non}|oui), 
+    [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})]
+    ]
+  </span>
+  <span class="Lieu">
+    <BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}{0,1}>
+      #TITRE, [(#DESCRIPTIF*|extraire_multi)]
+    </BOUCLE_lieu>
+  </span>
+</BOUCLE_date>
+<BOUCLE_date_alter(EVENEMENTS){id_article}{0,1}>
+  <span class="Date">
+    [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})][(#HORAIRE|!={non}|oui), 
+    [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})]
+    ] 
+  </span>
+  <span class="Lieu"><BOUCLE_lieu_alter(MOTS){id_evenement}{id_groupe=11}{0,1}>
+      #TITRE, [(#DESCRIPTIF*|extraire_multi)]
+    </BOUCLE_lieu_alter></span>
+</BOUCLE_date_alter>
+       <span class="Date">
+         [(#DATE|nom_jour)] [(#DATE|affdate{'d'})] [(#DATE|nom_mois)] [(#DATE|affdate{'Y'})]
+       </span>         
+    <//B_date_alter>           
+<//B_date>

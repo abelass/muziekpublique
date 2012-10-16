@@ -1,0 +1,230 @@
+#CACHE{3600*24}
+<BOUCLE_principale(RUBRIQUES) {id_rubrique}{tout}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title>[(#TITRE|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+<meta name="description" content="[(#INTRODUCTION|?{[(#INTRODUCTION{300}|textebrut)],[(#DESCRIPTIF_SITE_SPIP|textebrut)]})]" />
+<INCLURE{fond=inc/inc-head}/>
+[(#REM) Lien vers le flux RSS des articles la rubrique ]
+<link rel="alternate" type="application/rss+xml" title="<:syndiquer_rubrique:>" href="[(#URL_PAGE{backend}|parametre_url{id_rubrique,#ID_RUBRIQUE})]" />
+<BOUCLE_rub_head(MOTS) {id_rubrique}{id_mot IN 193} {tout}>
+<INCLURE{fond=scripts/masquer}> #SET{onload,onload="GereControle('chkb_1', 'texte_1', '1');"}
+</BOUCLE_rub_head>
+</head>
+
+<body #GET{onload}>
+
+	<!-- HEADER : Debut -->
+
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc/inc-entete}{id_rubrique}{lang}>
+	
+	<!-- HEADER : Fin -->
+
+      <div class="Contenu">
+
+<!-- LOGOS : Debut -->
+
+<INCLURE{fond=inc/inc-logos}/>
+            
+<!-- LOGOS : Fin -->
+
+	[(#REM) Contenu principal : contenu de la rubrique ]
+
+<!-- PODIUM : Debut -->
+
+	<div class="Podium">
+
+		[(#REM)SOUS menus des article pour la section production]
+
+		#SET{id_parent,#ARRAY{0,15,1,33,2,46}}
+
+
+            	<h1 class="#EDIT{titre}">#TITRE</h1>
+            	
+            	[(#REM) Menus Groupes]
+
+		[(#ID_PARENT|in_array{#GET{id_parent}}|?{' ',''})
+		
+		<div class="plat production_rubrique"><INCLURE{fond=inc/inc-rubriques_articles_liens_article}{id_rubrique}{titre}{id_mot=#ENV{id_mot}}/>
+		</div>]
+		            
+        	[(#REM)Différents menus de sélection]
+        	
+			[(#REM) menus de selection pour rubrique cours ]
+			[(#ID_TRAD|=={40}|oui)
+				<INCLURE{fond=inc/contenu/inc-cours_selection_menu}{env}{id_rubrique}/>
+				]
+							
+			[(#REM) menus de selection pour rubrique concerts ]
+			[(#ID_TRAD|=={39}|oui) 
+				<INCLURE{fond=inc/contenu/inc-agenda_selection_menu}{env}/>
+				]
+			[(#REM) menus de selection pour rubrique médias]
+			[(#ID_TRAD|=={35}|oui)
+				<INCLURE{fond=inc/contenu/inc-menu_selection_auteurs_photos}{id_rubrique} {id_mot=#ENV{id_mot}}>
+				]
+				
+				
+			[(#ID_TRAD|!={39}|oui)	
+				[(#ID_PARENT|in_array{#GET{id_parent}}|non)
+					[(#LOGO_RUBRIQUE|!={''}|?{
+							[(#LOGO_RUBRIQUE_NORMAL|image_reduire{280,160})],
+							[(#INCLURE{fond=inc/contenu/inc-logo_rub}{id_rubrique}{width=280}{height=160}{id_trad})]
+							})]
+					]
+				]
+        		[<div class="#EDIT{texte} chapo item">(#TEXTE)</div>]
+
+
+[(#REM)Selection des différent contenus spécifiques]
+
+[(#REM)Affichage home]
+[(#ID_TRAD|=={21}|oui)#SET{debut,4}#SET{news,20}#SET{list,6}
+	<INCLURE{fond=inc/contenu/inc-home}{env}/>
+]
+
+
+[(#REM)Rubrique Agenda]
+[(#ID_TRAD|=={39}|oui)#SET{news,20}#SET{list,6}
+	<INCLURE{fond=inc/contenu/inc-rubrique_concerts}{id_mot_rub=191}{env} {ajax}/>
+
+	[(#ENV{voir}|=={tout}|oui)<INCLURE{fond=inc/contenu/inc-rubrique_evenements_futurs}{env}{class=agenda}{rubrique=agenda}{voir=tout}{id_mot_rub=#ENV{id_mot_rub}}/>]
+	]
+
+[(#ID_TRAD|=={87}|oui) <INCLURE{fond=inc/contenu/inc-rubrique_evenements_passes}{id_mot_rub=191}{class=concerts}{env} {ajax}/> ]
+
+[(#REM)Rubrique Cours]
+[(#ID_TRAD|=={40}|oui)#SET{news,20}#SET{list,6}
+	[(#REM) Préparation de la liste des évenement trié au hasard]
+	#SET{id_evenement_source,#INCLURE{fond=inc/contenu/inc-cours_melangeur_ev}{env}}
+	
+	[(#REM) Affichage de la liste avec pagination]
+	#SET{id_evenement_source,#GET{id_evenement_source}|unserialize}
+	<INCLURE{fond=inc/contenu/inc-rubrique_cours}{env}{ajax}{id_evenement_source=#GET{id_evenement_source}}/>
+	]
+
+[(#REM)Rubrique Evenements - desactive
+	[(#ID_TRAD|=={189}|?{' ',''})
+	[(#ENV{periode}|!=={passe}|?{' '})<INCLURE{fond=inc/contenu/inc-rubrique_evenements_futurs}{session}{editer=#ENV{editer}}{ajout_evenement=#ENV{ajout_evenement}}{inscription=#ENV{inscription}}{afficher=#ENV{afficher}}{membres=#ENV{membres}}{id_evenement}{id_mot_rub=#ID_MOT}{id_mot=#ENV{id_mot}}{class=events} {passe=non}{events=oui}{id_article=#ENV{id_article}}/>]
+	]
+]
+
+[(#REM)Rubrique Liens]
+[(#ID_TRAD|=={28}|?{' ',''})<INCLURE{fond=inc/contenu/inc-rubrique_liens}{id_rubrique}{id_mot_rub=192}{id_mot=#ENV{id_mot}}/>]
+
+[(#REM)Rubrique Nouvelles -desactivé
+
+[(#ID_TRAD|=={'194'}|?{' ',''})<INCLURE{fond=inc/contenu/inc-rubrique_articles_rubrique}{id_rubrique}/>]
+	]
+	
+[(#REM)Rubrique Presse -desactive
+	[(#ID_TRAD|=={'195'}|?{' ',''})
+	[(#ENV{id_mot}|=={''}|?{' ',''})<INCLURE{fond=inc/contenu/inc-rubrique_presse}{id_rubrique}/>]
+	[(#ENV{id_mot}|!=={''}|?{' ',''})<INCLURE{fond=inc/contenu/inc-rubrique_presse_selection}{id_rubrique}{id_mot=#ENV{id_mot}}/>]
+	]
+]
+
+[(#REM)Rubrique Production]
+[(#ID_TRAD|=={46}|oui)#SET{news,20}#SET{list,6}
+	<INCLURE{fond=inc/contenu/inc-rubrique_production}{id_rubrique}{id_groupe=23} {id_mot=#ENV{id_mot}}/>
+]
+
+[(#REM)Rubrique CD]
+[(#ID_TRAD|=={'125'}|oui)
+	<INCLURE{fond=inc/contenu/inc-rubrique_articles_rubrique_cd}{id_rubrique}/>]
+
+
+[(#REM)Rubrique Médias]
+[(#ID_TRAD|=={35}|oui)
+	[(#ENV{sel}|non)<INCLURE{fond=inc/contenu/inc-rubrique_medias}{id_rubrique}{id_article=#ENV{id_article}}{sel=#ENV{sel}}{id_mot=#ENV{id_mot}}{annee=#ENV{annee}}{id_groupe=#ENV{id_groupe}}/>]
+	[(#ENV{sel}|oui)<INCLURE{fond=inc/contenu/inc-rubrique_medias_select}{id_rubrique}{id_art=#ENV{id_art}}{sel=#ENV{sel}}{id_mot=#ENV{id_mot}}/>]
+	]
+
+[(#REM)Rubrique Bénévoles -désactivé
+	[(#ID_TRAD|=={'262'}|oui)
+	<INCLURE{fond=inc/contenu/inc-rubrique_benevoles}{id_rubrique}{id_article}{session}{inscription=#ENV{inscription}}{id_evenement=#ENV{id_evenement}}{id_auteur=#ENV{id_auteur}}/>
+	]
+
+]
+[(#REM) desactivé
+[(#REM)Rubrique Membres]
+[(#ID_TRAD|=={42}|oui)
+	<INCLURE{fond=inc/contenu/inc-rubrique_membres}{env}{session}/>
+	]
+]
+[(#REM)Rubrique Gestion]
+[(#ID_TRAD|=={61}|oui)#SET{sidebar,non}<INCLURE{fond=inc/contenu/inc-rubrique_gestion}{env}/>]
+
+[(#REM)Rubrique Gestion_membres]
+[(#ID_TRAD|=={67}|oui)#SET{sidebar,non} <INCLURE{fond=inc/contenu/inc-rubrique_gestion_membres}{env}/>]
+
+[(#REM)Rubrique Gestion concerts]
+
+[(#ID_TRAD|=={68}|oui)#SET{sidebar,non}
+	[(#ENV{periode}|!=={'passe'}|oui)
+		[(#ENV{envoi}|!=={'email'}|oui)<INCLURE{fond=inc/contenu/inc-rubrique_gestion_concerts}{id_rubrique}/>]
+		]
+	[(#ENV{envoi}|=={'email'}|oui)<INCLURE{fond=formulaires/envoi_email_activites}{id_evenement=#ENV{id_evenement}}{url_retour=#ENV{url_retour}}/>]
+	[(#ENV{periode}|=={'passe'}|oui)
+		[(#ENV{envoi}|!=={'email'}|oui)
+			<INCLURE{fond=inc/contenu/inc-rubrique_gestion_concerts_passees}{annee=#ENV{annee}}{mois=#ENV{mois}}/>]
+			]
+		]
+
+[(#REM)Rubrique Gestion cours]
+
+[(#ID_TRAD|=={69}|oui)#SET{sidebar,non}
+	[(#ENV{periode}|!=={'passe'}|oui)
+		[(#ENV{envoi}|!=={'email'}|?{' ',''})
+		<INCLURE{fond=inc/contenu/inc-rubrique_gestion_cours}/>]
+		]
+	[(#ENV{envoi}|=={'email'}|oui)
+		<INCLURE{fond=formulaires/envoi_email_activites}{id_evenement=#ENV{id_evenement}}{url_retour=#ENV{url_retour}}/>
+		]
+	
+	[(#ENV{periode}|=={'passe'}|oui)
+		[(#ENV{envoi}|!=={'email'}|oui)
+			<INCLURE{fond=inc/contenu/inc-rubrique_gestion_cours_passes}{annee=#ENV{annee}}{mois=#ENV{mois}}{date_periode=#ENV{date_periode}}>
+			]
+		]
+	]
+
+
+        [(#REM) Documents joints a la rubrique ]
+        <B_documents_joints>
+        <div class="menu" id="documents_joints">
+            <h2><:titre_documents_joints:></h2>
+            <ul>
+                <BOUCLE_documents_joints(DOCUMENTS) {id_rubrique} {mode=document} {par num titre, date} {doublons}>
+                <li>
+                    <strong><a href="#URL_DOCUMENT" title="<:bouton_telecharger:>" type="#MIME_TYPE">[(#TITRE|sinon{<:info_document:>})]</a></strong>
+                    <small>(#TYPE_DOCUMENT[ &ndash; (#TAILLE|taille_en_octets)])</small>
+                    #DESCRIPTIF
+                </li>
+                </BOUCLE_documents_joints>
+            </ul>
+        </div>
+        </B_documents_joints>
+        [<div class="notes"><h2><:info_notes:></h2>(#NOTES)</div>]
+
+            </div>
+            
+<!-- PODIUM : Fin -->
+[(#GET{sidebar}|non)
+	<!-- LIST : Debut -->
+	<INCLURE{fond=inc/contenu/inc-list}{env}{debut=#GET{debut}}{id_rubrique=#ID_SECTEUR}{limit=#GET{list}}/>            
+			
+	<!-- LIST : Fin -->
+	<!-- NEWS : Debut -->
+
+	<INCLURE{fond=inc/contenu/inc-news}{env}{debut=#ENV{debut}}{limit=#GET{news}}{ajax}/>        
+	]
+<!-- NEWS : Fin -->
+	[(#REM) Pied de page ]
+	<INCLURE{fond=inc/inc-pied}>
+	</div>
+</body>
+</html>
+</BOUCLE_principale>

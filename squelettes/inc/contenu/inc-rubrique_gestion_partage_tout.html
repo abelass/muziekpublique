@@ -1,0 +1,50 @@
+#CACHE{0}
+<B_partage>
+<a name="membres_partage"></a>
+<h3><:inscriptions_partage:></h3>
+<BOUCLE_partage(AUTEURS_ELARGIS auteurs){id_auteur}{partage=attente}>
+	<form action="spip.php?page=gestion" method="post">
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td><strong><:comparer:></strong></td>
+		<td><strong><:id_asso:></strong></td>
+		<td><strong><:id_auteur:></strong></td>
+		<td><strong><:prenom:></strong></td>
+		<td><strong><:nom_famille:></strong></td>
+		<td><strong><:adresse:></strong></td>
+		<td><strong><:code_postal:></strong></td>	
+		<td><strong><:ville:></strong></td>
+		<td><strong><:partagedonne:></strong></td>
+		</tr>
+	</thead>
+	<tbody>	
+		<tr>
+		<td class="cell"><input name="id_auteur_prov" value="#ID_AUTEUR" type="hidden"/></td>
+		<td class="cell">#ID_ASSO</td>
+		<td class="cell">#ID_AUTEUR</td>
+		<td class="cell">#PRENOM</td>
+		<td class="cell">#NOM_FAMILLE</td>
+		<td class="cell">#ADRESSE</td>
+		<td class="cell">#CODE_POSTAL</td>
+		<td class="cell">#VILLE</td>
+		<td class="cell">#PARTAGEDONNE</td>
+		</tr>
+<tr bgcolor="#E1E5E2"><td colspan="9" style="text-align:center;"><strong><:entrees_semblables:></strong></td></tr>
+<INCLURE{fond=inc/contenu/inc-rubrique_gestion_partage}{nom}{partagedonne}{adresse}{{code_postal}{email}>
+<tr>
+<td class="cell" colspan="8" ><a href="[(#SELF|parametre_url{type,partage}||parametre_url{id_auteur_prov,#ID_AUTEUR}|parametre_url{sel_nom,ok}|parametre_url{sel_prenom,ok}|parametre_url{sel_nom_famille,ok}|parametre_url{sel_email,ok}|parametre_url{sel_code_postal,ok}|parametre_url{sel_ville,ok}|parametre_url{affichage,30})]"><:recherche_manuel:></a>
+</td>
+</tr>
+<tr>
+<td class="cell" colspan="8" >
+<input  type="hidden" name="url_retour"  value="#ENV{url_retour}"/>
+<input  type="hidden" name="type"  value="partage"/>
+<input  type="submit" name="comparer"  value="ok"/>
+</td>
+
+</tr>
+	</tbody>
+	</table>
+	</form>
+</BOUCLE_partage>

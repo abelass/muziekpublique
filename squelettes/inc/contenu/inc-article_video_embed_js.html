@@ -1,0 +1,31 @@
+#CACHE{0}
+<BOUCLE_art(ARTICLES){id_article}>
+	<BOUCLE_documents_joints(DOCUMENTS) {id_article} {par num titre, titre,date}{extension IN flv,swf} {tout}>
+#SET{hauteur,#ENV{hauteur,#HAUTEUR}} #SET{largeur,#ENV{largeur,#LARGEUR}}
+[(#REM)Si la taille est zero, mettre une valeur par defaut 320x240]
+[(#GET{hauteur}|plus{#GET{largeur}}|?{'',
+[(#SET{largeur,320})][(#SET{hauteur,240})]})]	
+[(#ENV{autostart}|oui)#SET{autostart,&autoplay=1}]
+document.write('<object width="#GET{largeur}" height="#GET{hauteur}">\n');
+document.write('<param name="movie" value="#URL_DOCUMENT#GET{autostart}" />\n');
+document.write('<param name="src" value="#URL_DOCUMENT#GET{autostart}" />\n');
+document.write('<embed src="#URL_DOCUMENT#GET{autostart}"  width="#GET{largeur}" height="#GET{hauteur}"></embed></object>\n');
+	</BOUCLE_documents_joints>
+	</B_documents_joints>
+				<BOUCLE_art_trad_origine2(ARTICLES){traduction}>
+					<BOUCLE_documents_joints_trad_origine2(DOCUMENTS) {doublons}{id_article}{id_mot ?}{extension IN flv,swf}{tout}>
+#SET{hauteur,#ENV{hauteur,#HAUTEUR}} #SET{largeur,#ENV{largeur,#LARGEUR}}
+[(#REM)Si la taille est zero, mettre une valeur par defaut 320x240]
+[(#GET{hauteur}|plus{#GET{largeur}}|?{'',
+[(#SET{largeur,320})][(#SET{hauteur,240})]})]	
+[(#ENV{autostart}|oui)#SET{autostart,&autoplay=1}]
+document.write('<object width="#GET{largeur}" height="#GET{hauteur}">\n');
+document.write('<param name="movie" value="#URL_DOCUMENT#GET{autostart}" />\n');
+document.write('<param name="src" value="#URL_DOCUMENT#GET{autostart}" />\n');
+document.write('<embed src="#URL_DOCUMENT#GET{autostart}"  width="#GET{largeur}" height="#GET{hauteur}"></embed></object>\n');	
+					</BOUCLE_documents_joints_trad_origine2>
+				</B_documents_joints_trad_origine2>
+			</BOUCLE_art_trad_origine2>
+	<//B_documents_joints>
+</BOUCLE_art>
+

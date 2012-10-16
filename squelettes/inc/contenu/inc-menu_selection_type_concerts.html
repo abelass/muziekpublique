@@ -1,0 +1,25 @@
+#CACHE{24*3600*365}
+<BOUCLE_rub_filtre(RUBRIQUES){id_mot=265}{doublons filtre1}{doublons filtre2}> </BOUCLE_rub_filtre>
+
+<div>
+	<:legende:> :
+		<span class="legende_mp">
+			<a href="[(#SELF|parametre_url{id_mot_rub,191})]">Muziekpublique</a>
+		</span>
+		<span class="legende_cours">
+			<BOUCLE_leg_cours(RUBRIQUES){id_mot=199}{lang=#ENV{lang}}{tout}>
+		<a href="[(#SELF|parametre_url{id_mot_rub,199})]">#TITRE</a>
+			</BOUCLE_leg_cours>
+		</span>
+		
+		<B_leg_ev>
+		<span class="legende_ev">
+			<BOUCLE_leg_ev(RUBRIQUES){id_mot=189}{lang=#ENV{lang}}{tout}{doublons filtre1}>
+				<a href="[(#SELF|parametre_url{id_mot_rub,189})]">#TITRE</a>
+		</BOUCLE_leg_ev>
+		</span>
+		</B_leg_ev>
+		<BOUCLE_leg_prod(MOTS){id_groupe=23}>
+			<span class="legende_prod_#ID_MOT"><a href="[(#SELF|parametre_url{id_mot_rub,#ID_MOT})]">#TITRE</a></span>
+		</BOUCLE_leg_prod>
+</div>

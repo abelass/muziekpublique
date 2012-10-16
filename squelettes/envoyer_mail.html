@@ -1,0 +1,184 @@
+#CACHE{0}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="#LANG_DIR" lang="#LANG">
+<head>
+	<title>[(#NOM_SITE_SPIP|textebrut)]</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	[<meta name="description" content="(#DESCRIPTIF_SITE_SPIP|couper{150}|attribut_html)" />]
+	<meta name="generator" content="SPIP" />
+	[<link rel="shortcut icon" href="(#CHEMIN{favicon.ico})" />]
+
+	<!-- Lien vers le backend pour navigateurs eclaires -->
+	<link rel="alternate" type="application/rss+xml" title="<:syndiquer_site:>" href="#URL_PAGE{backend}" />
+
+	<!-- Feuille de styles CSS pour l'affichage du site sur ecran -->
+	<link rel="stylesheet" href="[(#CHEMIN{styles/habillage.css}|direction_css)]" type="text/css" media="projection, screen, tv" />
+	<!-- Ceci est la feuille de style par defaut pour le code genere par SPIP -->
+	<link rel="stylesheet" href="[(#CHEMIN{spip_style.css}|direction_css)]" type="text/css" media="projection, screen, tv" />
+	<!-- Feuille de styles CSS pour l'impression -->
+	<link rel="stylesheet" href="[(#CHEMIN{impression.css}|direction_css)]" type="text/css" media="print" />
+<INCLURE{fond=scripts/masquer}>
+
+</head>
+
+<body id="page_sommaire" onload="GereControle('chkb_1', 'texte_1', '1');">
+
+<div id="page">
+
+
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc/inc-entete}{lang}>
+
+	[(#REM) Fil d'Ariane ]
+	<div id="hierarchie"><:accueil_site:></div>
+
+	<div id="conteneur">
+
+		[(#REM) Contenu principal : derniers articles publies ]
+
+		<div id="contenu">
+
+			<h1 class="invisible">#NOM_SITE_SPIP</h1>
+
+<?php
+
+	include_spip('inc/envoyer_mail');
+	include_spip('inc/mail');
+	include_spip ('inc/charsets');
+
+	
+		$url_etat_relances = $_POST['url_form'];
+		$url_retour= "[(#ENV{url_retour}|replace{&amp;,&}|replace{&envoi=email,''})]";
+
+		
+		//On r�cup�re les donn�es globales
+		$etat=$_REQUEST['etat'];
+		$sujet=$_POST['sujet'];
+		$message=$_POST['message'] ;
+		$statut=$_POST['statut'];
+		$email_tab=(isset($_POST["email"])) ? $_POST["email"]:array();
+		$statut_tab=(isset($_POST["statut"])) ? $_POST["statut"]:array();
+		$id_tab=(isset($_POST["id"])) ? $_POST["id"]:array();
+		$count=count ($email_tab);
+		
+		// CONFIRMATION
+		if ($etat=="confirm") {
+
+
+			if ($count==1)
+			{ echo ' relance';}
+			else
+			{ echo ' relances';}
+			echo '</strong></p>';
+			echo '<p>'.$sujet.'</p>';
+			echo '<fieldset>';
+			echo nl2br($message);
+			echo '</fieldset>';
+			
+			echo '<form method="post" etat="'.$url_etat_relances.'">';
+			for ( $i=0 ; $i < $count ; $i++ ) {
+				echo '<input name="id[]" type="hidden" value="'.$id_tab[$i].'">';
+				echo '<input name="email[]" type="hidden" value="'.$email_tab[$i].'">';
+			}
+			echo '<input name="sujet" type="hidden" value="'.$sujet.'">';
+			echo '<input name="message" type="hidden" value="'.$message.'">';
+			echo '<input name="etat" type="hidden" value="send">';
+			echo '<input name="url_retour" type="hidden" value="'.$url_retour.'">';
+			echo '<div style="float:right;"><input name="submit" type="submit" value="'._T('asso:bouton_envoyer').'" class="fondo" /></div>';
+			echo '</form>';	
+
+			exit;
+		}
+		
+		//ENVOI
+		if ($etat=="send") {
+			//On pr�pare le mail et on envoi! On peut modifier le $headers �� sa guise
+			$nomasso=lire_config('association/nom');
+			$adresse=lire_config('association/email');
+			$from=lire_config('association/email');
+			$expediteur=$nomasso.'<'.$adresse.'>'; 
+			$expediteur=$nomasso.'<'.$adresse.'>';      					//exp�diteur Association
+			$entetes .= "X-Mailer: PHP/" . phpversion();         			// mailer
+			$entetes .= "X-Sender: < ".$adresse.">\n";
+			//$entetes .= "X-Priority: 1\n";                					// Message urgent ! 
+			//$entetes .= "X-MSMail-Priority: High\n";        				// d�finition de la priorit�
+			$entetes .= "Return-Path: <".$adresse.">\n"; 									// En cas d' erreurs 
+			//$entetes .= "Errors-To: < ".$adresse.">\n";    									// En cas d' erreurs 
+			//$entetes .= "cc:  \n"; 													// envoi en copie �
+			//$entetes .= "bcc: \n";          												// envoi en copie cach�e �
+			
+			//On envoit le mail aux destinataires s�lectionn�s et on change le statut de relance
+			
+			for ( $i=0 ; $i < $count ; $i++ ) {
+				$email = $email_tab[$i];
+
+				if ( isset ( $id ) ) {
+					    envoyer_mail($email, $sujet, $message, $from);
+				}
+			}
+
+			$url   = $GLOBALS['meta']["adresse_site"];
+			header ('location:'.$url_retour);
+			exit;
+		}
+
+	$statut = 'ok';
+	if ( isset( $_POST['id_activite'] ) ) {
+		$id_activite_tab=(isset($_POST["id_activite"])) ? $_POST["id_activite"]:array(); 
+		$count=count ($id_activite_tab);
+		
+		for ( $i=0 ; $i < $count ; $i++ ) {
+			$id = $id_activite_tab[$i];
+			spip_query("UPDATE spip_asso_activites SET statut="._q($statut)."  WHERE id_activite=".$id) ;
+		}
+	}
+
+	
+
+	
+?>
+
+
+		</div><!-- fin contenu -->
+
+
+
+	</div><!-- fin conteneur -->
+
+		[(#REM) Menu de navigation laterale ]
+		<div id="navigation">
+			<h1 class="invisible"><:navigation:></h1>
+
+			[(#REM) Menu de navigation par rubriques ]
+			<INCLURE{fond=inc/inc-rubriques}{lang}>
+			
+
+		<div style="width:100%;background-color:red;color:#ffffff;font-weight:bold;text-align:center;margin:10px 0px 10px 0px">
+
+		</div>
+
+    </div><!--#navigation-->			
+    <div id="extra">
+<INCLURE{fond=inc/extra/inc-lien_newsletter}>
+<INCLURE{fond=inc/extra/inc-lien_radio}>
+[(#REM)Pour le moment inactif<INCLURE{fond=inc/extra/inc-liens_rel}{id_article}{id_mot=239}>
+
+[(#REM) Liens contextuel selon mots clés ]
+<INCLURE{fond=inc/extra/inc-art_ev_rel_mots} {id_article}>
+
+[(#REM) Les derniers concerts ]
+<INCLURE{fond=inc/extra/inc-derniers_evenements} {id_rubrique}>]
+
+    </div><!--#extra-->
+
+
+	[(#REM) Pied de page ]
+	
+	<div style="text-align:center">
+	<INCLURE{fond=inc/inc-pied}{lang}>
+	</div>
+	
+	
+</div>
+</body>
+</html>

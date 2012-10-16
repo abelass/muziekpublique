@@ -1,0 +1,35 @@
+#SET{date,#DATE}
+#SET{id_rub,#ARRAY{}}
+
+[(#REM) Convertir le d du dimanche en 0]
+#SET{val_jour,#ENV{jour}}
+[(#ENV{jour}|=={d}|oui)#SET{val_jour,0}]
+
+<BOUCLE_rub(RUBRIQUES){id_trad=40}>
+	#SET{id_rub,#GET{id_rub}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_RUBRIQUE}}}
+</BOUCLE_rub>
+
+
+#SET{id_evenement_source,#ARRAY}
+
+[(#REM)Trie pour affichage par jour de semaine]
+<BOUCLE_art(EVENEMENTS){id_rubrique IN #GET{id_rub}}{date_fin>=#GET{date}}{par hasard}>
+	[(#ENV{jour}|?{
+		[(#GET{val_jour}|=={[(#DATE_DEBUT|affdate{w})]}|oui)
+			[(#ID_EVENEMENT_SOURCE|!={0}|?{
+				[(#ID_ARTICLE|unique|oui)
+					#SET{id_evenement_source,#GET{id_evenement_source}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_EVENEMENT_SOURCE}}}
+					]
+				,
+				[(#ID_ARTICLE|unique|oui)
+					#SET{id_evenement_source,#GET{id_evenement_source}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_EVENEMENT}}}
+					]
+				})
+				]
+			]
+			,
+			[(#ID_ARTICLE|unique|oui)#SET{id_evenement_source,#GET{id_evenement_source}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_EVENEMENT}}}]
+		})]
+</BOUCLE_art>
+
+[(#GET{id_evenement_source}|serialize)]

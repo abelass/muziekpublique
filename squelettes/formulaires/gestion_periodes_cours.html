@@ -1,0 +1,112 @@
+
+
+<!-- @annotation: Actuellement pas utilisé car pas terminé.
+L'idée c'est de faire un module qui permet de actualiser les inscriptions au cours contentant le mot clés individuel : 229:
+Action serait on actualise la date début du evenement id_source=0 avec les dates corrpesondant à la semaine du début des cours et ceux qui ne sont pas choisit seront tagué avec le mot clés Cours fermé (287) -->
+
+#CACHE{0}
+<h2><:gestion_periode_cours_individuel:></h2>
+
+<BOUCLE_rubrique(RUBRIQUES){id_mot}{tout}>
+#SET{id_rub#COMPTEUR_BOUCLE,#ID_RUBRIQUE} 
+</BOUCLE_rubrique>
+
+#SET{id_rubrique,(#GET{id_rub1})|(#GET{id_rub2})|(#GET{id_rub3})}
+[(#GET{id_rubrique}|=={''}|?{#SET{id_rubrique,'0'}})]
+
+<BOUCLE_montant(spip_asso_activites){statut=ok_prov}>
+<BOUCLE_evenements_montants(EVENEMENTS){id_evenement=#ID_EVENEMENT}{id_rubrique==#GET{id_rubrique}}{id_mot=229}>
+#SET{montant,(#MONTANT|plus{#GET{montant}})}
+</BOUCLE_evenements_montants>
+</BOUCLE_montant>
+
+</B_montant>
+<div class="solde">
+<div>
+<form method="post" action="#SELF">
+<legend>
+	<:semaine_debut_prochaine_periode:>
+</legend><br/>
+<input type="hidden" name="etat" value="" />
+<input class="fondl" name="semaine" value="#ENV{semaine,00-00-0000}" type="text"/>
+<input name="url_retour" value="#ENV{url_retour}" type="hidden">
+<input class="fondl" name="gestion_periode" value="OK" type="submit"/>
+</form>
+</div>
+<BOUCLE_prochains_cours_derniere_semaine(EVENEMENTS){id_evenement_source=0}{!par date}{id_rubrique IN 1,27,40}{0,1}>
+	<BOUCLE_cours_precedents(EVENEMENTS){id_evenement_source=0}{id_rubrique IN 1,27,40}{mois_relatif_debut=0}{0,1}{!par date}>
+	<:periode_actuelle:>: [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|annee)] #SET{date_derniere,(#DATE_DEBUT|affdate)} [(#DATE_DEBUT|affdate)]
+	</BOUCLE_cours_precedents>
+</BOUCLE_prochains_cours_derniere_semaine>
+- #GET{date_derniere}
+[(#ENV{semaine|affdate})]<br/>
+[(#ENV{semaine}|moins{#GET{date_derniere}})]
+
+<div><:montant_comptabilise:> : #GET{montant}</div>
+
+#SET{difference,(#ENV{solde}|moins{#GET{montant}})}
+
+<div [(#GET{difference}|=={'0'}|?{'style="font-weight:bold;"',style="color:red;"})]><:montant_difference:> : #GET{difference}</div>
+</div>
+
+[(#GET{montant}|?{' ',''})[(#GET{difference}|=={'0'}|?{' ',''})
+<form method="post" action="#SELF">
+<legend>
+	<:valider:>
+</legend>
+<input type="hidden" name="etat" value="enregistrer" />
+<input type="hidden" name="solde" value="#ENV{solde}" />
+<input name="url_retour" value="#ENV{url_retour,#SELF}" type="hidden">
+<input class="fondl" name="gestion_paiements" value="OK" type="submit"/>
+</form>
+ ]]
+
+<B_evenements>
+
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td width="10%"><strong><:valider:></strong></td>
+		<td width="8%"><strong><:id_evenement:></strong></td>
+		<td width="10%"><strong><:titre:></strong></td>
+		<td width="10%"><strong><:date_dernier_cours:></strong></td>
+		</tr>
+	</thead>
+		<tbody>
+
+<BOUCLE_evenements(EVENEMENTS){id_evenement_source=0}{id_rubrique==#GET{id_rubrique}}{id_mot=229}{id_mot!=287}>
+
+<tr [(#STATUT|=={ok_prov}|?{style="background:grey;"})]>
+<td colspan="4">
+<form method="post" action="#SELF">
+	<table border=0 cellpadding=2 cellspacing=0   >
+	<tr>
+	<td  width="10%" class="cell" align="center">
+	<input type="hidden" name="etat" value="intermediaire" />
+	<input type="hidden" name="semaine" value="#ENV{semaine}" />
+	<input class="fondl" name="gestion_paiements" value="+" type="submit"/>
+	<input class="fondl" name="gestion_paiements" value="-" type="submit"/>	
+	</td>
+	<td width="8%" class="cell"><input  type="hidden" name="id_evenement"  value="#ID_ACTIVITE"/>#ID_EVENEMENT</td>
+	<td width="10%" class="cell">#TITRE</td>
+	<BOUCLE_dernier_cours_periode(EVENEMENTS){id_evenement_source=#ID_EVENEMENT}{!par date_debut}{0,1}>
+		#SET{validite,#DATE_DEBUT}
+	</BOUCLE_dernier_cours_periode>
+	<td width="12%" class="cell">[(#VALIDITE|!=={'0000-00-00'}|?{#VALIDITE,#GET{validite}})]</td>
+
+	</tr>
+
+	</table>
+</form>
+</td>
+</tbody>	
+</tr>
+</BOUCLE_evenements>
+
+
+		
+</table>
+
+</B_evenementss>
+
+

@@ -1,0 +1,63 @@
+#CACHE{0}
+
+<BOUCLE_rubrique(RUBRIQUES){id_mot}{tout}>
+#SET{id_rub#COMPTEUR_BOUCLE,#ID_RUBRIQUE}
+</BOUCLE_rubrique>
+
+#SET{id_rubrique,(#GET{id_rub1})|(#GET{id_rub2})|(#GET{id_rub3})}
+[(#GET{id_rubrique}|=={''}|?{#SET{id_rubrique,'0'}})]
+
+<BOUCLE_montant(spip_asso_activites){statut=ok_prov}>
+
+<BOUCLE_evenements_montants(EVENEMENTS){id_evenement=#ID_EVENEMENT}>
+#SET{montant,(#MONTANT|plus{#GET{montant}})}
+</BOUCLE_evenements_montants>
+</BOUCLE_montant>
+</B_montant>
+<B_activites>
+<form method="post" action="spip.php?page=action_paiement">
+	<table border=0 cellpadding=2 cellspacing=0 width='100%' class='arial2' style='border: 1px solid #aaaaaa;'>
+	<thead>
+		<tr bgcolor="#DBE1C5">
+		<td width="10%"><strong><:id_activite:></strong></td>
+		<td width="10%"><strong><:titre:></strong></td>
+		<td width="10%"><strong><:nom:></strong></td>
+		<td width="10%"><strong><:montant:></strong></td>
+		<td width="10%"><strong><:asso:activite_libelle_statut:></strong></td>
+		<td width="15%"><strong><:date_paiement:></strong></td>
+		<td width="15%"><strong><:source_paiement:></strong></td>
+		</tr>
+	</thead>
+		<tbody>
+<BOUCLE_activites(spip_asso_activites){statut=ok_prov}>
+<BOUCLE_evenements(EVENEMENTS){id_evenement=#ID_EVENEMENT}{id_rubrique==#GET{id_rubrique}}>
+<tr [(#STATUT|=={ok_prov}|?{style="background:grey;"})]>
+<td colspan="8">
+
+	<table border=0 cellpadding=2 cellspacing=0   >
+	<tr>
+	<td width="10%" class="cell"><input  type="hidden" value="#ID_ACTIVITE" name="id_activite[]"  />#ID_ACTIVITE</td>
+	<td width="10%" class="cell">#TITRE</td>
+	<td width="10%" class="cell">#NOM</td>
+	<td width="10%" class="cell">#MONTANT</td>
+	<td width="10%" class="cell" style="margin-left:2px;">[(#STATUT|sinon{rien})]</td>
+	<td width="15%" class="cell">#DATE_PAIEMENT</td>
+	<td width="15%" class="cell">#SOURCE_PAIEMENT</td>
+	</tr>
+	</table>
+
+</td>
+</tbody>	
+</tr>
+</BOUCLE_evenements>
+</BOUCLE_activites>
+
+		
+</table>
+<input name="url_retour" value="#ENV{url_retour,#SELF}" type="hidden">
+	<input type="hidden" name="etat" value="valider" />
+	<input class="fondl" name="gestion_paiements" value="<:valider:>" type="submit"/>
+</form>
+
+</B_activites>
+

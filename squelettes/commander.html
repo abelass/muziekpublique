@@ -1,0 +1,103 @@
+#CACHE{0}
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="#LANG" lang="#LANG" dir="#LANG_DIR">
+<head>
+<title>[(#TITRE|textebrut) - ][(#NOM_SITE_SPIP|textebrut)]</title>
+<meta name="description" content="[(#INTRODUCTION|?{[(#INTRODUCTION{300}|textebrut)],[(#DESCRIPTIF_SITE_SPIP|textebrut)]})]" />
+<INCLURE{fond=inc/inc-head}>
+[(#REM) Lien vers le flux RSS des articles la rubrique ]
+<link rel="alternate" type="application/rss+xml" title="<:syndiquer_rubrique:>" href="[(#URL_PAGE{backend}|parametre_url{id_rubrique,#ID_RUBRIQUE})]" />
+
+<INCLURE{fond=scripts/masquer}> 
+
+</head>
+
+<body onload="GereControle('chkb_1', 'texte_1', '1');">
+
+	<!-- HEADER : Debut -->
+
+	[(#REM) Entete de la page + titre du site ]
+	<INCLURE{fond=inc/inc-entete}{id_rubrique}>
+	
+	<!-- HEADER : Fin -->
+
+      <div class="Contenu">
+
+<!-- LOGOS : Debut -->
+
+<INCLURE{fond=inc/inc-logos}/>
+            
+<!-- LOGOS : Fin -->
+
+	[(#REM) Contenu principal : contenu de la rubrique ]
+
+<!-- PODIUM : Debut -->
+
+	<div class="Podium">
+			<h1><:commander:></h1>
+
+			<BOUCLE_evenement(EVENEMENTS){id_evenement}>
+			[(#REM) formulaire de login pour membres non connectés]
+			[(#ENV{login}|=={'oui'}|oui)<INCLURE{fond=inc/contenu/inc-login_public}{session}{id_evenement}>]
+
+			[(#REM) formulaire de login pour membres non connectés]
+
+				[(#REM) Inscription aux cours]
+					[(#ENV{type}|=={cours}|oui)
+
+						[(#REM) Ceux qui sont connectés, directement aux formulaires de cours]
+						[(#SESSION{id_auteur}|oui)
+						<h2>#TITRE</h2>
+						#FORMULAIRE_INSCRIPTION_COURS ]
+
+						[(#SESSION{id_auteur}|non)
+							[(#REM) Ceux qui ne sont pas encore inscrits]
+							[(#ENV{membre}|=={'non'}|oui)
+								#FORMULAIRE_INSCRIPTION2{'','',#ID_EVENEMENT}
+								]
+							[(#ENV{membre}|=={'oui'}|oui)
+								#LOGIN_PUBLIC{#SELF}
+								]									
+							]						
+						]
+					
+			[(#REM) inscriptions aux concerts]
+			[(#ENV{type}|=={concerts}|oui) #FORMULAIRE_INSCRIPTION_ACTIVITE]			
+			</BOUCLE_evenement>
+
+<BOUCLE_art(AUTEURS){id_auteur=#SESSION{id_auteur}} {tout}>
+#SET{id_auteur,#ID_AUTEUR}
+	<BOUCLE_aut_el(spip_auteurs_elargis){id_auteur}>
+[(#VALIDITE|>{#DATE}|?{#SET{membre,ok},#SET{membre,echu} })]
+	</BOUCLE_aut_el>
+</BOUCLE_art>
+
+			[(#REM) Gestion des inscription comme membre en dehors de reservation de cours]
+			[(#ENV{type}|=={'membres'}|oui)
+				[(#ENV{inscription}|=={'oui'}|oui)#FORMULAIRE_INSCRIPTION2{'','',#ENV{type}}	
+				]
+				[(#ENV{inscription}|=={provisoire}|oui)#FORMULAIRE_INSCRIPTION2{'','',provisoire}]
+				[(#ENV{inscription}|=={reabo}|oui)
+					[(#ENV{statut}|=={''}|oui)<INCLURE{fond=formulaires/formulaire_reabonnement}{id_auteur=#ENV{id_auteur}}{membre=#ENV{membre}}>]
+					[(#ENV{statut}|=={'paiement'}|?{' ',''})<INCLURE{fond=formulaires/paiement}{id_auteur=#ENV{id_auteur}}{membre=#ENV{membre}}{type=membres}>]
+					]
+				[(#ENV{login}|=={'oui'}|oui)<INCLURE{fond=inc/contenu/inc-login_public}{session}{id_evenement}>]								
+			]
+
+            </div>
+            
+<!-- PODIUM : Fin -->
+
+<!-- LIST : Debut -->
+<INCLURE{fond=inc/contenu/inc-list}{env}{debut=#GET{debut}}{id_rubrique=#ID_SECTEUR}/>            
+			
+<!-- LIST : Fin -->
+<!-- NEWS : Debut -->
+
+<INCLURE{fond=inc/contenu/inc-news}{env}{debut=#ENV{debut}}{ajax}/>        
+
+<!-- NEWS : Fin -->
+	[(#REM) Pied de page ]
+	<INCLURE{fond=inc/inc-pied}>
+	</div>
+</body>
+</html>
