@@ -75,5 +75,5 @@ include_spip('inc/cextras_autoriser');
 
 // restreindre le champ 'prix_non_membres','prix_membres'des articles, sur les rubriques festivals
 
-restreindre_extras('article', array('prix_non_membres','prix_membres','inscription_active'), array(168, 169, 170));
+if (function_exists('restreindre_extras'))restreindre_extras('article', array('prix_non_membres','prix_membres','inscription_active'), array(168, 169, 170));
 ?>
