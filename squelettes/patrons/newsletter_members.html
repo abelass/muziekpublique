@@ -1,0 +1,224 @@
+#CACHE{0}
+[(#REM)
+/**********************************************************
+* Ce squelette pour spip-listes    
+* Patron: patron_simple.html : gabarit pour r�diger un mail html dont le texte sera ajout� dans l'espace de redaction de spip-listes
+* Precautions:                             
+* - ne pas envoyer des gabarits de plus de 10Ko
+* - ne pas placer de balises html <html><body> ni de fermeture </body></html>
+* ils seront ajoutes automatiquement a l'envoi du mail 
+* - mettre les style  CSS directement dans les balises pour etre sur qu'ils seront interpretes (meme par les webmails)
+* - les urls et liens images seront automatiquement converties en absolues
+*  ex. rubrique5.html -> http://www.monsite.org/rubrique5.html
+*
+***********************************************************/
+]<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+
+<head>
+    <title>Open Forum for CSO Developement Effectiveness</title>
+    <LINK REL="SHORTCUT ICON" TYPE="image/ico" HREF="favicon.ico">
+    <link REL="ICON" TYPE="image/ico" HREF="favicon.ico">
+    
+<style type="text/css">
+
+
+body {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 1.2em;
+}
+
+.Podium .Item {
+    background-image: url("#URL_SITE_SPIP/squelettes/styles/img/bg_hr.gif");
+    background-position: center bottom;
+    background-repeat: repeat-x;
+    margin: 5px 0;
+    padding: 5px 0;
+}
+
+
+.Podium h1 {
+    background-image: url("#URL_SITE_SPIP/squelettes/styles/img/bg_hr.gif");
+    background-position: center bottom;
+    background-repeat: repeat-x;
+    color: #505155;
+    font-size: 170%;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+
+.Podium .Item .Date {
+    color: #A72600;
+    text-transform: lowercase;
+}
+.Podium .Item .Date, .Podium .Item .Auteur {
+    color: #A72600;
+    display: block;
+    font-size: 90%;
+    font-weight: bold;
+}
+
+.Podium .Item .Soustitre {
+    color: #505155;
+    font-size: 97%;
+    font-weight: bold;
+    line-height: 16px;
+}
+
+.Podium .Item h2 {
+    color: #505155;
+    font-size: 150%;
+    font-weight: bold;
+    margin: 0;
+}
+
+.Podium .Item .Chapeau {
+    display: block;
+    margin: 5px 0;
+    min-height:140px
+}
+
+
+
+.Podium .Item .ChapeauImg {
+    border: medium none;
+    float: left;
+    margin: 5px 10px 0 0;
+}
+
+.Podium .Item .More {
+    color: #521000;
+    display: block;
+    font-size: 1.1em;
+    letter-spacing: 0.05em;
+    padding: 5px;
+    text-align: right;
+    text-transform: uppercase;
+}
+
+.spip_logos, .ChapeauImg {
+    position: relative;
+}
+
+img {
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+}
+
+
+.Podium .Item .ChapeauTxt {
+    line-height: 16px;
+    margin: 0;
+    text-align: justify;
+}
+p, dt, dd {
+    color: #505155;
+    font-size: 1.2em;
+}
+
+ul { 
+list-style-position: inside;
+list-style-type: none;
+margin: 0px;
+padding: 0px;
+}
+
+ a{color: #521000;
+text-decoration: none;
+}
+
+
+
+
+</style>
+
+</head>
+<body>
+  <div class="body" style="background: #fff;color: #ccc;font-family:'Trebuchet MS', Tahoma, Arial, Verdana,sans-serif;font-size: 0.9em;text-align: left;">
+	<div class="conteneur Podium" style="width: 500px;background: #fff;color: #000;text-align: left;margin: 0 auto;padding: 15px;">
+		#SET{rub_concerts,#ARRAY{0,8,1,26,2,39}}
+#SET{date,#DATE}
+
+<BOUCLE_rub(RUBRIQUES){id_trad=278}{lang}{tout}>
+
+    <BOUCLE_art1(ARTICLES pb_selection){par ordre}{spip_pb_selection.id_rubrique=#ID_RUBRIQUE}>#SET{d,non}
+            #SET{donnees_logo,''}
+            #SET{logo_fini,''}  
+            #SET{donnees_logo,#INCLURE{fond=inc/contenu/inc-logo_art,id_article,width=210,height=140,class=ChapeauImg}}             
+            #SET{auteur,''}
+            #SET{auteur,#GET{donnees_logo}|table_valeur{auteur}}        
+            #SET{icone,''}
+            #SET{icone,#GET{donnees_logo}|table_valeur{icone}}          
+            #SET{url_photo,''}
+            #SET{url_photo,#GET{donnees_logo}|table_valeur{url_photo}}          
+            #SET{logo,''}
+            #SET{logo,#GET{donnees_logo}|table_valeur{logo}}    
+            
+            [(#SET{texte_lien,<:lire_article:>})]#ICONE
+            [(#GET{icone}|=={ecouter}|oui)[(#SET{texte_lien,<:ecouter_playliste:>})]]
+            [(#GET{icone}|=={play}|oui)[(#SET{texte_lien,<:voir_video:>})]]     
+        
+
+            [(#GET{icone}|oui)
+                [(#SET{icone,
+                <img src="[(#CHEMIN{styles/img/icone_[(#GET{icone})].png})]" class="icone"/>})]
+                ]                       
+                    
+            #SET{class,class=#ENV{class,ChapeauImg}}
+                    
+            [(#GET{logo}|oui)
+                [(#SET{logo_fini,
+                    <div #GET{class}>
+                    #GET{icone} 
+                    #GET{logo}
+                    </div>
+                })]
+            ]
+            [(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]     
+     [(#ID_RUBRIQUE|in_array{#GET{rub_concerts}}|oui)#SET{d,oui}]
+     <BOUCLE_test(CONDITION) {SI #TITRE|!={10 years}}>        
+    <div class="Item item_home">
+        <BOUCLE_date(EVENEMENTS){id_article}{0,1}>#SET{id_article,#ID_ARTICLE}#SET{id_evenement,#ID_EVENEMENT}
+        <span class="Date">[(#GET{d}|=={oui}|oui)
+            [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+            ]
+            <BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}{0,1}>
+            #TITRE
+            </BOUCLE_lieu></span>
+        </BOUCLE_date>
+        <BOUCLE_art(ARTICLES){traduction}{origine_traduction}>
+            
+            #SET{id_article,#ID_ARTICLE}
+            <BOUCLE_date_alter(EVENEMENTS){id_article}{0,1}>#SET{id_evenement,#ID_EVENEMENT}
+            <span class="Date">[(#GET{d}|=={oui}|oui)
+                [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+                ]
+                <BOUCLE_lieu_alter(MOTS){id_evenement}{id_groupe=11}{0,1}>
+                #TITRE
+                </BOUCLE_lieu_alter></span>
+            </BOUCLE_date_alter>
+        </BOUCLE_art>
+        <//B_date>
+            <h2><a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})]">#TITRE</a></h2>
+            [<span class="Soustitre">(#SURTITRE)</span>]
+            <div class="Chapeau">
+            <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+                <p class="ChapeauTxt">[(#INTRODUCTION)]</p>
+            </div>
+            <span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})]">#GET{texte_lien}</a></span>
+        </div>
+        </BOUCLE_test> 
+            [(#REM) Affichage différent pour les vidéos 10 ans] 
+            <INCLURE{fond=inc/contenu/inc-home_article_video}{id_trad=165}/>
+        <//B_test>          
+
+    </BOUCLE_art1>  
+
+</BOUCLE_rub>
+	</div>
+  </div>
+</body>
