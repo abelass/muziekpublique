@@ -9,8 +9,9 @@
 
 
 <BOUCLE_filtre(EVENEMENTS){id_rubrique IN 168,169,170}{doublons}{1,1000}{age<=0}{age_fin<=0}> </BOUCLE_filtre>
-
 <div class="News">
+    
+<BOUCLE_condition(CONDITION){si #ENV{newsletter}|!={oui}}>
 	[(#REM) Affiche les menu d'avancement]
 	<div class="Nav">
 	<BOUCLE_evs_p(EVENEMENTS){par date}{spip_articles.statut=publie}{id_rubrique IN #GET{id_rub}}{id_evenement_source=0}{par date}{age<=0}{age_fin<=0}{#GET{p},1}{id_article!=#ENV{id_article}}{doublons}>
@@ -21,12 +22,13 @@
 		<a class="ajax" href="[(#SELF|parametre_url{debut,#GET{n}})]"><:prochains:></a>	
 	</BOUCLE_evs_n>
 	</div>
-	
+#SET{id_rubrique,8,26,39}	
+</BOUCLE_condition>
 	[(#REM) On affiche les évenements]	
 
 
 
-	<BOUCLE_rub(RUBRIQUES){id_rubrique IN 8,26,39}{lang}>
+	<BOUCLE_rub(RUBRIQUES){id_rubrique IN #GET{id_rubrique}}{lang}>
 	<h1>#TITRE</h1>
 	[(#LOGO_RUBRIQUE|!={''}|?{[(#LOGO_RUBRIQUE|image_reduire{250}|inserer_attribut{alt,#TITRE})],[(#INCLURE{fond=inc/contenu/inc-logo_rub}{id_trad}{width=250}{alt=#TITRE})]})]
 	</BOUCLE_rub>
