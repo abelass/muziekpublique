@@ -52,26 +52,6 @@
                    </div>
                     <INCLURE{fond=inc/contenu/inc-news,id_rubrique,lang,newsletter=oui,limit=2000}/>
                  </div>
-                 <div class="icons">
-                     <div class="gauche">
-                          <a href="#URL_PAGE{radio}" onclick="window.open(this.href, 'radio', 'height=400, width=245, top=100, left=100, toolbar=no, menubar=no, location=no, resizable=yes, scrollbars=no, status=no'); return false;"><img src="#CHEMIN{styles/img/radiobutton.gif}"/>
-                          </a>
- 
-
-                        <BOUCLE_rub0(RUBRIQUES){id_trad=165}{lang}{tout}>
-                             <a href="#URL_RUBRIQUE"><img src="#CHEMIN{styles/img/iconetv.gif}"/></a>
-                        </BOUCLE_rub0>
-                                             
-                     </div>
-                     <div class="droite">
-                        <BOUCLE_rub2(RUBRIQUES){id_trad=165}{lang}{tout}>
-                             <a href="#URL_RUBRIQUE">[(#CHEMIN{styles/img/logo_10_ans.png}|image_reduire{70})]</a>
-                        </BOUCLE_rub2>
-
-                          <a href="http://www.facebook.com/pages/Muziekpublique/49064391174">[(#CHEMIN{styles/img/facebook.png}|image_reduire{70})]</a>  
-                     </div>                         
-                
-                 </div>
              </td>
              [(#REM)Affichage des articles sélectionnes]
              <td valign="top" width="475px">
@@ -80,6 +60,11 @@
                 </div>
              </td>
          </tr>
+         <tr>
+             <td colspan=2>
+                 <INCLURE{fond=patrons/inc-logos}/>
+             </td>
+         </tr>             
          [<tr>
              <td colspan=2>
                  <div class="footer">
