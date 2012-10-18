@@ -55,13 +55,13 @@
             </BOUCLE_date_alter>
         </BOUCLE_art>
         <//B_date>
-            <h2><a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})]">#TITRE</a></h2>
+            <h2><a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">#TITRE</a></h2>
             [<span class="Soustitre">(#SURTITRE)</span>]
             <div class="Chapeau">
-            <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+            <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
                 <p class="ChapeauTxt">[(#INTRODUCTION)]</p>
             </div>
-            <span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})]">#GET{texte_lien}</a></span>
+            <span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">#GET{texte_lien}</a></span>
         </div>
         </BOUCLE_test>
             [(#REM) Affichage différent pour les vidéos 10 ans] 

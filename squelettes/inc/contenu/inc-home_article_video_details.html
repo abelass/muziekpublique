@@ -25,7 +25,8 @@
                     </div>
                 })]
             ]
-            [(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]     
+            [(#ENV{var_google}|oui)#SET{var_google,?#ENV{var_google}}]
+            [(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE#GET{var_google}}})]     
 	
 	<BOUCLE_art1(ARTICLES){id_article}{lang}>
 	<div class="Item item_home">

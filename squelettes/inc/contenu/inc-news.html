@@ -1,7 +1,7 @@
 #CACHE{24*3600}
 
 #SET{id_rub,#ARRAY{0,8,1,26,2,39,3,168,4,169,5,170}
-	}
+	
 
 [(#REM) calcule les tranches prochaines ou antérieurs]
 #SET{p,#ENV{debut,0}|moins{#ENV{limit,6}}}
@@ -10,7 +10,7 @@
 
 <BOUCLE_filtre(EVENEMENTS){id_rubrique IN 168,169,170}{doublons}{1,1000}{age<=0}{age_fin<=0}> </BOUCLE_filtre>
 <div class="News">
-    
+
 <BOUCLE_condition(CONDITION){si #ENV{newsletter}|!={oui}}>
 	[(#REM) Affiche les menu d'avancement]
 	<div class="Nav">
@@ -48,7 +48,7 @@
 				
 			</div>
 			</BOUCLE_ev>
-			<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]">
+			<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})][&(#ENV{var_google})]">
 			<div class="ItemContent">
 				<h2>#TITRE</h2>
 				[<span class="Soustitre">(#SURTITRE)</span>]
@@ -73,7 +73,7 @@
 					</span>
 				</div>
 			</BOUCLE_ev_alter>
-				<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})]">
+				<a href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})][&(#ENV{var_google})]">
 					<div class="ItemContent">
 						<h2>#TITRE</h2>
 						[<span class="Soustitre">(#SURTITRE)</span>]
@@ -92,7 +92,7 @@
 						</span>
 					</div>
 				</BOUCLE_ev_alter_or>
-					<a href="[(#URL_ARTICLE|parametre_url{lang,#ENV{lang}}|parametre_url{id_evenement,#ID_EVENEMENT})]">
+					<a href="[(#URL_ARTICLE|parametre_url{lang,#ENV{lang}}|parametre_url{id_evenement,#ID_EVENEMENT})][&(#ENV{var_google})]">
 						<div class="ItemContent">
 							<h2>#TITRE [#LANG]</h2>
 							[<span class="Soustitre">(#SURTITRE)</span>]
@@ -106,14 +106,15 @@
 
 		
 	[(#REM) Affiche les menu d'avancement]
-		
-		<div class="Nav">
-	<BOUCLE_evs_p2(EVENEMENTS){spip_articles.statut=publie}{par date}{id_rubrique IN #GET{id_rub}}{id_evenement_source=0}{par date}{age<=0}{age_fin<=0}{#GET{p},1}{id_article!=#ENV{id_article}}>
-		<a class="ajax" href="[(#SELF|parametre_url{debut,#GET{p}})]"><:precedents:></a>
-	</BOUCLE_evs_p2> | 
-	</B_evs_p2>	
-	<BOUCLE_evs_n2(EVENEMENTS){spip_articles.statut=publie}{par date}{id_rubrique IN #GET{id_rub}}{id_evenement_source=0}{par date}{age<=0}{age_fin<=0}{#GET{n},1}{id_article!=#ENV{id_article}}>
-		<a class="ajax" href="[(#SELF|parametre_url{debut,#GET{n}})]"><:prochains:></a>	
-	</BOUCLE_evs_n2>
-	</div>                   
+    <BOUCLE_condition2(CONDITION){si #ENV{newsletter}|!={oui}}>	
+    		<div class="Nav">
+    	<BOUCLE_evs_p2(EVENEMENTS){spip_articles.statut=publie}{par date}{id_rubrique IN #GET{id_rub}}{id_evenement_source=0}{par date}{age<=0}{age_fin<=0}{#GET{p},1}{id_article!=#ENV{id_article}}>
+    		<a class="ajax" href="[(#SELF|parametre_url{debut,#GET{p}})]"><:precedents:></a>
+    	</BOUCLE_evs_p2> | 
+    	</B_evs_p2>	
+    	<BOUCLE_evs_n2(EVENEMENTS){spip_articles.statut=publie}{par date}{id_rubrique IN #GET{id_rub}}{id_evenement_source=0}{par date}{age<=0}{age_fin<=0}{#GET{n},1}{id_article!=#ENV{id_article}}>
+    		<a class="ajax" href="[(#SELF|parametre_url{debut,#GET{n}})]"><:prochains:></a>	
+    	</BOUCLE_evs_n2>
+    	</div> 
+    </BOUCLE_condition2>                   
 </div>
