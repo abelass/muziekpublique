@@ -31,7 +31,7 @@
 <body>
 #SET{rub_concerts,#ARRAY{0,8,1,26,2,39}}
 #SET{date,#DATE}
-#SET{var_google,utm_source=Muziekpublique&utm_medium=email&utm_campaign=Newsletter%2Bmember%2B#ENV{lang}%2B#GET{date}}
+#SET{var_google,utm_source=Muziekpublique&utm_medium=email&utm_campaign=Newsletter%2Bmember%2B#ENV{lang}%2B(#GET{date}|affdate{d-m-Y})}
 [(#REM)Les rubriques Newsletter membres]
 <BOUCLE_rub(RUBRIQUES){id_trad=278}{lang}{tout}>    
   <div class="body">

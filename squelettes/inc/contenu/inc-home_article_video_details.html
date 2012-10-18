@@ -25,21 +25,21 @@
                     </div>
                 })]
             ]
-            [(#ENV{var_google}|oui)#SET{var_google,?#ENV{var_google}}]
-            [(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE#GET{var_google}}})]     
+
+            [(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]     
 	
 	<BOUCLE_art1(ARTICLES){id_article}{lang}>
 	<div class="Item item_home">
 		<span class="Date">
 			<:video_du:> [(#DATE|affdate{'d/m/Y'})]
 		</span>
-		<h2><a href="[(#URL_ARTICLE})]">#TITRE</a></h2>
+		<h2><a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">#TITRE</a></h2>
 		[<span class="Soustitre">(#SURTITRE)</span>]
 			<div class="Chapeau">
-			<a href="[(#URL_ARTICLE})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+			<a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
 				<p class="ChapeauTxt">[(#ENV{texte_article}|?{#INTRODUCTION,<:video_10_explicatif:>})]</p>
 		</div>				
-		<span class="More"> >> <a href="[(#URL_ARTICLE)]"><:voir_video:></a></span>
+		<span class="More"> >> <a href="[(#URL_ARTICLE)][?(#ENV{var_google})]"><:voir_video:></a></span>
 	</div>
 	</BOUCLE_art1>
 		<BOUCLE_art2(ARTICLES){traduction}{lang}>
@@ -47,13 +47,13 @@
 				<span class="Date">
 					<:video_du:> [(#DATE|affdate{'d/m/Y'})]
 				</span>
-				<h2><a href="[(#URL_ARTICLE})]">#TITRE</a></h2>
+				<h2><a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">#TITRE</a></h2>
 				[<span class="Soustitre">(#SURTITRE)</span>]
 					<div class="Chapeau">
-					<a href="[(#URL_ARTICLE})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+					<a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
 						<p class="ChapeauTxt">[(#ENV{texte_article}|?{#INTRODUCTION,<:video_10_explicatif:>})]</p>
 				</div>				
-				<span class="More"> >> <a href="[(#URL_ARTICLE)]"><:voir_video:></a></span>
+				<span class="More"> >> <a href="[(#URL_ARTICLE)][?(#ENV{var_google})]"><:voir_video:></a></span>
 			</div>
 	</BOUCLE_art2>
 		<BOUCLE_art3(ARTICLES){traduction}{origine_traduction}>
@@ -61,13 +61,13 @@
 				<span class="Date">
 					<:video_du:> [(#DATE|affdate{'d/m/Y'})]
 				</span>
-				<h2><a href="[(#URL_ARTICLE})]">#TITRE</a></h2>
+				<h2><a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">#TITRE</a></h2>
 				[<span class="Soustitre">(#SURTITRE)</span>]
 					<div class="Chapeau">
-					<a href="[(#URL_ARTICLE})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
+					<a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
 						<p class="ChapeauTxt">[(#ENV{texte_article}|?{#INTRODUCTION,<:video_10_explicatif:>})]</p>
 				</div>				
-				<span class="More"> >> <a href="[(#URL_ARTICLE)]"><:voir_video:></a></span>
+				<span class="More"> >> <a href="[(#URL_ARTICLE)][?(#ENV{var_google})]"><:voir_video:></a></span>
 			</div>
 			</BOUCLE_art3>
 		<//B_art2>
