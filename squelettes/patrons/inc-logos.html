@@ -1,12 +1,12 @@
  <div style="text-align:center;padding:5px 0">
-		  <a href="#URL_PAGE{radio}[&(#ENV{var_google})]" onclick="window.open(this.href, 'radio', 'height=400, width=245, top=100, left=100, toolbar=no, menubar=no, location=no, resizable=yes, scrollbars=no, status=no'); return false;"><img src="#CHEMIN{styles/img/radiobutton.gif}" style="margin:0 10px;"/>
-		  </a>
+		  <span><a href="#URL_PAGE{radio}[&(#ENV{var_google})]" onclick="window.open(this.href, 'radio', 'height=400, width=245, top=100, left=100, toolbar=no, menubar=no, location=no, resizable=yes, scrollbars=no, status=no'); return false;"><img src="#CHEMIN{styles/img/radiobutton.gif}" style="margin:0 10px;"/>
+		  </a></span>
 	<BOUCLE_rub0(RUBRIQUES){id_trad=165}{lang}{tout}>
-			 <a href="#URL_RUBRIQUE[?(#ENV{var_google})]"><img src="#CHEMIN{styles/img/iconetv.gif}" style="margin:0 10px;"/></a>
+			<span><a href="#URL_RUBRIQUE[?(#ENV{var_google})]"><img src="#CHEMIN{styles/img/iconetv.gif}" style="margin:0 10px;"/></a></span>
 		</BOUCLE_rub0>
 		<BOUCLE_rub2(RUBRIQUES){id_trad=165}{lang}{tout}>
-			 <a href="#URL_RUBRIQUE[?(#ENV{var_google})]">[(#CHEMIN{styles/img/logo_10_ans.png}|image_reduire{70}|inserer_attribut{style,margin:0 10px})]</a>
+			 <span><a href="#URL_RUBRIQUE[?(#ENV{var_google})]">[(#CHEMIN{styles/img/logo_10_ans.png}|image_reduire{70}|inserer_attribut{style,margin:0 10px})]</a></span>
 		</BOUCLE_rub2>
-		  <a href="http://www.facebook.com/pages/Muziekpublique/49064391174">[(#CHEMIN{styles/img/facebook.png}|image_reduire{70}|inserer_attribut{style,margin:0 10px})]</a>  
+		  <span><a href="http://www.facebook.com/pages/Muziekpublique/49064391174">[(#CHEMIN{styles/img/facebook.png}|image_reduire{70}|inserer_attribut{style,margin:0 10px})]</a></span>  
  </div>
 
