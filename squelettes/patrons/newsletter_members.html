@@ -12,23 +12,8 @@
 *  ex. rubrique5.html -> http://www.monsite.org/rubrique5.html
 *
 ***********************************************************/
-]<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html>
-
-<head>
-    <title>Open Forum for CSO Developement Effectiveness</title>
-    <LINK REL="SHORTCUT ICON" TYPE="image/ico" HREF="favicon.ico">
-    <link REL="ICON" TYPE="image/ico" HREF="favicon.ico">
-    
-<style type="text/css">
-    [(#REM)Les styles communs]
-    <INCLURE{fond=patrons/inc-styles}/>
-
-</style>
-
-</head>
-<body>
+]
+<div style="font-family: Arial,Helvetica,sans-serif;font-size: 0.8em;width:760px;font-size:10px;">
 #SET{rub_concerts,#ARRAY{0,8,1,26,2,39}}
 #SET{date,#DATE}
 #SET{var_google,utm_source=Muziekpublique&utm_medium=email&utm_campaign=Newsletter%2Bmember%2B#ENV{lang}%2B(#GET{date}|affdate{d-m-Y})}
@@ -38,28 +23,26 @@
      <table width="650">
          <tr  class="Contenu">
              <td valign="top" width="140px">
-                 <div class="Logos">
-                   <div class="top">
+                 <div style="width:260px;">
+                   <div style="text-align:center;">
                       <a href="#URL_SITE_SPIP/?#GET{var_google}">#LOGO_SITE_SPIP</a>
-                       <div class="adresse">
+                       <div style="font-size:10px">
                            <p>
                                <b>Muziekpublique</b><br/>
                                 Galerie de la porte de Namur / Naamsepoortgalerij<br/>
                                 Square du Bastion 3 Bolwerksquare<br/>
                                 1050 Bruxelles/Brussel
                             </p>
-                            <p><a href="http://www.muziekpublique.be/?#GET{var_google}">www.muziekpublique.be</a></p>
+                            <p><a  style=" color: #521000;" href="http://www.muziekpublique.be/?#GET{var_google}">www.muziekpublique.be</a></p>
                        </div>
                    </div>
-                    <INCLURE{fond=inc/contenu/inc-news,id_rubrique,lang,newsletter=oui,limit=2000,var_google=#GET{var_google}}/>
+                    <INCLURE{fond=patrons/inc-news,id_rubrique,lang,newsletter=oui,limit=2000,var_google=#GET{var_google}}/>
                  </div>
 
              </td>
              [(#REM)Affichage des articles sélectionnes]
              <td valign="top" width="475px">
-                <div class="Podium">
-                    <INCLURE{fond=patrons/inc-list_articles_select,id_rubrique,lang,date=#GET{date},rub_concerts=#GET{rub_concerts},var_google=#GET{var_google}}/>
-                </div>
+                 <INCLURE{fond=patrons/inc-list_articles_select,id_rubrique,lang,date=#GET{date},rub_concerts=#GET{rub_concerts},var_google=#GET{var_google}}/>
              </td>
          </tr>
          <tr>
@@ -69,7 +52,7 @@
          </tr>        
          [<tr>
              <td colspan=2>
-                 <div class="footer">
+                 <div style="background:#5C2200;text-align:center;color:#FFFFFF; padding:5px">
                      (#DESCRIPTIF)
                  </div>
              </td>
@@ -78,4 +61,4 @@
 
 
 </BOUCLE_rub>  
-</body>
+</div>

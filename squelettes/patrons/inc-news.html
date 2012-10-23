@@ -1,0 +1,60 @@
+#CACHE{24*3600}
+
+#SET{id_rub,#ARRAY{0,8,1,26,2,39,3,168,4,169,5,170}
+	
+
+[(#REM) calcule les tranches prochaines ou antérieurs]
+#SET{p,#ENV{debut,0}|moins{#ENV{limit,6}}}
+#SET{n,#ENV{debut,0}|plus{#ENV{limit,6}}}	
+
+
+<div class="News">
+
+
+	<BOUCLE_evs(EVENEMENTS){spip_articles.statut=publie}{par date}{id_rubrique IN #GET{id_rub}}{id_evenement_source=0}{par date}{age<=0}{age_fin<=0}{#ENV{debut,0},#ENV{limit,6}}{exclus}{doublons}>
+	#SET{id_art_orig,#ID_ARTICLE}
+	[(#REM) Si l'article originale (celui de l'évenement) est dans la langue de l'environnement on le prend]
+		<BOUCLE_art_lang(ARTICLES){id_article}{lang}>
+		<div style="display: inline-block;margin: 3px 0;padding: 1px 0;position: relative;width:90%">
+			<BOUCLE_ev(EVENEMENTS){id_evenement}><span style="padding: 4px 3px 0;font-size: 85%;">[(#DATE_DEBUT|affdate{'d/m/Y'})]</span></BOUCLE_ev>
+			 <a style=" color: #521000;" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})][&(#ENV{var_google})]">
+			<span style="font-size: 12px;margin: 0 7px 9px;padding: 0;width: 191px;">
+				<h2 style="color: #5C2200;font-size: 100%;margin: 0;padding: 0;">#TITRE</h2>
+			</span>
+			</a>
+		</div>
+		</BOUCLE_art_lang>
+
+		[(#REM) Sinon on regarde si une traduction de l'article existe dans la langue du contexte]
+			<BOUCLE_art_alter(ARTICLES){id_trad=#ID_ARTICLE}{lang}>
+			
+				[(#REM) on détermine l'id évenement - celui de l'article d'origine]
+				<BOUCLE_art_ev(ARTICLES){id_trad=#ID_ARTICLE}{origine_traduction}>
+				#SET{id_art_or,#ID_ARTICLE}
+				</BOUCLE_art_ev>
+			<div class="Item">
+				<BOUCLE_ev_alter(EVENEMENTS){id_evenement}><span  style="padding: 4px 3px 0;font-size: 85%;">[(#DATE_DEBUT|affdate{'d/m/Y'})]</span></BOUCLE_ev_alter>
+				<a style=" color: #521000;" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT})][&(#ENV{var_google})]">
+					<span style="font-size: 12px;margin: 0 7px 9px;padding: 0;width: 191px;">
+						<h2 style="color: #5C2200;font-size: 100%;margin: 0;padding: 0;">#TITRE</h2>
+					</span>
+				</a>
+			</div>
+			</BOUCLE_art_alter>
+				[(#REM) Sinon on affiche l'article d'origine en mentionant la langue]
+				<BOUCLE_art_alter_or(ARTICLES){id_article=#GET{id_art_orig}}>
+				<div class="Item">
+					<BOUCLE_ev_alter_or(EVENEMENTS){id_evenement}><span  style="padding: 4px 3px 0; font-size: 85%;">[(#DATE_DEBUT|affdate{'d/m/Y'})]</span></BOUCLE_ev_alter_or>
+					<a style=" color: #521000;" href="[(#URL_ARTICLE|parametre_url{lang,#ENV{lang}}|parametre_url{id_evenement,#ID_EVENEMENT})][&(#ENV{var_google})]">
+						<span style="font-size: 12px;margin: 0 7px 9px;padding: 0;width: 191px;">
+							<h2 style="color: #5C2200;font-size: 100%;margin: 0;padding: 0;">#TITRE [#LANG]</h2>
+							[<span class="Soustitre">(#SURTITRE)</span>]
+						</span>
+					</a>
+				</div>
+			</BOUCLE_art_alter_or>
+			<//B_art_alter>
+		<//B_art_lang>
+	</BOUCLE_evs>
+                
+</div>
