@@ -24,19 +24,8 @@
          <tr>
              <td valign="top" width="140px">
                  <div style="width:260px;">
-                   <div style="text-align:center;">
-                      <a href="#URL_SITE_SPIP/?#GET{var_google}">#LOGO_SITE_SPIP</a>
-                       <div style="font-size:10px">
-                           <p>
-                               <b>Muziekpublique</b><br/>
-                                Galerie de la porte de Namur / Naamsepoortgalerij<br/>
-                                Square du Bastion 3 Bolwerksquare<br/>
-                                1050 Bruxelles/Brussel
-                            </p>
-                            <p><a  style=" color: #521000;" href="http://www.muziekpublique.be/?#GET{var_google}">www.muziekpublique.be</a></p>
-                       </div>
-                   </div>
-                    <INCLURE{fond=patrons/inc-news,id_rubrique,lang,newsletter=oui,limit=2000,var_google=#GET{var_google}}/>
+                   <INCLURE{fond=patrons/inc-coordonnees,var_google=#GET{var_google}}/>
+                   <INCLURE{fond=patrons/inc-news,id_rubrique,lang,newsletter=oui,limit=2000,var_google=#GET{var_google}}/>
                  </div>
 
              </td>

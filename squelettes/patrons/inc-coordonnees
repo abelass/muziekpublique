@@ -1,0 +1,12 @@
+  <div style="text-align:center;">
+      <a href="#URL_SITE_SPIP/?#ENB{var_google}">#LOGO_SITE_SPIP</a>
+      <div style="font-size:10px">
+         <p>
+            <b>Muziekpublique</b><br/>
+              Galerie de la porte de Namur / Naamsepoortgalerij<br/>
+               Square du Bastion 3 Bolwerksquare<br/>
+               1050 Bruxelles/Brussel
+        </p>
+        <p><a   style=" color: #521000;" href="http://www.muziekpublique.be/?#GET{var_google}">www.muziekpublique.be</a></p>
+      </div>
+  </div>                                  
