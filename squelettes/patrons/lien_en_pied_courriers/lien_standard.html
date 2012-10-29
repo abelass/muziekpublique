@@ -25,9 +25,10 @@ Construction du lien de gestion d'abonnement
 [(#SET{stop,
 	[(#ENV{lien_desabo}|?{[&stop=(#ENV{id_liste})],''})]
 	})]
-[<div style="font-family:sans-serif;font-size:75%;line-height:1.3em;padding:0.25em 1ex;background-color:transparent;
+[<div style="font-family:sans-serif;font-size:80%;line-height:1.3em;padding:0.25em 1ex;background-color:transparent;
 	color:#00cc00;margin:0;text-align:left;">
 	<p style='margin:0;'>
 	<a style="color:#A3A3A3" href="(#ENV{_url})?page=abonnement[(#GET{stop}|trim)]&d=#ENV{d}">[(#GET{texte_lien})]</a>.
 	</p>
 	</div>]
+
