@@ -39,7 +39,18 @@
 			<a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}|inserer_attribut{align,left})],#GET{logo_fini}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}})]</a>
 				<p style=" line-height: 16px;margin: 0;text-align: justify;">[(#ENV{texte_article}|?{#INTRODUCTION,<:video_10_explicatif:>})]</p>
 		</div>				
-		<span style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;"> >> <a  style="color: #521000;" href="[(#URL_ARTICLE)][?(#ENV{var_google})]"><:voir_video:></a></span>
+		<div style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;">
+           <div>
+               >> <a style="color: #521000;" href="[(#URL_ARTICLE)][?(#ENV{var_google})]"><:voir_video:></a>
+         </div>
+        [(#REM)Lien de téléchargement pour presse]
+        [(#ID_TRAD|>{0}|?{
+            #SET{id_article,#ID_TRAD}
+            ,
+            #SET{id_article,#ID_ARTICLE}
+            })]
+         [(#PRESSE|oui)<INCLURE{fond=patrons/inc-documents,id_article=#GET{id_article},env}/>]
+        </div>
 	</div>
 	</BOUCLE_art1>
 		<BOUCLE_art2(ARTICLES){traduction}{lang}>
@@ -53,7 +64,13 @@
 					<a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}|inserer_attribut{align,left})],#GET{logo_fini}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}})]</a>
 						<p style=" line-height: 16px;margin: 0;text-align: justify;">[(#ENV{texte_article}|?{#INTRODUCTION,<:video_10_explicatif:>})]</p>
 				</div>				
-				<span style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;"> >> <a  style="color: #521000;" href="[(#URL_ARTICLE)][?(#ENV{var_google})]"><:voir_video:></a></span>
+				<div style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;">
+                    <div>
+                        >> <a style="color: #521000;" href="[(#URL_ARTICLE)][?(#ENV{var_google})]"><:voir_video:></a>
+                    </div>
+                 [(#REM)Lien de téléchargement pour presse]
+                 [(#PRESSE|oui)<INCLURE{fond=patrons/inc-documents,id_article=#ID_TRAD,env}/>]
+                 </div>
 			</div>
 	</BOUCLE_art2>
 		<BOUCLE_art3(ARTICLES){traduction}{origine_traduction}>
@@ -67,7 +84,13 @@
 					<a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}|inserer_attribut{align,left})],#GET{logo_fini}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}})]</a>
 						<p style=" line-height: 16px;margin: 0;text-align: justify;">[(#ENV{texte_article}|?{#INTRODUCTION,<:video_10_explicatif:>})]</p>
 				</div>				
-				<span style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;"> >> <a style="color: #521000;" href="[(#URL_ARTICLE)][?(#ENV{var_google})]"><:voir_video:></a></span>
+				<div style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;">
+				    <div>
+				        >> <a style="color: #521000;" href="[(#URL_ARTICLE)][?(#ENV{var_google})]"><:voir_video:></a>
+				    </div>
+				 [(#REM)Lien de téléchargement pour presse]
+                 [(#PRESSE|oui)<INCLURE{fond=patrons/inc-documents,id_article,env}/>]
+				 </div>
 			</div>
 			</BOUCLE_art3>
 		<//B_art2>

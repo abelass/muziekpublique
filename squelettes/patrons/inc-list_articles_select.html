@@ -54,8 +54,13 @@
             <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}|inserer_attribut{align,left})],#GET{logo_fini}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}})]</a>
                 <p style=" line-height: 16px;margin: 0;text-align: justify; font-size:12px">[(#DESCRIPTIF)]</p>
             </div>
-            <div style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;"> >> <a style="color: #521000;" href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">#GET{texte_lien}</a></div>
-        </div>
+            <div style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;">
+                <div>
+                    >> <a style="color: #521000;" href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">#GET{texte_lien}</a>
+                 </div>
+                 [(#REM)Lien de téléchargement pour presse]
+                 [(#PRESSE|oui)<INCLURE{fond=patrons/inc-documents,id_article=#GET{id_article},env}/>]
+            </div>
         </BOUCLE_test>
             [(#REM) Affichage différent pour les vidéos 10 ans] 
             [(#GET{video}|=={oui}|?{#SET{texte_article,oui}#SET{id_article,#ID_ARTICLE},#SET{texte_article,''}})]
