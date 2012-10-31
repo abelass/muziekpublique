@@ -1,0 +1,16 @@
+<div style="background:#5C2200;text-align:center;color:#FFFFFF; padding:5px">
+    <div>#TITRE</div>
+    <div>#SOUSTITRE</div>
+    <div>
+        <:quand:> [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})]
+    </div>
+    <div>
+        <:ou:> #LIEU
+    </div>
+    [<div><:agenda_nl:> (#AGENDA**)</div>]  
+    <BOUCLE_org(MOTS){id_groupe=30}{id_evenement}>
+    <div>#TYPE #TITRE[, (#DESCRIPTIF**)]</div>
+    </BOUCLE_org>      
+    [<div>(#INTERVIEW_POSSIBLE|oui)<interview_possible:></div>]
+    [<div><:envoi_cd_possible:> (#CD_ENVOI_POSSIBLE**)</div>]
+</div>
