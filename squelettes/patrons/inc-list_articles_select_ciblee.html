@@ -1,0 +1,73 @@
+#CACHE{0}
+<div style="width:500px;margin-left:10px;">
+<BOUCLE_art1(ARTICLES pb_selection){par ordre}{spip_pb_selection.id_rubrique=#ID_RUBRIQUE}>#SET{d,non}
+            #SET{donnees_logo,''}
+            #SET{logo_fini,''}  
+            #SET{donnees_logo,#INCLURE{fond=inc/contenu/inc-logo_art,id_article,width=210,height=140,class=ChapeauImg}}              
+            #SET{icone,''}
+            #SET{icone,#GET{donnees_logo}|table_valeur{icone}}          
+            #SET{url_photo,''}
+            #SET{url_photo,#GET{donnees_logo}|table_valeur{url_photo}}          
+            #SET{logo,''}
+            #SET{logo,#GET{donnees_logo}|table_valeur{logo}}    
+            
+            [(#SET{texte_lien,<:lire_article:>})]
+
+            #SET{class,class=#ENV{class,ChapeauImg}}
+                    
+            [(#GET{logo}|oui)
+                [(#SET{logo_fini,
+                    <div>
+                    #GET{logo}
+                    </div>
+                })]
+            ]
+            [(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]     
+     [(#ID_RUBRIQUE|in_array{#ENV{rub_concerts}}|oui)#SET{d,oui}]
+     [(#ID_RUBRIQUE|in_array{#ARRAY{0,165,1,166,2,167}}|?{#SET{video,oui},#SET{video,''}})]
+     <BOUCLE_test(CONDITION) {si #TITRE|!={10 years}|et{#GET{video}|!={oui}}}>        
+    <div style="background-image: url('#URL_SITE_SPIP/squelettes/styles/img/bg_hr.gif');background-position: center bottom;background-repeat: repeat-x;margin: 5px 0;padding: 5px 0;">
+        <BOUCLE_date(EVENEMENTS){id_article}{0,1}>#SET{id_article,#ID_ARTICLE}#SET{id_evenement,#ID_EVENEMENT}#SET{date_debut,#DATE_DEBUT}#SET{agenda,#AGENDA}#SET{interview_possible,#INTERVIEW_POSSIBLE}#SET{envoi_cd_possible,#ENVOI_CD_POSSIBLE}
+        <span style="color: #A72600;text-transform: lowercase;">[(#GET{d}|=={oui}|oui)
+            [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+            ]
+            <BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}{0,1}>#SET{lieu,#TITRE&cedil; #DESCRIPTIF**}
+            </BOUCLE_lieu></span>
+        </BOUCLE_date>
+        <BOUCLE_art(ARTICLES){traduction}{origine_traduction}>
+            
+            #SET{id_article,#ID_ARTICLE}
+            <BOUCLE_date_alter(EVENEMENTS){id_article}{0,1}>#SET{id_evenement,#ID_EVENEMENT}#SET{date_debut,#DATE_DEBUT}#SET{agenda,#AGENDA}#SET{interview_possible,#INTERVIEW_POSSIBLE}#SET{envoi_cd_possible,#ENVOI_CD_POSSIBLE}
+            <span style="color: #A72600;text-transform: lowercase;">[(#GET{d}|=={oui}|oui)
+                [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+                ]
+                <BOUCLE_lieu_alter(MOTS){id_evenement}{id_groupe=11}{0,1}>#SET{lieu,#TITRE&cedil; #DESCRIPTIF**}
+                #TITRE
+                </BOUCLE_lieu_alter></span>
+            </BOUCLE_date_alter>
+        </BOUCLE_art>
+        <//B_date>
+            <h2 style="color: #505155;font-size: 150%;font-weight: bold;margin: 0;"><a style= "color: #521000;" href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">#TITRE</a></h2>#SET{titre_article,#TITRE}
+            [<div style="color: #505155;font-size: 97%;font-weight: bold;line-height: 16px;">(#SURTITRE)</div>]#SET{soustitre_article,#SOUSTITRE}
+            <div style="display: block;margin: 5px 0;min-height:140px">
+            <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}|inserer_attribut{align,left})],#GET{logo_fini}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}})]</a>
+                <p style=" line-height: 16px;margin: 0;text-align: justify; font-size:12px">[(#DESCRIPTIF)]</p>
+            </div>
+            <div style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;">
+                <div>
+                    >> <a style="color: #521000;" href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">#GET{texte_lien}</a>
+                 </div>
+                 [(#REM)Lien de téléchargement pour presse]
+                 [(#PRESSE|oui)<INCLURE{fond=patrons/inc-documents,id_evenement=#GET{id_evenement},env}/>]
+            </div>
+        [(#REM)cadre spécifique Presse]
+        [(#PRESSE|oui)<INCLURE{fond=patrons/inc-details_presse,id_evenement=#GET{id_evenement},titre=#GET{titre_article},sousitre=#GET{soustitre_article},date_debut=#GET{date_debut},lieu=#GET{lieu},agenda=#GET{agenda},interview_possible=#GET{interview_possible},envoi_cd_possible=#GET{envoi_cd_possible},env}/>] 
+  </div>  
+        </BOUCLE_test>
+            [(#REM) Affichage différent pour les vidéos 10 ans] 
+            [(#GET{video}|=={oui}|?{#SET{texte_article,oui}#SET{id_article,#ID_ARTICLE},#SET{texte_article,''}})]
+            <INCLURE{fond=patrons/inc-article_video,id_trad=165,newsletter=oui,texte_article=#GET{texte_article},id_article=#GET{id_article},env}/>
+        <//B_test>          
+
+    </BOUCLE_art1>  
+</div>

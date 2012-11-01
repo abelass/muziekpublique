@@ -1,0 +1,53 @@
+#CACHE{0}
+[(#REM)
+/**********************************************************
+* Ce squelette pour spip-listes    
+* Patron: patron_simple.html : gabarit pour rédiger un mail html dont le texte sera ajout� dans l'espace de redaction de spip-listes
+* Precautions:                             
+* - ne pas envoyer des gabarits de plus de 10Ko
+* - ne pas placer de balises html <html><body> ni de fermeture </body></html>
+* ils seront ajoutes automatiquement a l'envoi du mail 
+* - mettre les style  CSS directement dans les balises pour etre sur qu'ils seront interpretes (meme par les webmails)
+* - les urls et liens images seront automatiquement converties en absolues
+*  ex. rubrique5.html -> http://www.monsite.org/rubrique5.html
+*
+***********************************************************/
+]
+<div style="font-family: Arial,Helvetica,sans-serif;font-size: 0.8em;width:760px;font-size:10px;">
+#SET{rub_concerts,#ARRAY{0,8,1,26,2,39}}
+#SET{date,#DATE}
+#SET{var_google,utm_source=Muziekpublique&utm_medium=email&utm_campaign=Newsletter%2Bmember%2B#ENV{lang}%2B(#GET{date}|affdate{d-m-Y})}
+[(#REM)Les rubriques Newsletter membres]
+<BOUCLE_rub(RUBRIQUES){id_rubrique=281}{tout}>    
+  <div class="body">
+     <table width="650">
+         <tr>
+             <td valign="top" width="140px">
+                 <div style="width:260px;">
+                   <INCLURE{fond=patrons/inc-coordonnees,var_google=#GET{var_google}}/>
+                   <INCLURE{fond=patrons/inc-news,id_rubrique,lang,newsletter=oui,limit=2000,var_google=#GET{var_google}}/>
+                 </div>
+
+             </td>
+             [(#REM)Affichage des articles sélectionnes]
+             <td valign="top" width="475px">
+                 <INCLURE{fond=patrons/inc-list_articles_select,id_rubrique,lang,date=#GET{date},rub_concerts=#GET{rub_concerts},var_google=#GET{var_google}}/>
+             </td>
+         </tr>
+         <tr>
+             <td colspan=2>
+                 <INCLURE{fond=patrons/inc-logos,var_google=#GET{var_google}}/>
+             </td>
+         </tr>        
+         [<tr>
+             <td colspan=2>
+                 <div style="background:#5C2200;text-align:center;color:#FFFFFF; padding:5px">
+                     (#DESCRIPTIF)
+                 </div>
+             </td>
+         </tr>]
+     </table>
+
+
+</BOUCLE_rub>  
+</div>
