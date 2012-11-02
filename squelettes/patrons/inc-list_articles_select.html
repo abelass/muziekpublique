@@ -32,6 +32,7 @@
             [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
             ]
             <BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}{0,1}>#SET{lieu,#TITRE&cedil; #DESCRIPTIF**}
+            #TITRE
             </BOUCLE_lieu></div>
         </BOUCLE_date>
         <BOUCLE_art(ARTICLES){traduction}{origine_traduction}>
@@ -61,7 +62,7 @@
                  [(#PRESSE|oui)<INCLURE{fond=patrons/inc-documents,id_evenement=#GET{id_evenement},env}/>]
             </div>
         [(#REM)cadre spécifique Presse]
-        [(#PRESSE|oui)<INCLURE{fond=patrons/inc-details_presse,id_evenement=#GET{id_evenement},titre=#GET{titre_article},sousitre=#GET{soustitre_article},date_debut=#GET{date_debut},lieu=#GET{lieu},agenda=#GET{agenda},interview_possible=#GET{interview_possible},envoi_cd_possible=#GET{envoi_cd_possible},env}/>] 
+        [(#PRESSE|et{#ID_RUBRIQUE|in_array{#ARRAY{0,39,1,8,2,26}}}|oui)<INCLURE{fond=patrons/inc-details_presse,id_evenement=#GET{id_evenement},titre=#GET{titre_article},sousitre=#GET{soustitre_article},date_debut=#GET{date_debut},lieu=#GET{lieu},agenda=#GET{agenda},interview_possible=#GET{interview_possible},envoi_cd_possible=#GET{envoi_cd_possible},env}/>] 
   </div>  
         </BOUCLE_test>
             [(#REM) Affichage différent pour les vidéos 10 ans] 
