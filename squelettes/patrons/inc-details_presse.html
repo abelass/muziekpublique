@@ -1,4 +1,4 @@
-<div style="background:#5C2200;text-align:center;color:#FFFFFF; padding:5px">
+<div style="border:#505155 solid 1px;text-align:center;color:#505155; padding:5px">
     <div>#TITRE</div>
     <div>#SOUSTITRE</div>
     <div>
@@ -7,11 +7,11 @@
     <div>
         <:ou:> #LIEU
     </div>
-    [<div><:agenda_nl:> (#AGENDA**)</div>]  
+    [<div><b><:agenda_nl:></b> (#AGENDA**)</div>]  
     <BOUCLE_org(MOTS){id_groupe=30}{id_evenement}>
-    <div>#TYPE #TITRE[, (#DESCRIPTIF**)]</div>
+    <div><b><:ou:></b> #TYPE #TITRE[, (#DESCRIPTIF**)]</div>
     </BOUCLE_org>      
-    [<div>(#INTERVIEW_POSSIBLE|oui)<interview_possible:></div>]
-    [<div><:envoi_cd_possible:> (#CD_ENVOI_POSSIBLE**)</div>]
+    [<div>(#INTERVIEW_POSSIBLE|oui)<b><:interview_possible:></b> <:oui:></div>]
+    [<div><b><:envoi_cd_possible:></b> (#CD_ENVOI_POSSIBLE**)</div>]
     [<div>(#CHAMPS_EXTRA_NEWSLETTER)</div>]
 </div>
