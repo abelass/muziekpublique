@@ -1,15 +1,14 @@
-<div style="border:#505155 solid 1px;text-align:center;color:#505155; padding:5px">
-    <div>#TITRE</div>
-    <div>#SOUSTITRE</div>
+<div style="border:#521000 solid 1px;text-align:left;color:#521000; padding:5px">
+    <div><b>#TITRE</b> - #SOUSTITRE</div>
     <div>
-        <:quand:> [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})]
+        <b><:quand:></b> [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})]
     </div>
     <div>
-        <:ou:> #LIEU
+        <b><:ou:></b> [(#LIEU**|extraire_multi)]
     </div>
     [<div><b><:agenda_nl:></b> (#AGENDA**)</div>]  
     <BOUCLE_org(MOTS){id_groupe=30}{id_evenement}>
-    <div><b><:ou:></b> #TYPE #TITRE[, (#DESCRIPTIF**)]</div>
+    <div><b>[(#TYPE**)] </b> [(#TYPE**)] [(#TITRE**)][, (#DESCRIPTIF**)]</div>
     </BOUCLE_org>      
     [<div>(#INTERVIEW_POSSIBLE|oui)<b><:interview_possible:></b> <:oui:></div>]
     [<div><b><:envoi_cd_possible:></b> (#CD_ENVOI_POSSIBLE**)</div>]
