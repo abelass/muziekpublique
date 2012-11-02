@@ -28,22 +28,22 @@
      <BOUCLE_test(CONDITION) {si #TITRE|!={10 years}|et{#GET{video}|!={oui}}}>        
     <div style="background-image: url('#URL_SITE_SPIP/squelettes/styles/img/bg_hr.gif');background-position: center bottom;background-repeat: repeat-x;margin: 5px 0;padding: 5px 0;">
         <BOUCLE_date(EVENEMENTS){id_article}{0,1}>#SET{id_article,#ID_ARTICLE}#SET{id_evenement,#ID_EVENEMENT}#SET{date_debut,#DATE_DEBUT}#SET{agenda,#AGENDA}#SET{interview_possible,#INTERVIEW_POSSIBLE}#SET{envoi_cd_possible,#ENVOI_CD_POSSIBLE}
-        <span style="color: #A72600;text-transform: lowercase;">[(#GET{d}|=={oui}|oui)
+        <div style="color: #A72600;text-transform: lowercase;">[(#GET{d}|=={oui}|oui)
             [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
             ]
             <BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}{0,1}>#SET{lieu,#TITRE&cedil; #DESCRIPTIF**}
-            </BOUCLE_lieu></span>
+            </BOUCLE_lieu></div>
         </BOUCLE_date>
         <BOUCLE_art(ARTICLES){traduction}{origine_traduction}>
             
             #SET{id_article,#ID_ARTICLE}
             <BOUCLE_date_alter(EVENEMENTS){id_article}{0,1}>#SET{id_evenement,#ID_EVENEMENT}#SET{date_debut,#DATE_DEBUT}#SET{agenda,#AGENDA}#SET{interview_possible,#INTERVIEW_POSSIBLE}#SET{envoi_cd_possible,#ENVOI_CD_POSSIBLE}
-            <span style="color: #A72600;text-transform: lowercase;">[(#GET{d}|=={oui}|oui)
+            <div style="color: #A72600;text-transform: lowercase;">[(#GET{d}|=={oui}|oui)
                 [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
                 ]
                 <BOUCLE_lieu_alter(MOTS){id_evenement}{id_groupe=11}{0,1}>#SET{lieu,#TITRE&cedil; #DESCRIPTIF**}
                 #TITRE
-                </BOUCLE_lieu_alter></span>
+                </BOUCLE_lieu_alter></div>
             </BOUCLE_date_alter>
         </BOUCLE_art>
         <//B_date>
