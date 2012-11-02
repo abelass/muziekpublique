@@ -6,11 +6,11 @@
     <div>
         <b><:ou:></b> [(#LIEU**|extraire_multi)]
     </div>
-    [<div><b><:agenda_nl:></b> (#AGENDA**)</div>]  
+    [<div><b><:agenda_nl:></b> (#AGENDA**|extraire_multi)</div>]  
     <BOUCLE_org(MOTS){id_groupe=30}{id_evenement}>
-    <div><b>[(#TYPE**)] </b> [(#TYPE**)] [(#TITRE**)][, (#DESCRIPTIF**)]</div>
+    <div><b>[(#TYPE**|extraire_multi)] </b>[(#TITRE**|extraire_multi)][, (#DESCRIPTIF**|extraire_multi)]</div>
     </BOUCLE_org>      
     [<div>(#INTERVIEW_POSSIBLE|oui)<b><:interview_possible:></b> <:oui:></div>]
-    [<div><b><:envoi_cd_possible:></b> (#CD_ENVOI_POSSIBLE**)</div>]
-    [<div>(#CHAMPS_EXTRA_NEWSLETTER)</div>]
+    [<div><b><:envoi_cd_possible:></b> (#ENVOI_CD_POSSIBLE**|extraire_multi)</div>]
+    [<div>(#CHAMPS_EXTRA_NEWSLETTER|extraire_multi)</div>]
 </div>
