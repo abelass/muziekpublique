@@ -32,7 +32,7 @@
             [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
             ]
             <BOUCLE_lieu(MOTS){id_evenement}{id_groupe=11}{0,1}>#SET{lieu,#TITRE&cedil; #DESCRIPTIF**}
-            #TITRE
+            [(#TITRE|supprimer_tags)]
             </BOUCLE_lieu></div>
         </BOUCLE_date>
         <BOUCLE_art(ARTICLES){traduction}{origine_traduction}>
@@ -43,13 +43,13 @@
                 [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
                 ]
                 <BOUCLE_lieu_alter(MOTS){id_evenement}{id_groupe=11}{0,1}>#SET{lieu,#TITRE&cedil; #DESCRIPTIF**}
-                #TITRE
+                [(#TITRE|supprimer_tags)]
                 </BOUCLE_lieu_alter></div>
             </BOUCLE_date_alter>
         </BOUCLE_art>
         <//B_date>
             <h2 style="color: #505155;font-size: 150%;font-weight: bold;margin: 0;"><a style= "color: #521000;" href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">#TITRE</a></h2>#SET{titre_article,#TITRE}
-            [<div style="color: #505155;font-size: 97%;font-weight: bold;line-height: 16px;">(#SURTITRE)</div>]#SET{soustitre_article,#SOUSTITRE}
+            [<div style="color: #505155;font-size: 97%;font-weight: bold;line-height: 16px;">(#SURTITRE|supprimer_tags)</div>]#SET{soustitre_article,#SOUSTITRE}
             <div style="display: block;margin: 5px 0;min-height:140px">
             <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}|inserer_attribut{align,left})],#GET{logo_fini}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}})]</a>
                 <p style=" line-height: 16px;margin: 0;text-align: justify; font-size:12px">[(#DESCRIPTIF)]</p>
