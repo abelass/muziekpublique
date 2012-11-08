@@ -6,15 +6,15 @@
 #SET{id_document,#ARRAY}
 	<BOUCLE_art_port(ARTICLES){id_article}>
 		<BOUCLE_art_trad_port(ARTICLES){traduction}>
-			<BOUCLE_docs(DOCUMENTS) {id_article}{tout}{extension IN png,jpg,gif,doc,pdf,odt}{logo_article<1}{auteur ?}>>
+			<BOUCLE_docs(DOCUMENTS) {id_article}{tout}{extension IN png,jpg,gif,doc,pdf,odt}{logo_article<1}{auteur ?}>
 				#SET_MERGE{id_document,#GET{id_document},#ARRAY{#COMPTEUR_BOUCLE,#ID_DOCUMENT}}
 			</BOUCLE_docs>
 				<BOUCLE_art_trad0(ARTICLES){traduction}{origine_traduction}>
-					<BOUCLE_docs_trad(DOCUMENTS) {id_article} {tout}{extension IN png,jpg,gif,doc,pdf,odt}{logo_article<1}{auteur ?}>>
+					<BOUCLE_docs_trad(DOCUMENTS) {id_article} {tout}{extension IN png,jpg,gif,doc,pdf,odt}{logo_article<1}{auteur ?}>
 						#SET_MERGE{id_document,#GET{id_document},#ARRAY{#COMPTEUR_BOUCLE,#ID_DOCUMENT}}
 					</BOUCLE_docs_trad>
 					<BOUCLE_art_trad_autres(ARTICLES){traduction}>
-						<BOUCLE_docs_trad_autres(DOCUMENTS) {id_article} {tout}{extension IN png,jpg,gif,doc,pdf,odt}{logo_article<1}{auteur ?}>>
+						<BOUCLE_docs_trad_autres(DOCUMENTS) {id_article} {tout}{extension IN png,jpg,gif,doc,pdf,odt}{logo_article<1}{auteur ?}>
 							#SET_MERGE{id_document,#GET{id_document},#ARRAY{#COMPTEUR_BOUCLE,#ID_DOCUMENT}}
 						</BOUCLE_docs_trad_autres>				
 					</BOUCLE_art_trad_autres>		
