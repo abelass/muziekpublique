@@ -19,9 +19,8 @@
 
 [(#REM) sortir les article attachés dans ses langues]
  <BOUCLE_art(ARTICLES){id_article IN #GET{id_article}}{par  titre}>
-    <BOUCLE_art_lang(ARTICLES){id_article}{lang}>
+    <BOUCLE_art_lang(ARTICLES){traduction}{lang}>
         #SET{id_article_langues,#GET{id_article_langues}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_ARTICLE}}}
-
     </BOUCLE_art_lang>
         <BOUCLE_art_or(ARTICLES){traduction}{origine_traduction}>
         #SET{id_article_langues,#GET{id_article_langues}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_ARTICLE}}}
@@ -47,7 +46,6 @@
 </B_form_jours>
 
 
-
 <select SIZE=1 ONCHANGE="window.open(this.options[this.selectedIndex].value,'_top')"
 		<option value=""><:select_cours:></option>
 		<option value="[(#URL_PAGE{rubrique}|parametre_url{id_rubrique,#ENV{id_rubrique}})]"><:all:></option>					
@@ -55,7 +53,7 @@
     #SET{id_trad,#ID_TRAD}
     [(#ID_TRAD|=={0}|oui) #SET{id_trad,#ID_ARTICLE}]
      #SET{id_evenement,#GET{article_evenement}|table_valeur{n-#GET{id_trad}}}
- 			 [<option value="[(#URL_ARTICLE|parametre_url{id_evenement,#GET{id_evenement}})]" [(#ENV{id_evenement}|=={#GET{id_evenement}}|oui) selected="selected"]>(#ID_ARTICLE|nom_article|unique)</option>]
+ 			 [<option value="[(#URL_ARTICLE|parametre_url{id_evenement,#GET{id_evenement}})]" [(#ENV{id_evenement}|=={#GET{id_evenement}}|oui) selected="selected"]>(#TITRE)</option>]
 </BOUCLE_cours>
 	</select>
 </form>
