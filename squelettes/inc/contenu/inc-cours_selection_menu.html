@@ -1,17 +1,35 @@
 #SET{id_rub,#ARRAY{}}
 #SET{date,#DATE}
+#SET{id_article,#ARRAY}
+#SET{id_article_langues,#ARRAY}
+#SET{article_evenement,#ARRAY}
 <BOUCLE_rub(RUBRIQUES){id_trad=40}>
 	#SET{id_rub,#GET{id_rub}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_RUBRIQUE}}}
 </BOUCLE_rub> 
 
-[(#REM)Création du formulaire des jours en deux pas pour assurer que les jours de la semaine sont bien dans l'ordre]
+
 
 [(#REM)On sort d'abord les jours de la semaine ou il y a des cours actifs]
 #SET{jours,#ARRAY}
 <BOUCLE_jours_prep(EVENEMENTS){id_rubrique IN #GET{id_rub}}{date_fin>=#GET{date}}{par date_debut}>
  	[(#DATE_DEBUT|nom_jour|unique|oui)#SET{jours,#GET{jours}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#DATE_DEBUT|affdate{w}}}}]	
+ 	  #SET{id_article,#GET{id_article}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_ARTICLE}}}
+ 	  #SET{article_evenement,#GET{article_evenement}|array_merge{#ARRAY{n-#ID_ARTICLE,#ID_EVENEMENT}}}
 </BOUCLE_jours_prep>
 
+[(#REM) sortir les article attachés dans ses langues]
+ <BOUCLE_art(ARTICLES){id_article IN #GET{id_article}}{par  titre}>
+    <BOUCLE_art_lang(ARTICLES){id_article}{lang}>
+        #SET{id_article_langues,#GET{id_article_langues}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_ARTICLE}}}
+
+    </BOUCLE_art_lang>
+        <BOUCLE_art_or(ARTICLES){traduction}{origine_traduction}>
+        #SET{id_article_langues,#GET{id_article_langues}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_ARTICLE}}}
+        </BOUCLE_art_or>   
+    <//B_art_lang>   
+</BOUCLE_art>
+
+[(#REM)Création du formulaire des jours en deux pas pour assurer que les jours de la semaine sont bien dans l'ordre]
  <div class="Filter">
 <form action='' method='post'>
 [(#REM)On crée le formulaire des jours de la semaine trié par jour de la semaine]
@@ -28,13 +46,18 @@
 	</select>
 </B_form_jours>
 
-	<select SIZE=1 ONCHANGE="window.open(this.options[this.selectedIndex].value,'_top')">
-		<option value=""><:select_cours:></option>
-		<option value="[(#URL_PAGE{rubrique}|parametre_url{id_rubrique,#ENV{id_rubrique}})]"><:all:></option>			
- 		 <BOUCLE_ev(EVENEMENTS articles){id_rubrique IN 27,1,40}{par  spip_articles.titre}{date_fin>=#GET{date}}{id_evenement_source=0}>
- 			 [<option value="[(#URL_PAGE{rubrique}|parametre_url{id_rubrique,#ENV{id_rubrique}}|parametre_url{id_article,#ID_ARTICLE}|parametre_url{id_evenement,#ID_EVENEMENT})]" [(#ENV{id_evenement}|=={#ID_EVENEMENT}|oui) selected="selected"]>(#ID_ARTICLE|nom_article|unique)</option>]
-		</BOUCLE_ev>
 
+
+<select SIZE=1 ONCHANGE="window.open(this.options[this.selectedIndex].value,'_top')"
+		<option value=""><:select_cours:></option>
+		<option value="[(#URL_PAGE{rubrique}|parametre_url{id_rubrique,#ENV{id_rubrique}})]"><:all:></option>					
+<BOUCLE_cours(ARTICLES ){id_article IN #GET{id_article_langues}}{par titre}>
+    #SET{id_trad,#ID_TRAD}
+    [(#ID_TRAD|=={0}|oui) #SET{id_trad,#ID_ARTICLE}]
+     #SET{id_evenement,#GET{article_evenement}|table_valeur{n-#GET{id_trad}}}
+ 			 [<option value="[(#URL_ARTICLE|parametre_url{id_evenement,#GET{id_evenement}})]" [(#ENV{id_evenement}|=={#GET{id_evenement}}|oui) selected="selected"]>(#ID_ARTICLE|nom_article|unique)</option>]
+</BOUCLE_cours>
 	</select>
 </form>
 </div>
+
