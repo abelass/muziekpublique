@@ -1,16 +1,13 @@
 <div style="border:#521000 solid 1px;text-align:left;color:#521000; padding:5px;margin-top:10px">
-    <div><b>#TITRE</b> - #SOUSTITRE</div>
+    [<div><b><:agenda_nl:></b> (#AGENDA**|extraire_multi)</div>]     
+    <div><b>#TITRE</b>[ - (#SOUSTITRE**|extraire_multi|replace{p,span})]</div>
     <div>
-        <b><:quand:></b> [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})]
+[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})][, (#LIEU**|extraire_multi)]
     </div>
-    <div>
-        <b><:ou:></b> [(#LIEU**|extraire_multi)]
-    </div>
-    [<div><b><:agenda_nl:></b> (#AGENDA**|extraire_multi)</div>]  
+    [<div><b><:interview_possible:></b> (#INTERVIEW_POSSIBLE)</div>]
+    [<div><b><:envoi_cd_possible:></b> (#ENVOI_CD_POSSIBLE**|extraire_multi)</div>]        
     <BOUCLE_org(MOTS){id_groupe=30}{id_evenement}>
     <div><b>[(#TYPE**|extraire_multi)] </b>[(#TITRE**|extraire_multi)][, (#DESCRIPTIF**|extraire_multi)]</div>
     </BOUCLE_org>      
-    [<div>(#INTERVIEW_POSSIBLE|oui)<b><:interview_possible:></b> <:oui:></div>]
-    [<div><b><:envoi_cd_possible:></b> (#ENVOI_CD_POSSIBLE**|extraire_multi)</div>]
     [<div>(#CHAMPS_EXTRA_NEWSLETTER|extraire_multi)</div>]
 </div>
