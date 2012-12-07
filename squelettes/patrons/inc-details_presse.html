@@ -2,7 +2,10 @@
     [<div><b><:agenda_nl:></b> (#AGENDA**|extraire_multi)</div>]     
     <div><b>#TITRE</b>[ - (#SOUSTITRE**|extraire_multi|replace{p,span})]</div>
     <div>
-[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})][, (#LIEU**|extraire_multi)]
+[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})]
+ </div>
+     <div>
+[(#LIEU**|extraire_multi)]
     </div>
     [<div><b><:interview_possible:></b> (#INTERVIEW_POSSIBLE)</div>]
     [<div><b><:envoi_cd_possible:></b> (#ENVOI_CD_POSSIBLE**|extraire_multi)</div>]        
