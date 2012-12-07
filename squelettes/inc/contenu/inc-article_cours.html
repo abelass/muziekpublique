@@ -37,7 +37,8 @@
 		</li>]
 		<li>
 			[(#ENV{voir}|=={agenda}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:agenda2:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,agenda})]"><:agenda2:></a>})]
-		</li>		
+		</li>	
+
 		
 		<li>
 		<BOUCLE_inscr(MOTS){id_evenement}{id_groupe=14}>
@@ -48,6 +49,9 @@
 		<//B_inscr>
 		
 		</li>
+              <BOUCLE_documents_joints(DOCUMENTS) {id_article=#ID_TRAD} {extension IN dist_daily,dist_vimeo,dist_youtu,flv,swf,ogg,mp4}{0,1}{tout}>
+            <li>[(#ENV{voir}|=={video}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:video:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,video})]"><:video:></a>})]</li> 
+        </BOUCLE_documents_joints>      		
 	</ul>
 </div>
 <br class="nettoyeur"/>
@@ -70,6 +74,8 @@
 [(#GET{defaut}|non|et{#ENV{voir}|oui})
 <INCLURE{fond=inc/contenu/inc-cours_mots}{env}{id_groupe=#ENV{voir}}{id_article=#ENV{id_trad}}/>
 ]
+
+[(#ENV{voir}|=={video}|oui)<INCLURE {fond=inc/contenu/inc-documents_video}{env}>]
 #SET{type,cours}
 
 [(#ENV{voir}|=={inscription}|oui)

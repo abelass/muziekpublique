@@ -26,7 +26,9 @@
 				<li>[(#ENV{voir}|=={reservation}|?{<a class="ajax" href="[(#ENV{url_art}|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{id_art,#ENV{id_article}}|parametre_url{voir,rien}|parametre_url{lang,#ENV{lang}})]#infos"><:reservations:></a>,<a class="ajax" href="[(#ENV{url_art}|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{id_art,#ENV{id_article}}|parametre_url{voir,reservation}|parametre_url{type,#GET{type}}|parametre_url{lang,#ENV{lang}})]#infos"><:reservations:></a>})]</li>
 				]
 			]
-		<BOUCLE_documents_joints(DOCUMENTS) {id_article=#ID_TRAD} {extension IN flv,swf}{0,1}>
+			
+
+		<BOUCLE_documents_joints(DOCUMENTS) {id_article=#ID_TRAD} {extension IN dist_daily,dist_vimeo,dist_youtu,flv,swf,ogg,mp4}{0,1}{tout}>
 			<li>[(#ENV{voir}|=={video}|?{<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,rien})]"><:video:></a>,<a class="ajax" href="[(#URL_ARTICLE|parametre_url{id_evenement,#ID_EVENEMENT}|parametre_url{voir,video})]"><:video:></a>})]</li>	
 		</BOUCLE_documents_joints>			
 	</ul>
