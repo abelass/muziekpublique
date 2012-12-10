@@ -37,7 +37,8 @@
 		[<span style="color: #505155;font-size: 97%;font-weight: bold;line-height: 16px;">(#SURTITRE)</span>]
 			<div style="display: block;margin: 5px 0;min-height:140px">
 			<a href="[(#URL_ARTICLE})][?(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}|inserer_attribut{align,left})],#GET{logo_fini}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}})]</a>
-				<divstyle=" line-height: 16px;margin: 0;text-align: justify;">[(#ENV{texte_article}|?{#INTRODUCTION,<:video_10_explicatif:>})]</div>
+				<div style=" line-height: 16px;margin: 0;text-align: justify;">[(#ENV{texte_article}|?{#INTRODUCTION,<:video_10_explicatif:>})]
+				</div>
 		</div>				
 		<div style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;">
            <div>
