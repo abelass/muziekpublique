@@ -5,7 +5,6 @@
 <a [ (#ENV{ouvert}|non)class="ajax"]  href="[(#SELF|parametre_url{voir,''})]#formulaire_joindre_document-new">
 	<:fermer:>
 </a>
-	[(#ID_ARTICLE|afficher_documents_colonne)]
 	[(#FORMULAIRE_JOINDRE_DOCUMENT{new,#ID_OBJET,#OBJET,document})]
 	#FORMULAIRE_AUTEUR_DOCUMENT{#OBJET,#ID_OBJET}
 	[<script type="text/javascript" src='(#CHEMIN{javascript/jquery.MultiFile.js})'></script>
