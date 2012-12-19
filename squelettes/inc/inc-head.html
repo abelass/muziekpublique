@@ -80,5 +80,16 @@ window.location=document.getElementById("menupays").value
 }
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+  $("a[href^='http://']").not("a[href^='http://muziekpublique.be']").not("a[href^='http://muziekpublique.be']").click(function(){
+ window.open(this.href,'external');
+ return false;
+ });
+});
+
+
+</script>
+
  <link href="#CHEMIN{js/jquery_player/skin/jplayer.pink.flag.css}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="#CHEMIN{js/jquery_player/js/jquery.jplayer.min.js}"></script> 
