@@ -27,7 +27,7 @@
 
 		
 	<div class="Chapeau">
-		#SET{titre,#TITRE}#SET{intro,#INTRODUCTION{125}}	
+		#SET{titre,#TITRE}#SET{intro,#INTRODUCTION|couper{125}}	
 		[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
 		
 		<a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
