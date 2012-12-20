@@ -24,16 +24,18 @@
 					</div>
 				})]
 			]		
+
 		
 	<div class="Chapeau">
-		#SET{titre,#TITRE}
+		#SET{titre,#TITRE}#SET{intro,#INTRODUCTION{125}}	
 		[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+		
 		<a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]</a>
 		<BOUCLE_ev(EVENEMENTS){id_evenement}>
 		<div class="ItemContent">
 			<h2><a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">#GET{titre} [((#ENV{trad}))]</a></h2>
 			[<span class="Soustitre">(#SURTITRE)</span>]
-			<p class="ChapeauTxt">[(#INTRODUCTION|couper{125})]</p>	
+			<p class="ChapeauTxt">[(#GET{intro})]</p>	
 		</div>
 	</div>
 	<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]"><:lire_article:></a></span>

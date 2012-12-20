@@ -22,7 +22,7 @@
 			[(#GET{icone}|=={ecouter}|oui)[(#SET{texte_lien,<:ecouter_playliste:>})]]
 			[(#GET{icone}|=={play}|oui)[(#SET{texte_lien,<:voir_video:>})]]		
 		      
-		    #SET{introduction,#INTRODUCTION{500}}
+		    #SET{introduction,#INTRODUCTION|couper{500}}
 
 			[(#GET{icone}|oui)
 				[(#SET{icone,

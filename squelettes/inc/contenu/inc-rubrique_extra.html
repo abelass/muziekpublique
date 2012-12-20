@@ -32,14 +32,16 @@
 				[(#SET{logo_fini,
 					<div #GET{attribut_div}>
 					#GET{icone}	
-					#GET{logo}>
+					#GET{logo}
 					#GET{auteur}
 					</div>
 				})]
 			]
 		  
 	  	[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]
+	  	#SET{intro,#INTRODUCTION|couper{125}}  
     <div class="Item">
+
        <div class="Chapeau">
        <a href="[(#GET{url})]">         [(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]
        </a>
@@ -60,7 +62,7 @@
       <div class="ItemContent">
         <h2><a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]">#TITRE</a></h2>
         [<span class="Soustitre">(#SURTITRE)</span>]
-        <p class="ChapeauTxt">[(#INTRODUCTION|couper{125})]</p>  
+        <p class="ChapeauTxt">#GET{intro}</p>  
       </div>
       </div>
       <span class="More"> >> <a href="[(#GET{url})]">#GET{texte_lien}</a></span>
