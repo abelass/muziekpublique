@@ -100,20 +100,20 @@
 			</div>
 			</BOUCLE_art_alter>
 			
-				[(#REM) Sinon on affiche l'article d'origine en mentionant la langue]
-				<BOUCLE_art_alter_or(ARTICLES){id_trad=#ID_ARTICLE}{origine_traduction}>
+				[(#REM) Si pas traduit on affiche l'article original]
+				<BOUCLE_art_alter_alter(ARTICLES){id_trad=#ID_ARTICLE}{origine_traduction}>
 				#SET{intro,#INTRODUCTION|couper{125}}  
 				[(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})]	
 				<div class="Item">
 		 			<div class="Chapeau">
 		 			[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]
-					<BOUCLE_ev_alter_or(EVENEMENTS){id_evenement}{jour ?}>
+					<BOUCLE_ev_alter_alter(EVENEMENTS){id_evenement}{jour ?}>
 						<span class="Date">[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})]/[(#DATE_DEBUT|affdate{'m'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
-						<BOUCLE_lieu_alter_or(MOTS){id_evenement}{id_groupe=11}{0,1}>
+						<BOUCLE_lieu_alter_alter(MOTS){id_evenement}{id_groupe=11}{0,1}>
 						#TITRE
-						</BOUCLE_lieu_alter_or>
+						</BOUCLE_lieu_alter_alter>
 						</span>
-					</BOUCLE_ev_alter_or>
+					</BOUCLE_ev_alter_alter>
 						<div class="ItemContent">
 							<h2>#TITRE [#LANG]</h2>
 							[<span class="Soustitre">(#SURTITRE)</span>]
@@ -122,7 +122,32 @@
 					</div>
 				<span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]"><:lire_article:></a></span>
 				</div>
-				</BOUCLE_art_alter_or>
+				</BOUCLE_art_alter_alter>
+                [(#REM) Sinon on affiche l'article d'origine en mentionant la langue]
+                <BOUCLE_art_alter_or(ARTICLES){id_article}>
+                #SET{intro,#INTRODUCTION|couper{125}}  
+                [(#GET{url_photo}|?{#SET{url,#GET{url_photo}},#SET{url,#URL_ARTICLE}})] 
+                <div class="Item">
+                    <div class="Chapeau">
+                    [(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{141}|inserer_attribut{class,ChapeauImg}|inserer_attribut{align,left})],#GET{logo_fini}})]
+                    <BOUCLE_ev_alter_or(EVENEMENTS){id_evenement}{jour ?}>
+                        <span class="Date">[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})]/[(#DATE_DEBUT|affdate{'m'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
+                        <BOUCLE_lieu_alter_or(MOTS){id_evenement}{id_groupe=11}{0,1}>
+                        #TITRE
+                        </BOUCLE_lieu_alter_or>
+                        </span>
+                    </BOUCLE_ev_alter_or>
+                        <div class="ItemContent">
+                            <h2>#TITRE [#LANG]</h2>
+                            [<span class="Soustitre">(#SURTITRE)</span>]
+                            <p class="ChapeauTxt">#GET{intro}</p>   
+                        </div>
+                    </div>
+                <span class="More"> >> <a href="[(#GET{url}|parametre_url{id_evenement,#ID_EVENEMENT})]"><:lire_article:></a></span>
+                </div>
+                </BOUCLE_art_alter_or>				
+				
+                <//B_art_alter_alter>				
 			<//B_art_alter>
 		<//B_art_lang>	
 	

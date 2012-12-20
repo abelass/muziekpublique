@@ -28,6 +28,10 @@
 				<BOUCLE_art_alter(ARTICLES){id_trad=#ID_ARTICLE}{origine_traduction}>
  				[<option value="[(#URL_PAGE{article}|parametre_url{id_article,#ID_ARTICLE})]" [(#ENV{id_article}|=={#ID_ARTICLE}|oui) selected="selected"]>(#TITRE|unique)</option>]
 			</BOUCLE_art_alter>
+                <BOUCLE_art_alter_alter(ARTICLES){id_article}>
+                [<option value="[(#URL_PAGE{article}|parametre_url{id_article,#ID_ARTICLE})]" [(#ENV{id_article}|=={#ID_ARTICLE}|oui) selected="selected"]>(#TITRE|unique)</option>]
+                </BOUCLE_art_alter_alter>			
+			      <//B_art_alter>
 			<//B_art>
  			
 		</BOUCLE_ev>
