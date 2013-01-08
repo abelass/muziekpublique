@@ -40,7 +40,7 @@
         <BOUCLE_art(ARTICLES){traduction}{origine_traduction}>
             
             #SET{id_article,#ID_ARTICLE}
-            <BOUCLE_date_alter(EVENEMENTS){id_article}{0,1}>#SET{id_evenement,#ID_EVENEMENT}#SET{date_debut,#DATE_DEBUT}#SET{agenda,#AGENDA}#SET{interview_possible,#INTERVIEW_POSSIBLE}#SET{envoi_cd_possible,#ENVOI_CD_POSSIBLE}#SET{agenda,#AGENDA}#SET{interview_possible,#INTERVIEW_POSSIBLE}#SET{envoi_cd_possible,#ENVOI_CD_POSSIBLE}#SET{champs_extra_newsletter,#CHAMPS_EXTRA_NEWSLETTER}
+            <BOUCLE_date_alter(EVENEMENTS){id_article}{0,1}>#SET{id_evenement,#ID_EVENEMENT}#SET{date_debut,#DATE_DEBUT}#SET{agenda,#AGENDA}#SET{interview_possible,#INTERVIEW_POSSIBLE}#SET{envoi_cd_possible,#ENVOI_CD_POSSIBLE}#SET{agenda,#AGENDA}#SET{interview_possible,#INTERVIEW_POSSIBLE}#SET{envoi_cd_possible,#ENVOI_CD_POSSIBLE}#SET{champs_extra_newsletter,#CHAMPS_EXTRA_NEWSLETTER}#SET{soustitre,#SOUSTITRE}
             <div style="color: #A72600;text-transform: lowercase;">[(#GET{d}|=={oui}|oui)
                 [(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate{'d'})] [(#DATE_DEBUT|nom_mois)] [(#DATE_DEBUT|affdate{'Y'})],  [(#DATE_DEBUT|affdate{'H'})]:[(#DATE_DEBUT|affdate{'i'})],
                 ]
