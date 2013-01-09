@@ -16,7 +16,7 @@
 
 		<B_article_mois1>
 			<div class="menu mois ">
-			<BOUCLE_article_mois1(ARTICLES){id_rubrique IN #GET{id_rubrique}}{annee ?}{mois_relatif>=0}{par date}{0,1}>#SET{mois_defaut,#DATE|mois}#SET{mois,#DATE|mois}
+			<BOUCLE_article_mois1(ARTICLES){id_rubrique IN #GET{id_rubrique}}{mois_relatif>=0}{par date}{0,1}>#SET{mois_defaut,#DATE|mois}#SET{mois,#DATE|mois}
 				<div class="Date[(#ENV{mois}|=={[(#DATE|mois)]}|oui) on]">			
 					<a class="ajax" href="[(#SELF|parametre_url{mois,[(#DATE|mois)]})]">
 						<span class="DateBox">
@@ -28,7 +28,7 @@
 				</div>
 				<B_article_mois2>	
 
-				<BOUCLE_article_mois2(ARTICLES){id_rubrique IN #GET{id_rubrique}}{annee}{par date}{mois_relatif<0}{0,1}>#SET{mois_defaut,#DATE|mois}
+				<BOUCLE_article_mois2(ARTICLES){id_rubrique IN #GET{id_rubrique}}{par date}{mois_relatif<0}{0,1}>#SET{mois_defaut,#DATE|mois}
 				<div class="Date[(#ENV{mois}|=={[(#DATE|mois)]}|oui) on]">					
 					<a class="ajax[(#ENV{mois}|=={[(#DATE|mois)]}|oui) on]" href="[(#SELF|parametre_url{mois,[(#DATE|mois)]})]">				
 						<span class="DateBox">
