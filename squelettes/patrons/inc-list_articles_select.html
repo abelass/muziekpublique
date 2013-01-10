@@ -50,15 +50,15 @@
             </BOUCLE_date_alter>
         </BOUCLE_art>
         <//B_date>
-            <h2 style="color: #505155;font-size: 150%;font-weight: bold;margin: 0;"><a style= "color: #521000;" href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">#TITRE</a></h2>#SET{titre_article,#TITRE}
+            <h2 style="color: #505155;font-size: 150%;font-weight: bold;margin: 0;"><a style= "color: #521000;" href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''}|parametre_url{mail,oui})][&(#ENV{var_google})]">#TITRE</a></h2>#SET{titre_article,#TITRE}
             [<div style="color: #505155;font-size: 97%;font-weight: bold;line-height: 16px;">(#SURTITRE|supprimer_tags)</div>]#SET{surtitre,#SURTITRE}
             <div style="display: block;margin: 5px 0;min-height:140px">
-            <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}|inserer_attribut{align,left})],#GET{logo_fini}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}})]</a>
+            <a href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''}|parametre_url{mail,oui})][&(#ENV{var_google})]">[(#LOGO_ARTICLE_NORMAL|!=={''}|?{[(#LOGO_ARTICLE_NORMAL||image_reduire{210,140}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}|inserer_attribut{align,left})],#GET{logo_fini}|inserer_attribut{style, border: medium none;float: left;margin: 5px 10px 0 0; position: relative;}})]</a>
                 <div style=" line-height: 16px;margin: 0;text-align: justify; font-size:12px">[(#DESCRIPTIF)]</div>
             </div>
             <div style="color: #521000;display: block;font-size: 12px;letter-spacing: 0.05em; padding: 5px;text-align: right;text-transform: uppercase;">
                 <div>
-                    >> <a  style="color: #521000;" href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''})][&(#ENV{var_google})]">#GET{texte_lien}</a>
+                    >> <a  style="color: #521000;" href="[(#GET{url}|parametre_url{id_evenement,#GET{id_evenement}}|parametre_url{connect,''}|parametre_url{mail,oui})][&(#ENV{var_google})]">#GET{texte_lien}</a>
                  </div>
                  [(#REM)Lien de téléchargement pour presse]
                  [(#PRESSE|oui)<INCLURE{fond=patrons/inc-documents,id_evenement=#GET{id_evenement},env}/>]
