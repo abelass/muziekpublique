@@ -18,7 +18,7 @@
 			<div class="menu mois ">
 			<BOUCLE_article_mois1(ARTICLES){id_rubrique IN #GET{id_rubrique}}{mois_relatif>=0}{par date}{0,1}>#SET{mois_defaut,#DATE|mois}#SET{mois,#DATE|mois}
 				<div class="Date[(#ENV{mois}|=={[(#DATE|mois)]}|oui) on]">			
-					<a class="ajax" href="[(#SELF|parametre_url{mois,[(#DATE|mois)]})]">
+					<a class="ajax" href="[(#SELF|parametre_url{mois,[(#DATE|mois)]}|parametre_url{annee,[(#DATE|annee)]})]">
 						<span class="DateBox">
 							<span class="Number"><:video_sing:></span>						
 							<span class="Day">[(#DATE|nom_mois|couper{3})]</span>
@@ -30,7 +30,7 @@
 
 				<BOUCLE_article_mois2(ARTICLES){id_rubrique IN #GET{id_rubrique}}{par date}{mois_relatif<0}{0,1}>#SET{mois_defaut,#DATE|mois}
 				<div class="Date[(#ENV{mois}|=={[(#DATE|mois)]}|oui) on]">					
-					<a class="ajax[(#ENV{mois}|=={[(#DATE|mois)]}|oui) on]" href="[(#SELF|parametre_url{mois,[(#DATE|mois)]})]">				
+					<a class="ajax[(#ENV{mois}|=={[(#DATE|mois)]}|oui) on]" href="[(#SELF|parametre_url{mois,[(#DATE|mois)]}|parametre_url{annee,[(#DATE|annee)]})]">				
 						<span class="DateBox">
 							<span class="Number"><:video_sing:></span>						
 							<span class="Day">[(#DATE|nom_mois|couper{3})]</span>
@@ -53,7 +53,7 @@
 
 [(#REM)Affichage des vidéso du mois]
 
-<BOUCLE_art(ARTICLES){id_rubrique IN #GET{id_rubrique}} {annee} {mois} {!par date}>
+<BOUCLE_art(ARTICLES){id_rubrique IN #GET{id_rubrique}}  {mois} {!par date}>
 	[(#ID_TRAD|in_array{#GET{exclure}}|non)<INCLURE{fond=inc/contenu/inc-rubrique_videos_details,id_article,env,lang}/>]
 	[(#ID_TRAD|>{0}|oui)#SET{exclure,#GET{exclure}|array_merge{#ARRAY{#COMPTEUR_BOUCLE,#ID_TRAD}}}]
 </BOUCLE_art>
