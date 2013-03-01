@@ -27,7 +27,6 @@
 					</a>
 				</div>
 				<B_article_mois2>	
-
 				<BOUCLE_article_mois2(ARTICLES){id_rubrique IN #GET{id_rubrique}}{par date}{mois_relatif<0}{0,1}>#SET{mois_defaut,#DATE|mois}
 				<div class="Date[(#ENV{mois}|=={[(#DATE|mois)]}|et{#ENV{annee,#GET{anneecourane}}|=={#DATE|annee}}|oui) on]">					
 					<a class="ajax[(#ENV{mois}|=={[(#DATE|mois)]}|oui) on]" href="[(#SELF|parametre_url{mois,[(#DATE|mois)]}|parametre_url{annee,[(#DATE|annee)]})]">				
@@ -44,10 +43,7 @@
 			</BOUCLE_article_mois1>			
 			#SET{fin_menu_mois,</div>}
 		</B_article_mois1>	
-
-
 		#GET{fin_menu_mois}
-
 	</div>
 	<br class="nettoyeur">
 
