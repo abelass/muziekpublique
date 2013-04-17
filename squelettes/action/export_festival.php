@@ -33,7 +33,7 @@ function action_export_festival_dist(){
 		$id_article=_request('arg');
 
 
-		$result = sql_select($tablefield,'spip_asso_activites','id_article=783');
+		$result = sql_select($tablefield,'spip_asso_activites','id_article='._request('arg'));
 
 
 
